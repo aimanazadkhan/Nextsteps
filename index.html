@@ -1,12 +1,5 @@
 <!DOCTYPE html>
 
-<!--
- // WEBSITE: https://themefisher.com
- // TWITTER: https://twitter.com/themefisher
- // FACEBOOK: https://www.facebook.com/themefisher
- // GITHUB: https://github.com/themefisher/
--->
-
 <html lang="en-us">
 
 <head>
@@ -95,29 +88,25 @@
             </li>
             <li class="nav-item "> <a class="nav-link" href="about.html">About</a>
             </li>
-            <li class="nav-item "> <a class="nav-link" href="how-it-works.html">How It Works</a>
+
+            <li class="nav-item "> <a class="nav-link" href="services.html">Search Courses</a>
             </li>
-            <li class="nav-item "> <a class="nav-link" href="services.html">Services</a>
-            </li>
-            <li class="nav-item "> <a class="nav-link" href="contact.html">Contact</a>
+            <li class="nav-item "> <a class="nav-link" href="contact.html">Test Preparation</a>
             </li>
             <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
-                role="button" data-bs-toggle="dropdown" aria-expanded="false">Pages</a>
+                role="button" data-bs-toggle="dropdown" aria-expanded="false">Services</a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item " href="blog.html">Blog</a>
+                <li><a class="dropdown-item " href="blog.html">Application Processing</a>
                 </li>
-                <li><a class="dropdown-item " href="blog-details.html">Blog Details</a>
+                <li><a class="dropdown-item " href="blog-details.html">Course Selection Advice</a>
                 </li>
-                <li><a class="dropdown-item " href="service-details.html">Service Details</a>
+                <li><a class="dropdown-item " href="faq.html">Scholarship Assistance</a>
                 </li>
-                <li><a class="dropdown-item " href="faq.html">FAQ&#39;s</a>
+                <li><a class="dropdown-item " href="service-details.html">Visa Assistance</a>
                 </li>
-                <li><a class="dropdown-item " href="legal.html">Legal</a>
+                <li><a class="dropdown-item " href="service-details.html">Air ticketing</a>
                 </li>
-                <li><a class="dropdown-item " href="terms.html">Terms &amp; Condition</a>
-                </li>
-                <li><a class="dropdown-item " href="privacy-policy.html">Privacy &amp; Policy</a>
-                </li>
+
               </ul>
             </li>
           </ul>
@@ -135,7 +124,7 @@
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header border-bottom-0">
-          <h4 class="modal-title" id="exampleModalLabel">How much do you need?</h4>
+          <h4 class="modal-title" id="exampleModalLabel">Contact Us</h4>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -143,42 +132,317 @@
             <div class="row">
               <div class="col-lg-6 mb-4 pb-2">
                 <div class="form-group">
-                  <label for="loan_amount" class="form-label">Amount</label>
-                  <input type="number" class="form-control shadow-none" id="loan_amount" placeholder="ex: 25000">
+                  <label for="loan_amount" class="form-label">Full Name</label>
+                  <input type="text" class="form-control shadow-none">
                 </div>
               </div>
               <div class="col-lg-6 mb-4 pb-2">
                 <div class="form-group">
-                  <label for="loan_how_long_for" class="form-label">How long for?</label>
-                  <input type="number" class="form-control shadow-none" id="loan_how_long_for" placeholder="ex: 12">
+                  <label for="loan_amount" class="form-label">Mobile</label>
+                  <input type="number" class="form-control shadow-none" required>
                 </div>
               </div>
               <div class="col-lg-12 mb-4 pb-2">
                 <div class="form-group">
-                  <label for="loan_repayment" class="form-label">Repayment</label>
-                  <input type="number" class="form-control shadow-none" id="loan_repayment" disabled>
+                  <label for="loan_how_long_for" class="form-label">Email address</label>
+                  <input type="number" class="form-control shadow-none" required>
+                </div>
+              </div>
+              <div class="col-lg-12 mb-4 pb-2">
+                <div class="form-group">
+                  <label for="loan_repayment" class="form-label">Address</label>
+                  <input type="text" class="form-control shadow-none">
                 </div>
               </div>
               <div class="col-lg-6 mb-4 pb-2">
                 <div class="form-group">
-                  <label for="loan_full_name" class="form-label">Full Name</label>
-                  <input type="text" class="form-control shadow-none" id="loan_full_name">
+                  <label>Preferred Destination</label>
+                  <select name="destination_country_id" id="destination_country_id" class="form-control" required="">
+
+                    <option value="">Select Country</option>
+                    <option value="14">Australia</option>
+                    <option value="157">New Zealand</option>
+                    <option value="235">United Kingdom</option>
+                    <option value="236">United States</option>
+                    <option value="40">Canada</option>
+                    <option value="76">France</option>
+                    <option value="199">Singapore</option>
+                    <option value="83">Germany</option>
+                    <option value="234">United Arab Emirates</option>
+                    <option value="133">Malaysia</option>
+                    <option value="176">Poland</option>
+                    <option value="140">Mauritius</option>
+                    <option value="202">Slovenia</option>
+                    <option value="61">Denmark</option>
+                    <option value="233">Ukraine</option>
+                    <option value="75">Finland</option>
+                    <option value="86">Greece</option>
+                    <option value="106">Ireland</option>
+                    <option value="109">Italy</option>
+                    <option value="136">Malta</option>
+                    <option value="155">Netherlands</option>
+                    <option value="209">Spain</option>
+                    <option value="215">Sweden</option>
+                    <option value="216">Switzerland</option>
+                    <option value="221">Thailand</option>
+                    <option value="243">Vietnam</option>
+                    <option value="35">Bulgaria</option>
+                    <option value="102">India</option>
+                    <option value="1">Afghanistan</option>
+                    <option value="2">Aland Islands</option>
+                    <option value="3">Albania</option>
+                    <option value="4">Algeria</option>
+                    <option value="5">American Samoa</option>
+                    <option value="6">Andorra</option>
+                    <option value="7">Angola</option>
+                    <option value="8">Anguilla</option>
+                    <option value="9">Antarctica</option>
+                    <option value="10">Antigua and Barbuda</option>
+                    <option value="11">Argentina</option>
+                    <option value="12">Armenia</option>
+                    <option value="13">Aruba</option>
+                    <option value="15">Austria</option>
+                    <option value="16">Azerbaijan</option>
+                    <option value="17">Bahamas</option>
+                    <option value="18">Bahrain</option>
+                    <option value="19">Bangladesh</option>
+                    <option value="20">Barbados</option>
+                    <option value="21">Belarus</option>
+                    <option value="22">Belgium</option>
+                    <option value="23">Belize</option>
+                    <option value="24">Benin</option>
+                    <option value="25">Bermuda</option>
+                    <option value="26">Bhutan</option>
+                    <option value="27">Bolivia</option>
+                    <option value="28">Bonaire, Sint Eustatius and Saba</option>
+                    <option value="29">Bosnia and Herzegovina</option>
+                    <option value="30">Botswana</option>
+                    <option value="31">Bouvet Island</option>
+                    <option value="32">Brazil</option>
+                    <option value="33">British Indian Ocean Territory</option>
+                    <option value="34">Brunei</option>
+                    <option value="36">Burkina Faso</option>
+                    <option value="37">Burundi</option>
+                    <option value="38">Cambodia</option>
+                    <option value="39">Cameroon</option>
+                    <option value="41">Cape Verde</option>
+                    <option value="42">Cayman Islands</option>
+                    <option value="43">Central African Republic</option>
+                    <option value="44">Chad</option>
+                    <option value="45">Chile</option>
+                    <option value="46">China</option>
+                    <option value="47">Christmas Island</option>
+                    <option value="48">Cocos (Keeling) Islands</option>
+                    <option value="49">Colombia</option>
+                    <option value="50">Comoros</option>
+                    <option value="51">Congo</option>
+                    <option value="52">Cook Islands</option>
+                    <option value="53">Costa Rica</option>
+                    <option value="54">Cote d'ivoire (Ivory Coast)</option>
+                    <option value="55">Croatia</option>
+                    <option value="56">Cuba</option>
+                    <option value="57">Curacao</option>
+                    <option value="58">Cyprus</option>
+                    <option value="59">Czech Republic</option>
+                    <option value="60">Democratic Republic of the Congo</option>
+                    <option value="62">Djibouti</option>
+                    <option value="63">Dominica</option>
+                    <option value="64">Dominican Republic</option>
+                    <option value="65">Ecuador</option>
+                    <option value="66">Egypt</option>
+                    <option value="67">El Salvador</option>
+                    <option value="68">Equatorial Guinea</option>
+                    <option value="69">Eritrea</option>
+                    <option value="70">Estonia</option>
+                    <option value="71">Ethiopia</option>
+                    <option value="72">Falkland Islands (Malvinas)</option>
+                    <option value="73">Faroe Islands</option>
+                    <option value="74">Fiji</option>
+                    <option value="77">French Guiana</option>
+                    <option value="78">French Polynesia</option>
+                    <option value="79">French Southern Territories</option>
+                    <option value="80">Gabon</option>
+                    <option value="81">Gambia</option>
+                    <option value="82">Georgia</option>
+                    <option value="84">Ghana</option>
+                    <option value="85">Gibraltar</option>
+                    <option value="87">Greenland</option>
+                    <option value="88">Grenada</option>
+                    <option value="89">Guadaloupe</option>
+                    <option value="90">Guam</option>
+                    <option value="91">Guatemala</option>
+                    <option value="92">Guernsey</option>
+                    <option value="93">Guinea</option>
+                    <option value="94">Guinea-Bissau</option>
+                    <option value="95">Guyana</option>
+                    <option value="96">Haiti</option>
+                    <option value="97">Heard Island and McDonald Islands</option>
+                    <option value="98">Honduras</option>
+                    <option value="99">Hong Kong</option>
+                    <option value="100">Hungary</option>
+                    <option value="101">Iceland</option>
+                    <option value="103">Indonesia</option>
+                    <option value="104">Iran</option>
+                    <option value="105">Iraq</option>
+                    <option value="107">Isle of Man</option>
+                    <option value="108">Israel</option>
+                    <option value="110">Jamaica</option>
+                    <option value="111">Japan</option>
+                    <option value="112">Jersey</option>
+                    <option value="113">Jordan</option>
+                    <option value="114">Kazakhstan</option>
+                    <option value="115">Kenya</option>
+                    <option value="116">Kiribati</option>
+                    <option value="117">Kosovo</option>
+                    <option value="118">Kuwait</option>
+                    <option value="119">Kyrgyzstan</option>
+                    <option value="120">Laos</option>
+                    <option value="121">Latvia</option>
+                    <option value="122">Lebanon</option>
+                    <option value="123">Lesotho</option>
+                    <option value="124">Liberia</option>
+                    <option value="125">Libya</option>
+                    <option value="126">Liechtenstein</option>
+                    <option value="127">Lithuania</option>
+                    <option value="128">Luxembourg</option>
+                    <option value="129">Macao</option>
+                    <option value="130">Macedonia</option>
+                    <option value="131">Madagascar</option>
+                    <option value="132">Malawi</option>
+                    <option value="134">Maldives</option>
+                    <option value="135">Mali</option>
+                    <option value="137">Marshall Islands</option>
+                    <option value="138">Martinique</option>
+                    <option value="139">Mauritania</option>
+                    <option value="141">Mayotte</option>
+                    <option value="142">Mexico</option>
+                    <option value="143">Micronesia</option>
+                    <option value="144">Moldava</option>
+                    <option value="145">Monaco</option>
+                    <option value="146">Mongolia</option>
+                    <option value="147">Montenegro</option>
+                    <option value="148">Montserrat</option>
+                    <option value="149">Morocco</option>
+                    <option value="150">Mozambique</option>
+                    <option value="151">Myanmar (Burma)</option>
+                    <option value="152">Namibia</option>
+                    <option value="153">Nauru</option>
+                    <option value="154">Nepal</option>
+                    <option value="156">New Caledonia</option>
+                    <option value="158">Nicaragua</option>
+                    <option value="159">Niger</option>
+                    <option value="160">Nigeria</option>
+                    <option value="161">Niue</option>
+                    <option value="162">Norfolk Island</option>
+                    <option value="163">North Korea</option>
+                    <option value="164">Northern Mariana Islands</option>
+                    <option value="165">Norway</option>
+                    <option value="166">Oman</option>
+                    <option value="167">Pakistan</option>
+                    <option value="168">Palau</option>
+                    <option value="169">Palestine</option>
+                    <option value="170">Panama</option>
+                    <option value="171">Papua New Guinea</option>
+                    <option value="172">Paraguay</option>
+                    <option value="173">Peru</option>
+                    <option value="174">Phillipines</option>
+                    <option value="175">Pitcairn</option>
+                    <option value="177">Portugal</option>
+                    <option value="178">Puerto Rico</option>
+                    <option value="179">Qatar</option>
+                    <option value="180">Reunion</option>
+                    <option value="181">Romania</option>
+                    <option value="182">Russia</option>
+                    <option value="183">Rwanda</option>
+                    <option value="184">Saint Barthelemy</option>
+                    <option value="185">Saint Helena</option>
+                    <option value="186">Saint Kitts and Nevis</option>
+                    <option value="187">Saint Lucia</option>
+                    <option value="188">Saint Martin</option>
+                    <option value="189">Saint Pierre and Miquelon</option>
+                    <option value="190">Saint Vincent and the Grenadines</option>
+                    <option value="191">Samoa</option>
+                    <option value="192">San Marino</option>
+                    <option value="193">Sao Tome and Principe</option>
+                    <option value="194">Saudi Arabia</option>
+                    <option value="195">Senegal</option>
+                    <option value="196">Serbia</option>
+                    <option value="197">Seychelles</option>
+                    <option value="198">Sierra Leone</option>
+                    <option value="200">Sint Maarten</option>
+                    <option value="201">Slovakia</option>
+                    <option value="203">Solomon Islands</option>
+                    <option value="204">Somalia</option>
+                    <option value="205">South Africa</option>
+                    <option value="206">South Georgia and the South Sandwich Islands</option>
+                    <option value="207">South Korea</option>
+                    <option value="208">South Sudan</option>
+                    <option value="210">Sri Lanka</option>
+                    <option value="211">Sudan</option>
+                    <option value="212">Suriname</option>
+                    <option value="213">Svalbard and Jan Mayen</option>
+                    <option value="214">Swaziland</option>
+                    <option value="217">Syria</option>
+                    <option value="218">Taiwan</option>
+                    <option value="219">Tajikistan</option>
+                    <option value="220">Tanzania</option>
+                    <option value="222">Timor-Leste (East Timor)</option>
+                    <option value="223">Togo</option>
+                    <option value="224">Tokelau</option>
+                    <option value="225">Tonga</option>
+                    <option value="226">Trinidad and Tobago</option>
+                    <option value="227">Tunisia</option>
+                    <option value="228">Turkey</option>
+                    <option value="229">Turkmenistan</option>
+                    <option value="230">Turks and Caicos Islands</option>
+                    <option value="231">Tuvalu</option>
+                    <option value="232">Uganda</option>
+                    <option value="237">United States Minor Outlying Islands</option>
+                    <option value="238">Uruguay</option>
+                    <option value="239">Uzbekistan</option>
+                    <option value="240">Vanuatu</option>
+                    <option value="241">Vatican City</option>
+                    <option value="242">Venezuela</option>
+                    <option value="244">Virgin Islands, British</option>
+                    <option value="245">Virgin Islands, US</option>
+                    <option value="246">Wallis and Futuna</option>
+                    <option value="247">Western Sahara</option>
+                    <option value="248">Yemen</option>
+                    <option value="249">Zambia</option>
+                    <option value="250">Zimbabwe</option>
+                  </select>
                 </div>
               </div>
               <div class="col-lg-6 mb-4 pb-2">
                 <div class="form-group">
-                  <label for="loan_email_address" class="form-label">Email address</label>
-                  <input type="email" class="form-control shadow-none" id="loan_email_address">
+                  <label>My Queries</label>
+                  <select class="form-control" name="query_type" required="">
+                    <option value="">Please Select</option>
+
+                    <option value="1">Counselling</option>
+
+                    <option value="2">Tests</option>
+
+                    <option value="3">English Test Vouchers</option>
+
+                  </select>
                 </div>
               </div>
-              <div class="col-lg-12">
-                <button type="submit" class="btn btn-primary w-100">Get Your Loan Now</button>
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-col mb-3">
+                <div class="form-group">
+                  <label>Query</label>
+                  <textarea class="form-control remove_input_space" rows="3" id="textquery" name="textquery" placeholder="Query" required=""> </textarea>
+                </div>
               </div>
             </div>
-          </form>
+            <div class="col-lg-12">
+              <button type="submit" class="btn btn-primary w-100">Submit</button>
+            </div>
         </div>
+        </form>
       </div>
     </div>
+  </div>
   </div>
 
 
@@ -191,13 +455,13 @@
             <p class="mb-4">We have collected the best offers of credit institutions and banks
               <br>of Colombia. It remains to choose what suits you as fast as you.
             </p> <a type="button" class="btn btn-primary" href="#" data-bs-toggle="modal"
-              data-bs-target="#applyLoan">Find Courses<span style="font-size: 14px;"
+              data-bs-target="#applyLoan">Contact Us<span style="font-size: 14px;"
                 class="ms-2 fas fa-arrow-right"></span></a>
           </div>
         </div>
         <div class="col-lg-6">
           <div class="ps-lg-5 text-center">
-            <img loading="lazy" decoding="async" src="images/banner/banner1.png" alt="banner image" class="w-100">
+            <img loading="lazy" decoding="async" src="images/banner/banner2.png" alt="banner image" class="w-100">
           </div>
         </div>
       </div>
@@ -285,11 +549,11 @@
       </div>
 
       <div class="row">
-        <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="col-lg-4 col-md-6 col-sm-6 mb-3">
           <div class="service-item mb-4 rounded bg-white" style="padding: 20px; width: 100%; height: 100%;">
             <div class="icon d-flex align-items-center">
               <!-- <i class="fa-solid fa-magnifying-glass fa-beat fa-lg"></i> -->
-              <h4 class="mt-3 mb-3">Search courses</h4>
+              <h4 class="mt-3 mb-3">Laboratory services</h4>
             </div>
 
             <div class="content">
@@ -298,11 +562,11 @@
           </div>
         </div>
 
-        <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="col-lg-4 col-md-6 col-sm-6 mb-3">
           <div class="service-item mb-4  rounded bg-white" style="padding: 20px; width: 100%; height: 100%;">
             <div class="icon d-flex align-items-center">
               <i class="icofont-heart-beat-alt text-lg"></i>
-              <h4 class="mt-3 mb-3">Upload file</h4>
+              <h4 class="mt-3 mb-3">Heart Disease</h4>
             </div>
             <div class="content">
               <p class="mb-4">Saepe nulla praesentium eaque omnis perferendis a doloremque.</p>
@@ -310,11 +574,11 @@
           </div>
         </div>
 
-        <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="col-lg-4 col-md-6 col-sm-6 mb-3">
           <div class="service-item mb-4  rounded bg-white" style="padding: 20px; width: 100%; height: 100%;">
             <div class="icon d-flex align-items-center">
               <i class="icofont-tooth text-lg"></i>
-              <h4 class="mt-3 mb-3">Contact with us</h4>
+              <h4 class="mt-3 mb-3">Dental Care</h4>
             </div>
             <div class="content">
               <p class="mb-4">Saepe nulla praesentium eaque omnis perferendis a doloremque.</p>
@@ -713,36 +977,36 @@
         <div class="card col-md-3 mb-3 p-3 me-lg-5" style="width: 200px;">
           <div class="counter-box colored text-center">
             <i class="fa-solid fa-building-columns" style="color: #3507c1;"></i>
-            <span style="color: #3507c1;"class="counter">200</span><span style="color: #3507c1;">+</span>
+            <span style="color: #3507c1;" class="counter">200</span><span style="color: #3507c1;">+</span>
             <p>universities</p>
           </div>
         </div>
-        <div class="card col-md-3 mb-3 p-3  me-lg-5" style="width: 200px;" >
+        <div class="card col-md-3 mb-3 p-3  me-lg-5" style="width: 200px;">
           <div class="counter-box text-center">
-            <i class="fa-brands fa-leanpub"style="color: #3507c1;"></i>
+            <i class="fa-brands fa-leanpub" style="color: #3507c1;"></i>
             <span style="color: #3507c1;" class="counter">300</span><span style="color: #3507c1;">+</span>
             <p>Coursess</p>
           </div>
         </div>
-        
-        <div class="card col-md-3 mb-3 p-3  me-lg-5"style="width: 200px;">
+
+        <div class="card col-md-3 mb-3 p-3  me-lg-5" style="width: 200px;">
           <div class="counter-box text-center">
             <i class="fa-solid fa-user" style="color: #3507c1;"></i>
             <span style="color: #3507c1;" class="counter">3</span><span style="color: #3507c1;">k+</span>
             <p>Students</p>
           </div>
         </div>
-        <div class="card col-md-3 mb-3 p-3"style="width: 200px;">
+        <div class="card col-md-3 mb-3 p-3" style="width: 200px;">
           <div class="counter-box text-center blue-text">
             <i class="fa-brands fa-cc-visa" style="color: #3507c1;"></i>
-            <span style="color: #3507c1;"class="counter">5</span><span style="color: #3507c1;">k+</span>
+            <span style="color: #3507c1;" class="counter">5</span><span style="color: #3507c1;">k+</span>
             <p>Visa</p>
           </div>
         </div>
       </div>
     </div>
 
-  <!-- <section class="section testimonials overflow-hidden bg-tertiary">
+    <!-- <section class="section testimonials overflow-hidden bg-tertiary">
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-lg-6">
@@ -885,274 +1149,287 @@
     </div>
   </section> -->
 
-  <section class="section">
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-12">
-          <div class="section-title text-center mb-5 pb-2">
-            <p class="text-primary text-uppercase fw-bold mb-3">Questions You Have</p>
-            <h1>Frequently Asked Questions</h1>
-          </div>
-        </div>
-        <div class="col-lg-6">
-          <div class="accordion shadow rounded py-5 px-0 px-lg-4 bg-white position-relative" id="accordionFAQ">
-            <div class="accordion-item p-1 mb-2">
-              <h2 class="accordion-header accordion-button h5 border-0 active"
-                id="heading-ebd23e34fd2ed58299b32c03c521feb0b02f19d9" type="button" data-bs-toggle="collapse"
-                data-bs-target="#collapse-ebd23e34fd2ed58299b32c03c521feb0b02f19d9" aria-expanded="true"
-                aria-controls="collapse-ebd23e34fd2ed58299b32c03c521feb0b02f19d9">Can I apply if my credit isn&rsquo;t
-                perfect?
-              </h2>
-              <div id="collapse-ebd23e34fd2ed58299b32c03c521feb0b02f19d9"
-                class="accordion-collapse collapse border-0 show"
-                aria-labelledby="heading-ebd23e34fd2ed58299b32c03c521feb0b02f19d9" data-bs-parent="#accordionFAQ">
-                <div class="accordion-body py-0 content">The difference between and premium product consist number of
-                  components, plugins, page in each. The Free versions contain only a few elements and pages that.</div>
-              </div>
-            </div>
-            <div class="accordion-item p-1 mb-2">
-              <h2 class="accordion-header accordion-button h5 border-0 "
-                id="heading-a443e01b4db47b3f4a1267e10594576d52730ec1" type="button" data-bs-toggle="collapse"
-                data-bs-target="#collapse-a443e01b4db47b3f4a1267e10594576d52730ec1" aria-expanded="false"
-                aria-controls="collapse-a443e01b4db47b3f4a1267e10594576d52730ec1">How do I know that I have been
-                approved?
-              </h2>
-              <div id="collapse-a443e01b4db47b3f4a1267e10594576d52730ec1" class="accordion-collapse collapse border-0 "
-                aria-labelledby="heading-a443e01b4db47b3f4a1267e10594576d52730ec1" data-bs-parent="#accordionFAQ">
-                <div class="accordion-body py-0 content">The difference between and premium product consist number of
-                  components, plugins, page in each. The Free versions contain only a few elements and pages that.</div>
-              </div>
-            </div>
-            <div class="accordion-item p-1 mb-2">
-              <h2 class="accordion-header accordion-button h5 border-0 "
-                id="heading-4b82be4be873c8ad699fa97049523ac86b67a8bd" type="button" data-bs-toggle="collapse"
-                data-bs-target="#collapse-4b82be4be873c8ad699fa97049523ac86b67a8bd" aria-expanded="false"
-                aria-controls="collapse-4b82be4be873c8ad699fa97049523ac86b67a8bd">Do I need to fax or email any
-                documents?
-              </h2>
-              <div id="collapse-4b82be4be873c8ad699fa97049523ac86b67a8bd" class="accordion-collapse collapse border-0 "
-                aria-labelledby="heading-4b82be4be873c8ad699fa97049523ac86b67a8bd" data-bs-parent="#accordionFAQ">
-                <div class="accordion-body py-0 content">The difference between and premium product consist number of
-                  components, plugins, page in each. The Free versions contain only a few elements and pages that.</div>
-              </div>
-            </div>
-            <div class="accordion-item p-1 mb-2">
-              <h2 class="accordion-header accordion-button h5 border-0 "
-                id="heading-3e13e9676a9cd6a6f8bfbe6e1e9fc0881ef247b3" type="button" data-bs-toggle="collapse"
-                data-bs-target="#collapse-3e13e9676a9cd6a6f8bfbe6e1e9fc0881ef247b3" aria-expanded="false"
-                aria-controls="collapse-3e13e9676a9cd6a6f8bfbe6e1e9fc0881ef247b3">Do you provide loans to military
-                personnel?
-              </h2>
-              <div id="collapse-3e13e9676a9cd6a6f8bfbe6e1e9fc0881ef247b3" class="accordion-collapse collapse border-0 "
-                aria-labelledby="heading-3e13e9676a9cd6a6f8bfbe6e1e9fc0881ef247b3" data-bs-parent="#accordionFAQ">
-                <div class="accordion-body py-0 content">The difference between and premium product consist number of
-                  components, plugins, page in each. The Free versions contain only a few elements and pages that.</div>
-              </div>
-            </div>
-            <div class="accordion-item p-1 mb-2">
-              <h2 class="accordion-header accordion-button h5 border-0 "
-                id="heading-0c2f829793a1f0562fea97120357dd2d43319164" type="button" data-bs-toggle="collapse"
-                data-bs-target="#collapse-0c2f829793a1f0562fea97120357dd2d43319164" aria-expanded="false"
-                aria-controls="collapse-0c2f829793a1f0562fea97120357dd2d43319164">Can I remove footer credit purchase ?
-              </h2>
-              <div id="collapse-0c2f829793a1f0562fea97120357dd2d43319164" class="accordion-collapse collapse border-0 "
-                aria-labelledby="heading-0c2f829793a1f0562fea97120357dd2d43319164" data-bs-parent="#accordionFAQ">
-                <div class="accordion-body py-0 content">The difference between and premium product consist number of
-                  components, plugins, page in each. The Free versions contain only a few elements and pages that.</div>
-              </div>
-            </div>
-            <div class="accordion-item p-1 mb-2">
-              <h2 class="accordion-header accordion-button h5 border-0 "
-                id="heading-8fe6730e26db16f15763887c30a614caa075f518" type="button" data-bs-toggle="collapse"
-                data-bs-target="#collapse-8fe6730e26db16f15763887c30a614caa075f518" aria-expanded="false"
-                aria-controls="collapse-8fe6730e26db16f15763887c30a614caa075f518">What is the difference the free
-                versions?
-              </h2>
-              <div id="collapse-8fe6730e26db16f15763887c30a614caa075f518" class="accordion-collapse collapse border-0 "
-                aria-labelledby="heading-8fe6730e26db16f15763887c30a614caa075f518" data-bs-parent="#accordionFAQ">
-                <div class="accordion-body py-0 content">The difference between and premium product consist number of
-                  components, plugins, page in each. The Free versions contain only a few elements and pages that.</div>
-              </div>
+    <section class="section">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-12">
+            <div class="section-title text-center mb-5 pb-2">
+              <p class="text-primary text-uppercase fw-bold mb-3">Questions You Have</p>
+              <h1>Frequently Asked Questions</h1>
             </div>
           </div>
-        </div>
-        <div class="col-lg-4 mt-4 mt-lg-0">
-          <div class="shadow rounded py-5 px-4 ms-0 ms-lg-4 bg-white position-relative">
-            <div class="block mx-0 mx-lg-3 mt-0">
-              <h4 class="h5">Still Have Questions?</h4>
-              <div class="content">Call Us We Will Be Happy To Help
-                <br> <a href="tel:+3301563965">+3301563965</a>
-                <br>Monday - Friday
-                <br>9AM TO 8PM Eastern Time
-              </div>
-            </div>
-            <div class="block mx-0 mx-lg-3 mt-4">
-              <h4 class="h5">Canada Office</h4>
-              <div class="content">231 Ross Street.
-                <br>K7A 1C2.
-                <br>Smiths Falls
-              </div>
-            </div>
-            <div class="block mx-0 mx-lg-3 mt-4">
-              <h4 class="h5">UK Office</h4>
-              <div class="content">57 Folkestone Road.
-                <br>AB54 5XQ,
-                <br>Winston
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <footer class="section-sm bg-tertiary">
-    <div class="container">
-      <div class="row justify-content-between">
-        <div class="col-lg-2 col-md-4 col-6 mb-4">
-          <div class="footer-widget">
-            <h5 class="mb-4 text-primary font-secondary">Service</h5>
-            <ul class="list-unstyled">
-              <li class="mb-2"><a href="service-details.html">Personal loans</a>
-              </li>
-              <li class="mb-2"><a href="service-details.html">Home Equity Loans</a>
-              </li>
-              <li class="mb-2"><a href="service-details.html">Student Loans</a>
-              </li>
-              <li class="mb-2"><a href="service-details.html">Mortgage Loans</a>
-              </li>
-              <li class="mb-2"><a href="service-details.html">Payday Loans</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="col-lg-2 col-md-4 col-6 mb-4">
-          <div class="footer-widget">
-            <h5 class="mb-4 text-primary font-secondary">About</h5>
-            <ul class="list-unstyled">
-              <li class="mb-2"><a href="#!">Benefits</a>
-              </li>
-              <li class="mb-2"><a href="#!">Careers</a>
-              </li>
-              <li class="mb-2"><a href="#!">Our Story</a>
-              </li>
-              <li class="mb-2"><a href="#!">Team</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="col-lg-2 col-md-4 col-6 mb-4">
-          <div class="footer-widget">
-            <h5 class="mb-4 text-primary font-secondary">Help</h5>
-            <ul class="list-unstyled">
-              <li class="mb-2"><a href="contact.html">Contact Us</a>
-              </li>
-              <li class="mb-2"><a href="faq.html">FAQs</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="col-lg-4 col-md-12 newsletter-form">
-          <div style="background-color: #F4F4F4; padding: 35px;">
-            <h5 class="mb-4 text-primary font-secondary">Subscribe</h5>
-            <div class="pe-0 pe-xl-5">
-              <form action="#!" method="post" name="mc-embedded-subscribe-form" target="_blank">
-                <div class="input-group mb-3">
-                  <input type="text" class="form-control shadow-none bg-white border-end-0" placeholder="Email address">
-                  <span class="input-group-text border-0 p-0">
-                    <button class="input-group-text border-0 bg-primary" type="submit" name="subscribe"
-                      aria-label="Subscribe for Newsletter"><i class="fas fa-arrow-right"></i></button>
-                  </span>
+          <div class="col-lg-6">
+            <div class="accordion shadow rounded py-5 px-0 px-lg-4 bg-white position-relative" id="accordionFAQ">
+              <div class="accordion-item p-1 mb-2">
+                <h2 class="accordion-header accordion-button h5 border-0 active"
+                  id="heading-ebd23e34fd2ed58299b32c03c521feb0b02f19d9" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#collapse-ebd23e34fd2ed58299b32c03c521feb0b02f19d9" aria-expanded="true"
+                  aria-controls="collapse-ebd23e34fd2ed58299b32c03c521feb0b02f19d9">Can I apply if my credit isn&rsquo;t
+                  perfect?
+                </h2>
+                <div id="collapse-ebd23e34fd2ed58299b32c03c521feb0b02f19d9"
+                  class="accordion-collapse collapse border-0 show"
+                  aria-labelledby="heading-ebd23e34fd2ed58299b32c03c521feb0b02f19d9" data-bs-parent="#accordionFAQ">
+                  <div class="accordion-body py-0 content">The difference between and premium product consist number of
+                    components, plugins, page in each. The Free versions contain only a few elements and pages that.
+                  </div>
                 </div>
-                <div style="position: absolute; left: -5000px;" aria-hidden="true">
-                  <input type="text" name="b_463ee871f45d2d93748e77cad_a0a2c6d074" tabindex="-1">
+              </div>
+              <div class="accordion-item p-1 mb-2">
+                <h2 class="accordion-header accordion-button h5 border-0 "
+                  id="heading-a443e01b4db47b3f4a1267e10594576d52730ec1" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#collapse-a443e01b4db47b3f4a1267e10594576d52730ec1" aria-expanded="false"
+                  aria-controls="collapse-a443e01b4db47b3f4a1267e10594576d52730ec1">How do I know that I have been
+                  approved?
+                </h2>
+                <div id="collapse-a443e01b4db47b3f4a1267e10594576d52730ec1"
+                  class="accordion-collapse collapse border-0 "
+                  aria-labelledby="heading-a443e01b4db47b3f4a1267e10594576d52730ec1" data-bs-parent="#accordionFAQ">
+                  <div class="accordion-body py-0 content">The difference between and premium product consist number of
+                    components, plugins, page in each. The Free versions contain only a few elements and pages that.
+                  </div>
                 </div>
-              </form>
+              </div>
+              <div class="accordion-item p-1 mb-2">
+                <h2 class="accordion-header accordion-button h5 border-0 "
+                  id="heading-4b82be4be873c8ad699fa97049523ac86b67a8bd" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#collapse-4b82be4be873c8ad699fa97049523ac86b67a8bd" aria-expanded="false"
+                  aria-controls="collapse-4b82be4be873c8ad699fa97049523ac86b67a8bd">Do I need to fax or email any
+                  documents?
+                </h2>
+                <div id="collapse-4b82be4be873c8ad699fa97049523ac86b67a8bd"
+                  class="accordion-collapse collapse border-0 "
+                  aria-labelledby="heading-4b82be4be873c8ad699fa97049523ac86b67a8bd" data-bs-parent="#accordionFAQ">
+                  <div class="accordion-body py-0 content">The difference between and premium product consist number of
+                    components, plugins, page in each. The Free versions contain only a few elements and pages that.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item p-1 mb-2">
+                <h2 class="accordion-header accordion-button h5 border-0 "
+                  id="heading-3e13e9676a9cd6a6f8bfbe6e1e9fc0881ef247b3" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#collapse-3e13e9676a9cd6a6f8bfbe6e1e9fc0881ef247b3" aria-expanded="false"
+                  aria-controls="collapse-3e13e9676a9cd6a6f8bfbe6e1e9fc0881ef247b3">Do you provide loans to military
+                  personnel?
+                </h2>
+                <div id="collapse-3e13e9676a9cd6a6f8bfbe6e1e9fc0881ef247b3"
+                  class="accordion-collapse collapse border-0 "
+                  aria-labelledby="heading-3e13e9676a9cd6a6f8bfbe6e1e9fc0881ef247b3" data-bs-parent="#accordionFAQ">
+                  <div class="accordion-body py-0 content">The difference between and premium product consist number of
+                    components, plugins, page in each. The Free versions contain only a few elements and pages that.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item p-1 mb-2">
+                <h2 class="accordion-header accordion-button h5 border-0 "
+                  id="heading-0c2f829793a1f0562fea97120357dd2d43319164" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#collapse-0c2f829793a1f0562fea97120357dd2d43319164" aria-expanded="false"
+                  aria-controls="collapse-0c2f829793a1f0562fea97120357dd2d43319164">Can I remove footer credit purchase
+                  ?
+                </h2>
+                <div id="collapse-0c2f829793a1f0562fea97120357dd2d43319164"
+                  class="accordion-collapse collapse border-0 "
+                  aria-labelledby="heading-0c2f829793a1f0562fea97120357dd2d43319164" data-bs-parent="#accordionFAQ">
+                  <div class="accordion-body py-0 content">The difference between and premium product consist number of
+                    components, plugins, page in each. The Free versions contain only a few elements and pages that.
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item p-1 mb-2">
+                <h2 class="accordion-header accordion-button h5 border-0 "
+                  id="heading-8fe6730e26db16f15763887c30a614caa075f518" type="button" data-bs-toggle="collapse"
+                  data-bs-target="#collapse-8fe6730e26db16f15763887c30a614caa075f518" aria-expanded="false"
+                  aria-controls="collapse-8fe6730e26db16f15763887c30a614caa075f518">What is the difference the free
+                  versions?
+                </h2>
+                <div id="collapse-8fe6730e26db16f15763887c30a614caa075f518"
+                  class="accordion-collapse collapse border-0 "
+                  aria-labelledby="heading-8fe6730e26db16f15763887c30a614caa075f518" data-bs-parent="#accordionFAQ">
+                  <div class="accordion-body py-0 content">The difference between and premium product consist number of
+                    components, plugins, page in each. The Free versions contain only a few elements and pages that.
+                  </div>
+                </div>
+              </div>
             </div>
-            <p class="mb-0">Lorem ipsum dolor sit amet, rdghds consetetur sadipscing elitr, sed diam nonumy eirmod
-              tempor invidunt ut labore et dolore magna aliquyam erat</p>
+          </div>
+          <div class="col-lg-4 mt-4 mt-lg-0">
+            <div class="shadow rounded py-5 px-4 ms-0 ms-lg-4 bg-white position-relative">
+              <div class="block mx-0 mx-lg-3 mt-0">
+                <h4 class="h5">Still Have Questions?</h4>
+                <div class="content">Call Us We Will Be Happy To Help
+                  <br> <a href="tel:+3301563965">+3301563965</a>
+                  <br>Monday - Friday
+                  <br>9AM TO 8PM Eastern Time
+                </div>
+              </div>
+              <div class="block mx-0 mx-lg-3 mt-4">
+                <h4 class="h5">Canada Office</h4>
+                <div class="content">231 Ross Street.
+                  <br>K7A 1C2.
+                  <br>Smiths Falls
+                </div>
+              </div>
+              <div class="block mx-0 mx-lg-3 mt-4">
+                <h4 class="h5">UK Office</h4>
+                <div class="content">57 Folkestone Road.
+                  <br>AB54 5XQ,
+                  <br>Winston
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <div class="row align-items-center mt-5 text-center text-md-start">
-        <div class="col-lg-4">
-          <a href="index.html">
-            <img loading="prelaod" decoding="async" class="img-fluid" width="70" src="images/Next Steps logo.png"
-              alt="Wallet">
-          </a>
+    </section>
+
+    <footer class="section-sm bg-tertiary">
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col-lg-2 col-md-4 col-6 mb-4">
+            <div class="footer-widget">
+              <h5 class="mb-4 text-primary font-secondary">Service</h5>
+              <ul class="list-unstyled">
+                <li class="mb-2"><a href="service-details.html">Personal loans</a>
+                </li>
+                <li class="mb-2"><a href="service-details.html">Home Equity Loans</a>
+                </li>
+                <li class="mb-2"><a href="service-details.html">Student Loans</a>
+                </li>
+                <li class="mb-2"><a href="service-details.html">Mortgage Loans</a>
+                </li>
+                <li class="mb-2"><a href="service-details.html">Payday Loans</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-4 col-6 mb-4">
+            <div class="footer-widget">
+              <h5 class="mb-4 text-primary font-secondary">About</h5>
+              <ul class="list-unstyled">
+                <li class="mb-2"><a href="#!">Benefits</a>
+                </li>
+                <li class="mb-2"><a href="#!">Careers</a>
+                </li>
+                <li class="mb-2"><a href="#!">Our Story</a>
+                </li>
+                <li class="mb-2"><a href="#!">Team</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-4 col-6 mb-4">
+            <div class="footer-widget">
+              <h5 class="mb-4 text-primary font-secondary">Help</h5>
+              <ul class="list-unstyled">
+                <li class="mb-2"><a href="contact.html">Contact Us</a>
+                </li>
+                <li class="mb-2"><a href="faq.html">FAQs</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-12 newsletter-form">
+            <div style="background-color: #F4F4F4; padding: 35px;">
+              <h5 class="mb-4 text-primary font-secondary">Subscribe</h5>
+              <div class="pe-0 pe-xl-5">
+                <form action="#!" method="post" name="mc-embedded-subscribe-form" target="_blank">
+                  <div class="input-group mb-3">
+                    <input type="text" class="form-control shadow-none bg-white border-end-0"
+                      placeholder="Email address">
+                    <span class="input-group-text border-0 p-0">
+                      <button class="input-group-text border-0 bg-primary" type="submit" name="subscribe"
+                        aria-label="Subscribe for Newsletter"><i class="fas fa-arrow-right"></i></button>
+                    </span>
+                  </div>
+                  <div style="position: absolute; left: -5000px;" aria-hidden="true">
+                    <input type="text" name="b_463ee871f45d2d93748e77cad_a0a2c6d074" tabindex="-1">
+                  </div>
+                </form>
+              </div>
+              <p class="mb-0">Lorem ipsum dolor sit amet, rdghds consetetur sadipscing elitr, sed diam nonumy eirmod
+                tempor invidunt ut labore et dolore magna aliquyam erat</p>
+            </div>
+          </div>
         </div>
-        <div class="col-lg-4 col-md-6 mt-4 mt-lg-0">
-          <ul class="list-unstyled list-inline mb-0 text-lg-center">
-            <li class="list-inline-item me-4"><a class="text-black" href="privacy-policy.html">Privacy Policy</a>
-            </li>
-            <li class="list-inline-item me-4"><a class="text-black" href="terms.html">Terms &amp; Conditions</a>
-            </li>
-          </ul>
-        </div>
-        <div class="col-lg-4 col-md-6 text-md-end mt-4 mt-md-0">
-          <ul class="list-unstyled list-inline mb-0 social-icons">
-            <li class="list-inline-item me-3"><a title="Explorer Facebook Profile" class="text-black"
-                href="https://facebook.com/"><i class="fab fa-facebook-f"></i></a>
-            </li>
-            <li class="list-inline-item me-3"><a title="Explorer Twitter Profile" class="text-black"
-                href="https://twitter.com/"><i class="fab fa-twitter"></i></a>
-            </li>
-            <li class="list-inline-item me-3"><a title="Explorer Instagram Profile" class="text-black"
-                href="https://instagram.com/"><i class="fab fa-instagram"></i></a>
-            </li>
-          </ul>
+        <div class="row align-items-center mt-5 text-center text-md-start">
+          <div class="col-lg-4">
+            <a href="index.html">
+              <img loading="prelaod" decoding="async" class="img-fluid" width="70" src="images/Next Steps logo.png"
+                alt="Wallet">
+            </a>
+          </div>
+          <div class="col-lg-4 col-md-6 mt-4 mt-lg-0">
+            <ul class="list-unstyled list-inline mb-0 text-lg-center">
+              <li class="list-inline-item me-4"><a class="text-black" href="privacy-policy.html">Privacy Policy</a>
+              </li>
+              <li class="list-inline-item me-4"><a class="text-black" href="terms.html">Terms &amp; Conditions</a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-lg-4 col-md-6 text-md-end mt-4 mt-md-0">
+            <ul class="list-unstyled list-inline mb-0 social-icons">
+              <li class="list-inline-item me-3"><a title="Explorer Facebook Profile" class="text-black"
+                  href="https://facebook.com/"><i class="fab fa-facebook-f"></i></a>
+              </li>
+              <li class="list-inline-item me-3"><a title="Explorer Twitter Profile" class="text-black"
+                  href="https://twitter.com/"><i class="fab fa-twitter"></i></a>
+              </li>
+              <li class="list-inline-item me-3"><a title="Explorer Instagram Profile" class="text-black"
+                  href="https://instagram.com/"><i class="fab fa-instagram"></i></a>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
-    </div>
-  </footer>
+    </footer>
 
 
-  <!-- # JS Plugins -->
-  <script src="plugins/jquery/jquery.min.js"></script>
-  <script src="plugins/bootstrap/bootstrap.min.js"></script>
-  <script src="plugins/slick/slick.min.js"></script>
-  <script src="plugins/scrollmenu/scrollmenu.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
-  <script>
+    <!-- # JS Plugins -->
+    <script src="plugins/jquery/jquery.min.js"></script>
+    <script src="plugins/bootstrap/bootstrap.min.js"></script>
+    <script src="plugins/slick/slick.min.js"></script>
+    <script src="plugins/scrollmenu/scrollmenu.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+    <script>
 
-    $('.logo-slider').slick({
-      slidesToShow: 5,
-      slidesToScroll: 1,
-      dots: true,
-      autoplay: true,
-      autoplaySpeed: 2000,
-      infinite: true
-    });
-
-
-
-
-
-    $(document).ready(function () {
-
-      $('.counter').each(function () {
-        $(this).prop('Counter', 0).animate({
-          Counter: $(this).text()
-        }, {
-          duration: 4000,
-          easing: 'swing',
-          step: function (now) {
-            $(this).text(Math.ceil(now));
-          }
-        });
+      $('.logo-slider').slick({
+        slidesToShow: 5,
+        slidesToScroll: 1,
+        dots: true,
+        autoplay: true,
+        autoplaySpeed: 2000,
+        infinite: true
       });
 
-    });
 
 
 
 
-  </script>
+      $(document).ready(function () {
 
-  <!-- Main Script -->
-  <script src="js/script.js"></script>
+        $('.counter').each(function () {
+          $(this).prop('Counter', 0).animate({
+            Counter: $(this).text()
+          }, {
+            duration: 4000,
+            easing: 'swing',
+            step: function (now) {
+              $(this).text(Math.ceil(now));
+            }
+          });
+        });
 
-</body>
+      });
+
+
+
+
+    </script>
+
+    <!-- Main Script -->
+    <script src="js/script.js"></script>
+
+  </body>
 
 </html>

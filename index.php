@@ -530,11 +530,7 @@
       </div>
     </div>
   </div>
-
-
 </section>
-
-
 
 <section class="about-section section position-relative overflow-hidden">
   <div class="container">
@@ -755,10 +751,6 @@
   });
 
 
-
-
-
-
   $(document).ready(function () {
     // Function to start counting animation
     function startCountingAnimation() {
@@ -805,11 +797,6 @@
       });
     }
   });
-
-
-
-
-
 </script>
 
 <!-- Main Script -->

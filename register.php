@@ -11,10 +11,10 @@ if (isset($_POST['signup'])) {
     $reg_conPass = $_POST['con_pass'];
     $verifytoken = md5(rand());
     
-    $insert_query = "INSERT INTO `register`(`firstName`,`lastName`,`email`,`password`,`phonenumber`,`verifytoken`) 
+    $insert_query = "INSERT INTO `users`(`firstName`,`lastName`,`email`,`password`,`phonenumber`,`verifytoken`) 
         VALUES ('$reg_firstName','$reg_lastName','$reg_email','$reg_pass','$reg_phoneNumber','$verifytoken')";
 
-    $dupe_email = mysqli_query($conn, "SELECT * FROM `register` WHERE email = '$reg_email'");
+    $dupe_email = mysqli_query($conn, "SELECT * FROM `users` WHERE email = '$reg_email'");
 
     if ($reg_pass !== $reg_conPass) { //confirm password check
         echo "<script>alert('Password & Confirm Password do not match..!!')</script>";
@@ -92,8 +92,8 @@ if (isset($_POST['signup'])) {
                                 <label class="form-label">Password</label>
                                 <input type="password" class="form-control" name="pass"
                                     pattern="(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%&*()]).{6,20}"
-                                    title="Password must be 6-20 characters long, contain at least one uppercase letter, one lowercase letter, one digit, and one special character"
-                                    required>
+                                    title="Password must be 6-20 characters long, contain at least one uppercase letter, 
+                                    one lowercase letter, one digit, and one special character" required>
                             </div>
 
                             <div class="col-sm-6">

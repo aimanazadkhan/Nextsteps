@@ -1,3 +1,36 @@
+<?php
+
+if (isset($_POST['btn_signIn'])) {
+    include 'connection.php';
+
+    $log_user_email = $_POST['l_email'];
+    $log_password = $_POST['l_pass'];
+
+    $result = mysqli_query($conn, "SELECT * FROM `users` 
+        WHERE email = '$log_user_email' AND BINARY `password` = '$log_password' AND verifystatus = '1'");
+    if ($log_user_email === 'admin' && $log_password === 'admin') {
+        session_start();
+        $_SESSION['user'] = $log_user_email;
+        echo "<script>location.href='../AdminPanel/'</script>";
+    } else if (mysqli_num_rows($result) > 0) {
+        session_start();
+        $_SESSION['userName'] = $log_user_email;
+        echo "<script>location.href='index.php'</script>";
+    } else {
+        $result1 = mysqli_query($conn, "SELECT * FROM `users` 
+            WHERE email = '$log_user_email' AND BINARY `password` = '$log_password' AND verifystatus = '0'");
+        if (mysqli_num_rows($result1) > 0) {
+            echo "<script>alert('Your Account has not been verified yet. A verification link has been sent to your registered email address!')</script>";
+            echo "<script>location.href='login.php.php'</script>";
+        } else {
+            echo "<script>alert('Invalid Username or Password.Please Try Again!')</script>";
+            echo "<script>location.href='login.php'</script>";
+        }
+    }
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,14 +54,14 @@
 
                 <div class="col-md-8 col-lg-6 col-xl-4 pt-2">
                     <div class="border border-2 border-primary-subtle rounded p-5 shadow-lg">
-                        <form action="loginAction.php" method="POST">
+                        <form action="" method="POST">
                             <div class="py-5 text-center">
                                 <span class="font" style="font-size: 1.2rem;">Sign-In</span>
                             </div>
 
                             <div class="form-outline">
-                                <label class="form-label">Username or Email</label>
-                                <input type="text" id="form12" class="form-control" name="l_username" />
+                                <label class="form-label">Email</label>
+                                <input type="text" id="form12" class="form-control" name="l_email" />
                             </div>
 
                             <div class="form-outline mb-3">

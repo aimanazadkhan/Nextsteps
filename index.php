@@ -34,7 +34,6 @@
     .slide-container {
       max-width: 1400px;
       margin: 0 auto;
-      
 
       h3 {
         font-size: 30px;
@@ -65,13 +64,6 @@
           /* Center the element */
         }
       }
-
-    
-    
-
-
-
-
     }
   </style>
 </head>

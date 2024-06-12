@@ -48,8 +48,8 @@ if (isset($_POST['btn_signIn'])) {
         <div class="container-fluid mt-5 pt-5">
             <div class="row d-flex justify-content-center align-items-center">
                 <div class="mt-0 col-md-9 col-lg-6 col-xl-5">
-                    <a href="../Homepage/index.php"><img src="images/Next Steps logo.png" class="img-fluid" alt="Sample image"
-                            style="width:450px"></a>
+                    <a href="../Homepage/index.php"><img src="images/Next Steps logo.png" class="img-fluid"
+                            alt="Sample image" style="width:400px"></a>
                 </div>
 
                 <div class="col-md-8 col-lg-6 col-xl-4 pt-2">
@@ -74,10 +74,16 @@ if (isset($_POST['btn_signIn'])) {
                             </div>
 
                             <div class="text-center text-lg-start mt-4 pt-2">
-                                <button type="submit" class="btn btn-outline-primary btn-lg" name="btn_signIn"
-                                    style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
-                                <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="register.php"
-                                        class="link-danger">Register</a></p>
+                                <div class="d-flex justify-content-center">
+                                    <button type="submit" class="btn btn-outline-success btn-lg" name="btn_signIn"
+                                        style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
+                                </div>
+
+                                <div class="d-flex justify-content-center">
+                                    <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a
+                                            href="register.php" class="link-danger">Register</a></p>
+                                </div>
+
                             </div>
                         </form>
                     </div>

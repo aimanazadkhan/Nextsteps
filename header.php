@@ -30,8 +30,17 @@
             </ul>
           </li>
         </ul>
-        <!-- account btn --> <a href="login.php" class="btn btn-outline-primary">Log In</a>
-        <!-- account btn --> <a href="register.php" class="btn btn-primary ms-2 ms-lg-3">Sign Up</a>
+
+        <?php if(isset($_SESSION['user'])) {
+          echo "<a href='logout.php' class='btn btn-primary ms-2 ms-lg-3'>Logout</a>" ;
+        } else {
+          echo "<div>
+                  <a href='login.php' class='btn btn-outline-primary'>Log In</a>
+                  <a href='register.php' class='btn btn-primary ms-2 ms-lg-3'>Sign Up</a>
+                </div>" ;
+        }
+        
+        ?>
       </div>
     </div>
   </nav>

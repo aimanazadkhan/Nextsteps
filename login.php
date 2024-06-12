@@ -14,7 +14,7 @@ if (isset($_POST['btn_signIn'])) {
         echo "<script>location.href='../AdminPanel/'</script>";
     } else if (mysqli_num_rows($result) > 0) {
         session_start();
-        $_SESSION['userName'] = $log_user_email;
+        $_SESSION['user'] = $log_user_email;
         echo "<script>location.href='index.php'</script>";
     } else {
         $result1 = mysqli_query($conn, "SELECT * FROM `users` 

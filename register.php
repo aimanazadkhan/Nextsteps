@@ -31,9 +31,6 @@ if (isset($_POST['signup'])) {
             echo "<script>location.href='login.php'</script>";
         }
     }
-} else {
-    echo "<script>alert('Not Accessible!')</script>";
-    echo "<script>location.href='register.php'</script>";
 }
 
 ?>

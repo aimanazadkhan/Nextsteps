@@ -33,7 +33,7 @@ $email_template = "
          <h2>You have create an account successfully</h2>
          <h4>Verify your email address using the below given Link</h4>
          <br><br>
-         <a href='http://localhost/Nextsteps/Authentication/verifytoken.php?token=$verifytoken'>Verification Link</a>
+         <a href='http://localhost/Nextsteps/verifytoken.php?token=$verifytoken'>Verification Link</a>
      ";
 
 $mail->Body = $email_template;

@@ -22,13 +22,20 @@ session_start();
         body {
             background-color: #f4f5f7;
         }
+
+        .list-item:hover {
+            background-color: #e0e0e0;
+            transition: background-color 0.3s;
+        }
     </style>
 </head>
 
 <body>
     <?php include "header.php"; ?>
     <div class="container-fluid">
+        <?php include "profilenavBar.php"; ?>
         <section class="vh-100">
+            <!-- Personal Information Card -->
             <div class="container h-100">
                 <div class="mt-4 col col-lg-12">
                     <div class="card mb-3" style="border-radius: .5rem;">

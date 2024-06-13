@@ -31,15 +31,35 @@
           </li>
         </ul>
 
-        <?php if(isset($_SESSION['user'])) {
-          echo "<a href='logout.php' class='btn btn-primary ms-2 ms-lg-3'>Logout</a>" ;
+        <?php if (isset($_SESSION['user'])) {
+          echo
+            "
+              <div class='dropdown text-end'>
+                <a href='#' class='d-block link-body-emphasis text-decoration-none dropdown-toggle'
+                  data-bs-toggle='dropdown' aria-expanded='false'>
+                  <img src='images/blank-profile-picture.jpg' alt='' width='32' height='32' class='rounded-circle'>
+                </a>
+                <ul class='dropdown-menu text-small'>
+                  <li><a class='dropdown-item' href='profile.php'>Profile</a></li>
+                  <li><hr class='dropdown-divider'></li>";
+
+              if (isset($_SESSION['userName']) && $_SESSION['userName'] == 'admin') {
+                echo "<li><a class='dropdown-item' href='../AdminPanel'>Admin Panel</a></li>";
+              }
+
+          echo 
+            "
+                  <li><a class='dropdown-item' href='logout.php'>Sign out</a></li>
+                </ul>
+              </div>
+            ";
         } else {
           echo "<div>
                   <a href='login.php' class='btn btn-outline-primary'>Log In</a>
                   <a href='register.php' class='btn btn-primary ms-2 ms-lg-3'>Sign Up</a>
-                </div>" ;
+                </div>";
         }
-        
+
         ?>
       </div>
     </div>

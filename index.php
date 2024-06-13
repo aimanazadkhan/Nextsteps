@@ -73,13 +73,8 @@ session_start();
   </style>
 </head>
 
-
-
 <!-- navigation -->
-
-
 <?php include "header.php"; ?>
-
 <!-- /navigation -->
 
 <div class="modal applyLoanModal fade" id="applyLoan" tabindex="-1" aria-labelledby="applyLoanLabel" aria-hidden="true">

@@ -1,6 +1,3 @@
-<?php
-session_start();
-?>
 <header class="navigation bg-tertiary">
   <nav class="navbar navbar-expand-xl navbar-light text-center py-3">
     <div class="container">

@@ -93,6 +93,7 @@ session_start();
         .hidden {
             display: none;
         }
+
     </style>
 </head>
 
@@ -133,18 +134,20 @@ session_start();
                 <div class="mt-4 col col-lg-12">
                     <!-- Personal Information Card -->
                     <div class="card" id="pinfo" style="border-radius: .5rem;">
-                        <form action="">
+                        <form action="" method="POST">
                             <div class="row g-0">
                                 <div class="col-md-4 gradient-custom text-center text-white"
                                     style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
                                     <img src="images/blank-profile-picture.jpg" alt="Avatar" class="img-fluid my-5"
                                         style="width: 80px;" />
                                     <h5>Name</h5>
-                                    <i class="far fa-edit mb-5"></i>
                                 </div>
                                 <div class="col-md-8">
                                     <div class="card-body p-4">
-                                        <h6>Personal Information</h6>
+                                        <div class="d-flex justify-content-between mb-1">
+                                            <h6>Personal Information</h6>
+                                            <i class="far fa-edit editData"></i>
+                                        </div>
                                         <hr class="mt-0 mb-4">
                                         <div class="row pt-1">
                                             <div class="col-6 mb-3">
@@ -196,10 +199,10 @@ session_start();
                                                 <p class="text-muted">123 456 789</p>
                                             </div>
                                         </div>
-                                        <div class="d-flex justify-content-start">
-                                            <a href="#!"><i class="fab fa-facebook-f fa-lg me-3"></i></a>
-                                            <a href="#!"><i class="fab fa-twitter fa-lg me-3"></i></a>
-                                            <a href="#!"><i class="fab fa-instagram fa-lg"></i></a>
+                                        <div class="float-end mb-3">
+                                            <button type="submit" class="btn btn-primary saveBtn hidden">Save</button>
+                                            <button type="button"
+                                                class="btn btn-danger discardBtn hidden">Discard</button>
                                         </div>
                                     </div>
                                 </div>
@@ -209,18 +212,20 @@ session_start();
 
                     <!-- Work Experience Card -->
                     <div class="card hidden" id="wexp" style="border-radius: .5rem;">
-                        <form action="">
+                        <form action="" method="POST">
                             <div class="row g-0">
                                 <div class="col-md-4 gradient-custom text-center text-white"
                                     style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
                                     <img src="images/blank-profile-picture.jpg" alt="Avatar" class="img-fluid my-5"
                                         style="width: 80px;" />
                                     <h5>Name</h5>
-                                    <i class="far fa-edit mb-5"></i>
                                 </div>
                                 <div class="col-md-8">
                                     <div class="card-body p-4">
-                                        <h6>Work Experience</h6>
+                                        <div class="d-flex justify-content-between mb-1">
+                                            <h6>Work Experience</h6>
+                                            <i class="far fa-edit editData"></i>
+                                        </div>
                                         <hr class="mt-0 mb-4">
                                         <div class="row pt-1">
                                             <div class="col-6 mb-3">
@@ -272,10 +277,10 @@ session_start();
                                                 <p class="text-muted">123 456 789</p>
                                             </div>
                                         </div>
-                                        <div class="d-flex justify-content-start">
-                                            <a href="#!"><i class="fab fa-facebook-f fa-lg me-3"></i></a>
-                                            <a href="#!"><i class="fab fa-twitter fa-lg me-3"></i></a>
-                                            <a href="#!"><i class="fab fa-instagram fa-lg"></i></a>
+                                        <div class="float-end mb-3">
+                                            <button type="submit" class="btn btn-primary saveBtn hidden">Save</button>
+                                            <button type="button"
+                                                class="btn btn-danger discardBtn hidden">Discard</button>
                                         </div>
                                     </div>
                                 </div>
@@ -285,18 +290,20 @@ session_start();
 
                     <!-- Educational Qualification Card -->
                     <div class="card hidden" id="equalif" style="border-radius: .5rem;">
-                        <form action="">
+                        <form action="" method="POST">
                             <div class="row g-0">
                                 <div class="col-md-4 gradient-custom text-center text-white"
                                     style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
                                     <img src="images/blank-profile-picture.jpg" alt="Avatar" class="img-fluid my-5"
                                         style="width: 80px;" />
                                     <h5>Name</h5>
-                                    <i class="far fa-edit mb-5"></i>
                                 </div>
                                 <div class="col-md-8">
                                     <div class="card-body p-4">
-                                        <h6>Educational Qualification</h6>
+                                        <div class="d-flex justify-content-between mb-1">
+                                            <h6>Academic Qualification</h6>
+                                            <i class="far fa-edit editData"></i>
+                                        </div>
                                         <hr class="mt-0 mb-4">
                                         <div class="row pt-1">
                                             <div class="col-6 mb-3">
@@ -348,10 +355,10 @@ session_start();
                                                 <p class="text-muted">123 456 789</p>
                                             </div>
                                         </div>
-                                        <div class="d-flex justify-content-start">
-                                            <a href="#!"><i class="fab fa-facebook-f fa-lg me-3"></i></a>
-                                            <a href="#!"><i class="fab fa-twitter fa-lg me-3"></i></a>
-                                            <a href="#!"><i class="fab fa-instagram fa-lg"></i></a>
+                                        <div class="float-end mb-3">
+                                            <button type="submit" class="btn btn-primary saveBtn hidden">Save</button>
+                                            <button type="button"
+                                                class="btn btn-danger discardBtn hidden">Discard</button>
                                         </div>
                                     </div>
                                 </div>
@@ -365,6 +372,7 @@ session_start();
 
     <script>
         $(document).ready(function () {
+            // NavBar Card Toggle
             $('.nav-link').click(function (e) {
                 e.preventDefault();
                 var targetCard = $(this).attr('href').substring(1);
@@ -380,6 +388,32 @@ session_start();
                                 });
                         });
                 }
+            });
+
+            // Edit/Discard in the form
+            $('.editData').click(function () {
+                var cardBody = $(this).closest('.card-body');
+                cardBody.find('p.text-muted').each(function () {
+                    var value = $(this).text();
+                    var input = $('<input>').attr({
+                        type: 'text',
+                        class: 'form-control mb-3',
+                        value: value
+                    });
+                    $(this).replaceWith(input);
+                });
+                cardBody.find('.saveBtn, .discardBtn').removeClass('d-none').addClass('d-inline-block');
+                $(this).removeClass('d-inline-block').addClass('d-none');
+            });
+
+            $('.discardBtn').click(function () {
+                var card = $(this).closest('.card');
+                card.find('input[type="text"]').each(function () {
+                    var text = $(this).val();
+                    $(this).replaceWith('<p class="text-muted">' + text + '</p>');
+                });
+                card.find('.saveBtn, .discardBtn').removeClass('d-inline-block').addClass('d-none');
+                card.find('.editData').removeClass('d-none').addClass('d-inline-block');
             });
         });
     </script>

@@ -11,7 +11,7 @@ if (isset($_POST['btn_signIn'])) {
     if ($log_user_email === 'admin' && $log_password === 'admin') {
         session_start();
         $_SESSION['user'] = $log_user_email;
-        echo "<script>location.href='../AdminPanel/'</script>";
+        echo "<script>location.href='../Admin/'</script>";
     } else if (mysqli_num_rows($result) > 0) {
         session_start();
         $_SESSION['user'] = $log_user_email;

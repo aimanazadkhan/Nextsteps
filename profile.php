@@ -14,7 +14,13 @@ session_start();
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <!-- Fontawesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
+        .animate__animated {
+            --animate-duration: 0.4s;
+        }
+
         .gradient-custom {
             background: linear-gradient(to right bottom, rgba(30, 58, 138, 1), rgba(38, 76, 153, 1));
         }
@@ -39,7 +45,7 @@ session_start();
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(to top left, rgba(180, 200, 230, 1), rgba(200, 220, 250, 1));
+            background: linear-gradient(to top left, rgba(30, 60, 100, 1), rgba(50, 80, 130, 1));
             z-index: -1;
             transform: scaleX(0);
             transform-origin: bottom right;
@@ -49,6 +55,10 @@ session_start();
         .nav-item:hover .nav-link::before {
             transform: scaleX(1);
             transform-origin: bottom right;
+        }
+
+        .nav-item:hover .nav-link {
+            color: white !important;
         }
 
         /* Fade animations */
@@ -94,21 +104,21 @@ session_start();
                 <div class="container-fluid justify-content-center">
                     <ul class="navbar-nav justify-content-evenly w-100">
                         <li class="nav-item" style="flex: 1;">
-                            <a class="nav-link text-center d-block pt-3" href="#">
+                            <a class="nav-link text-center d-block pt-3" href="#pinfo">
                                 Personal Information<br>
                                 <p class="text-success">Complete</p>
                             </a>
                         </li>
                         <div class="vr"></div>
                         <li class="nav-item" style="flex: 1;">
-                            <a class="nav-link text-center d-block pt-3" href="#">
+                            <a class="nav-link text-center d-block pt-3" href="#equalif">
                                 Academic Qualification<br>
                                 <p class="text-success">Complete</p>
                             </a>
                         </li>
                         <div class="vr"></div>
                         <li class="nav-item" style="flex: 1;">
-                            <a class="nav-link text-center d-block pt-3" href="#">
+                            <a class="nav-link text-center d-block pt-3" href="#wexp">
                                 Work Experience<br>
                                 <p class="text-success">Complete</p>
                             </a>
@@ -123,224 +133,230 @@ session_start();
                 <div class="mt-4 col col-lg-12">
                     <!-- Personal Information Card -->
                     <div class="card" id="pinfo" style="border-radius: .5rem;">
-                        <div class="row g-0">
-                            <div class="col-md-4 gradient-custom text-center text-white"
-                                style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
-                                <img src="images/blank-profile-picture.jpg" alt="Avatar" class="img-fluid my-5"
-                                    style="width: 80px;" />
-                                <h5>Name</h5>
-                                <i class="far fa-edit mb-5"></i>
-                            </div>
-                            <div class="col-md-8">
-                                <div class="card-body p-4">
-                                    <h6>Personal Information</h6>
-                                    <hr class="mt-0 mb-4">
-                                    <div class="row pt-1">
-                                        <div class="col-6 mb-3">
-                                            <h6>First Name</h6>
-                                            <p class="text-muted">info@example.com</p>
+                        <form action="">
+                            <div class="row g-0">
+                                <div class="col-md-4 gradient-custom text-center text-white"
+                                    style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
+                                    <img src="images/blank-profile-picture.jpg" alt="Avatar" class="img-fluid my-5"
+                                        style="width: 80px;" />
+                                    <h5>Name</h5>
+                                    <i class="far fa-edit mb-5"></i>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body p-4">
+                                        <h6>Personal Information</h6>
+                                        <hr class="mt-0 mb-4">
+                                        <div class="row pt-1">
+                                            <div class="col-6 mb-3">
+                                                <h6>First Name</h6>
+                                                <p class="text-muted">info@example.com</p>
+                                            </div>
+                                            <div class="col-6 mb-3">
+                                                <h6>Last Name</h6>
+                                                <p class="text-muted">123 456 789</p>
+                                            </div>
                                         </div>
-                                        <div class="col-6 mb-3">
-                                            <h6>Last Name</h6>
-                                            <p class="text-muted">123 456 789</p>
+                                        <div class="row pt-1">
+                                            <div class="col-6 mb-3">
+                                                <h6>Email</h6>
+                                                <p class="text-muted">info@example.com</p>
+                                            </div>
+                                            <div class="col-6 mb-3">
+                                                <h6>Phone Number</h6>
+                                                <p class="text-muted">123 456 789</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="row pt-1">
-                                        <div class="col-6 mb-3">
-                                            <h6>Email</h6>
-                                            <p class="text-muted">info@example.com</p>
+                                        <div class="row pt-1">
+                                            <div class="col-6 mb-3">
+                                                <h6>Date of Birth</h6>
+                                                <p class="text-muted">info@example.com</p>
+                                            </div>
+                                            <div class="col-6 mb-3">
+                                                <h6>Gender</h6>
+                                                <p class="text-muted">123 456 789</p>
+                                            </div>
                                         </div>
-                                        <div class="col-6 mb-3">
-                                            <h6>Phone Number</h6>
-                                            <p class="text-muted">123 456 789</p>
+                                        <div class="row pt-1">
+                                            <div class="col-6 mb-3">
+                                                <h6>Martial Status</h6>
+                                                <p class="text-muted">info@example.com</p>
+                                            </div>
+                                            <div class="col-6 mb-3">
+                                                <h6>Address</h6>
+                                                <p class="text-muted">123 456 789</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="row pt-1">
-                                        <div class="col-6 mb-3">
-                                            <h6>Date of Birth</h6>
-                                            <p class="text-muted">info@example.com</p>
+                                        <div class="row pt-1">
+                                            <div class="col-6 mb-3">
+                                                <h6>Country</h6>
+                                                <p class="text-muted">info@example.com</p>
+                                            </div>
+                                            <div class="col-6 mb-3">
+                                                <h6>Gender</h6>
+                                                <p class="text-muted">123 456 789</p>
+                                            </div>
                                         </div>
-                                        <div class="col-6 mb-3">
-                                            <h6>Gender</h6>
-                                            <p class="text-muted">123 456 789</p>
+                                        <div class="d-flex justify-content-start">
+                                            <a href="#!"><i class="fab fa-facebook-f fa-lg me-3"></i></a>
+                                            <a href="#!"><i class="fab fa-twitter fa-lg me-3"></i></a>
+                                            <a href="#!"><i class="fab fa-instagram fa-lg"></i></a>
                                         </div>
-                                    </div>
-                                    <div class="row pt-1">
-                                        <div class="col-6 mb-3">
-                                            <h6>Martial Status</h6>
-                                            <p class="text-muted">info@example.com</p>
-                                        </div>
-                                        <div class="col-6 mb-3">
-                                            <h6>Address</h6>
-                                            <p class="text-muted">123 456 789</p>
-                                        </div>
-                                    </div>
-                                    <div class="row pt-1">
-                                        <div class="col-6 mb-3">
-                                            <h6>Country</h6>
-                                            <p class="text-muted">info@example.com</p>
-                                        </div>
-                                        <div class="col-6 mb-3">
-                                            <h6>Gender</h6>
-                                            <p class="text-muted">123 456 789</p>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-start">
-                                        <a href="#!"><i class="fab fa-facebook-f fa-lg me-3"></i></a>
-                                        <a href="#!"><i class="fab fa-twitter fa-lg me-3"></i></a>
-                                        <a href="#!"><i class="fab fa-instagram fa-lg"></i></a>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
 
                     <!-- Work Experience Card -->
                     <div class="card hidden" id="wexp" style="border-radius: .5rem;">
-                        <div class="row g-0">
-                            <div class="col-md-4 gradient-custom text-center text-white"
-                                style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
-                                <img src="images/blank-profile-picture.jpg" alt="Avatar" class="img-fluid my-5"
-                                    style="width: 80px;" />
-                                <h5>Name</h5>
-                                <i class="far fa-edit mb-5"></i>
-                            </div>
-                            <div class="col-md-8">
-                                <div class="card-body p-4">
-                                    <h6>Work Experience</h6>
-                                    <hr class="mt-0 mb-4">
-                                    <div class="row pt-1">
-                                        <div class="col-6 mb-3">
-                                            <h6>First Name</h6>
-                                            <p class="text-muted">info@example.com</p>
+                        <form action="">
+                            <div class="row g-0">
+                                <div class="col-md-4 gradient-custom text-center text-white"
+                                    style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
+                                    <img src="images/blank-profile-picture.jpg" alt="Avatar" class="img-fluid my-5"
+                                        style="width: 80px;" />
+                                    <h5>Name</h5>
+                                    <i class="far fa-edit mb-5"></i>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body p-4">
+                                        <h6>Work Experience</h6>
+                                        <hr class="mt-0 mb-4">
+                                        <div class="row pt-1">
+                                            <div class="col-6 mb-3">
+                                                <h6>First Name</h6>
+                                                <p class="text-muted">info@example.com</p>
+                                            </div>
+                                            <div class="col-6 mb-3">
+                                                <h6>Last Name</h6>
+                                                <p class="text-muted">123 456 789</p>
+                                            </div>
                                         </div>
-                                        <div class="col-6 mb-3">
-                                            <h6>Last Name</h6>
-                                            <p class="text-muted">123 456 789</p>
+                                        <div class="row pt-1">
+                                            <div class="col-6 mb-3">
+                                                <h6>Email</h6>
+                                                <p class="text-muted">info@example.com</p>
+                                            </div>
+                                            <div class="col-6 mb-3">
+                                                <h6>Phone Number</h6>
+                                                <p class="text-muted">123 456 789</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="row pt-1">
-                                        <div class="col-6 mb-3">
-                                            <h6>Email</h6>
-                                            <p class="text-muted">info@example.com</p>
+                                        <div class="row pt-1">
+                                            <div class="col-6 mb-3">
+                                                <h6>Date of Birth</h6>
+                                                <p class="text-muted">info@example.com</p>
+                                            </div>
+                                            <div class="col-6 mb-3">
+                                                <h6>Gender</h6>
+                                                <p class="text-muted">123 456 789</p>
+                                            </div>
                                         </div>
-                                        <div class="col-6 mb-3">
-                                            <h6>Phone Number</h6>
-                                            <p class="text-muted">123 456 789</p>
+                                        <div class="row pt-1">
+                                            <div class="col-6 mb-3">
+                                                <h6>Martial Status</h6>
+                                                <p class="text-muted">info@example.com</p>
+                                            </div>
+                                            <div class="col-6 mb-3">
+                                                <h6>Address</h6>
+                                                <p class="text-muted">123 456 789</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="row pt-1">
-                                        <div class="col-6 mb-3">
-                                            <h6>Date of Birth</h6>
-                                            <p class="text-muted">info@example.com</p>
+                                        <div class="row pt-1">
+                                            <div class="col-6 mb-3">
+                                                <h6>Country</h6>
+                                                <p class="text-muted">info@example.com</p>
+                                            </div>
+                                            <div class="col-6 mb-3">
+                                                <h6>Gender</h6>
+                                                <p class="text-muted">123 456 789</p>
+                                            </div>
                                         </div>
-                                        <div class="col-6 mb-3">
-                                            <h6>Gender</h6>
-                                            <p class="text-muted">123 456 789</p>
+                                        <div class="d-flex justify-content-start">
+                                            <a href="#!"><i class="fab fa-facebook-f fa-lg me-3"></i></a>
+                                            <a href="#!"><i class="fab fa-twitter fa-lg me-3"></i></a>
+                                            <a href="#!"><i class="fab fa-instagram fa-lg"></i></a>
                                         </div>
-                                    </div>
-                                    <div class="row pt-1">
-                                        <div class="col-6 mb-3">
-                                            <h6>Martial Status</h6>
-                                            <p class="text-muted">info@example.com</p>
-                                        </div>
-                                        <div class="col-6 mb-3">
-                                            <h6>Address</h6>
-                                            <p class="text-muted">123 456 789</p>
-                                        </div>
-                                    </div>
-                                    <div class="row pt-1">
-                                        <div class="col-6 mb-3">
-                                            <h6>Country</h6>
-                                            <p class="text-muted">info@example.com</p>
-                                        </div>
-                                        <div class="col-6 mb-3">
-                                            <h6>Gender</h6>
-                                            <p class="text-muted">123 456 789</p>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-start">
-                                        <a href="#!"><i class="fab fa-facebook-f fa-lg me-3"></i></a>
-                                        <a href="#!"><i class="fab fa-twitter fa-lg me-3"></i></a>
-                                        <a href="#!"><i class="fab fa-instagram fa-lg"></i></a>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
 
                     <!-- Educational Qualification Card -->
                     <div class="card hidden" id="equalif" style="border-radius: .5rem;">
-                        <div class="row g-0">
-                            <div class="col-md-4 gradient-custom text-center text-white"
-                                style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
-                                <img src="images/blank-profile-picture.jpg" alt="Avatar" class="img-fluid my-5"
-                                    style="width: 80px;" />
-                                <h5>Name</h5>
-                                <i class="far fa-edit mb-5"></i>
-                            </div>
-                            <div class="col-md-8">
-                                <div class="card-body p-4">
-                                    <h6>Educational Qualification</h6>
-                                    <hr class="mt-0 mb-4">
-                                    <div class="row pt-1">
-                                        <div class="col-6 mb-3">
-                                            <h6>First Name</h6>
-                                            <p class="text-muted">info@example.com</p>
+                        <form action="">
+                            <div class="row g-0">
+                                <div class="col-md-4 gradient-custom text-center text-white"
+                                    style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
+                                    <img src="images/blank-profile-picture.jpg" alt="Avatar" class="img-fluid my-5"
+                                        style="width: 80px;" />
+                                    <h5>Name</h5>
+                                    <i class="far fa-edit mb-5"></i>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body p-4">
+                                        <h6>Educational Qualification</h6>
+                                        <hr class="mt-0 mb-4">
+                                        <div class="row pt-1">
+                                            <div class="col-6 mb-3">
+                                                <h6>First Name</h6>
+                                                <p class="text-muted">info@example.com</p>
+                                            </div>
+                                            <div class="col-6 mb-3">
+                                                <h6>Last Name</h6>
+                                                <p class="text-muted">123 456 789</p>
+                                            </div>
                                         </div>
-                                        <div class="col-6 mb-3">
-                                            <h6>Last Name</h6>
-                                            <p class="text-muted">123 456 789</p>
+                                        <div class="row pt-1">
+                                            <div class="col-6 mb-3">
+                                                <h6>Email</h6>
+                                                <p class="text-muted">info@example.com</p>
+                                            </div>
+                                            <div class="col-6 mb-3">
+                                                <h6>Phone Number</h6>
+                                                <p class="text-muted">123 456 789</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="row pt-1">
-                                        <div class="col-6 mb-3">
-                                            <h6>Email</h6>
-                                            <p class="text-muted">info@example.com</p>
+                                        <div class="row pt-1">
+                                            <div class="col-6 mb-3">
+                                                <h6>Date of Birth</h6>
+                                                <p class="text-muted">info@example.com</p>
+                                            </div>
+                                            <div class="col-6 mb-3">
+                                                <h6>Gender</h6>
+                                                <p class="text-muted">123 456 789</p>
+                                            </div>
                                         </div>
-                                        <div class="col-6 mb-3">
-                                            <h6>Phone Number</h6>
-                                            <p class="text-muted">123 456 789</p>
+                                        <div class="row pt-1">
+                                            <div class="col-6 mb-3">
+                                                <h6>Martial Status</h6>
+                                                <p class="text-muted">info@example.com</p>
+                                            </div>
+                                            <div class="col-6 mb-3">
+                                                <h6>Address</h6>
+                                                <p class="text-muted">123 456 789</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="row pt-1">
-                                        <div class="col-6 mb-3">
-                                            <h6>Date of Birth</h6>
-                                            <p class="text-muted">info@example.com</p>
+                                        <div class="row pt-1">
+                                            <div class="col-6 mb-3">
+                                                <h6>Country</h6>
+                                                <p class="text-muted">info@example.com</p>
+                                            </div>
+                                            <div class="col-6 mb-3">
+                                                <h6>Gender</h6>
+                                                <p class="text-muted">123 456 789</p>
+                                            </div>
                                         </div>
-                                        <div class="col-6 mb-3">
-                                            <h6>Gender</h6>
-                                            <p class="text-muted">123 456 789</p>
+                                        <div class="d-flex justify-content-start">
+                                            <a href="#!"><i class="fab fa-facebook-f fa-lg me-3"></i></a>
+                                            <a href="#!"><i class="fab fa-twitter fa-lg me-3"></i></a>
+                                            <a href="#!"><i class="fab fa-instagram fa-lg"></i></a>
                                         </div>
-                                    </div>
-                                    <div class="row pt-1">
-                                        <div class="col-6 mb-3">
-                                            <h6>Martial Status</h6>
-                                            <p class="text-muted">info@example.com</p>
-                                        </div>
-                                        <div class="col-6 mb-3">
-                                            <h6>Address</h6>
-                                            <p class="text-muted">123 456 789</p>
-                                        </div>
-                                    </div>
-                                    <div class="row pt-1">
-                                        <div class="col-6 mb-3">
-                                            <h6>Country</h6>
-                                            <p class="text-muted">info@example.com</p>
-                                        </div>
-                                        <div class="col-6 mb-3">
-                                            <h6>Gender</h6>
-                                            <p class="text-muted">123 456 789</p>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-start">
-                                        <a href="#!"><i class="fab fa-facebook-f fa-lg me-3"></i></a>
-                                        <a href="#!"><i class="fab fa-twitter fa-lg me-3"></i></a>
-                                        <a href="#!"><i class="fab fa-instagram fa-lg"></i></a>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -348,62 +364,25 @@ session_start();
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', (event) => {
-            const pinfoCard = document.getElementById('pinfo');
-            const wexpCard = document.getElementById('wexp');
-            const equalifCard = document.getElementById('equalif');
+        $(document).ready(function () {
+            $('.nav-link').click(function (e) {
+                e.preventDefault();
+                var targetCard = $(this).attr('href').substring(1);
+                var currentCard = $('.card:visible');
 
-            const navItems = document.querySelectorAll('.nav-item');
-
-            navItems.forEach(navItem => {
-                navItem.addEventListener('click', (e) => {
-                    const navLink = e.target.closest('.nav-link');
-                    if (navLink.textContent.includes('Work Experience')) {
-                        pinfoCard.classList.add('fade-out');
-                        setTimeout(() => {
-                            pinfoCard.style.display = 'none';
-                            equalifCard.style.display = 'none';
-                            wexpCard.style.display = 'block';
-                            wexpCard.classList.add('fade-in');
-                            setTimeout(() => {
-                                pinfoCard.classList.remove('fade-out');
-                                wexpCard.classList.remove('fade-in');
-                                equalifCard.classList.remove('fade-out');
-                            }, 200);
-                        }, 200);
-                    } else if (navLink.textContent.includes('Personal Information')) {
-                        wexpCard.classList.add('fade-out');
-                        setTimeout(() => {
-                            wexpCard.style.display = 'none';
-                            equalifCard.style.display = 'none';
-                            pinfoCard.style.display = 'block';
-                            pinfoCard.classList.add('fade-in');
-                            setTimeout(() => {
-                                wexpCard.classList.remove('fade-out');
-                                pinfoCard.classList.remove('fade-in');
-                                equalifCard.classList.remove('fade-out');
-                            }, 200);
-                        }, 200);
-                    } else if (navLink.textContent.includes('Academic Qualification')) {
-                        equalifCard.classList.add('fade-out');
-                        setTimeout(() => {
-                            equalifCard.style.display = 'block';
-                            pinfoCard.style.display = 'none';
-                            wexpCard.style.display = 'none';
-                            wexpCard.classList.add('fade-in');
-                            setTimeout(() => {
-                                equalifCard.classList.remove('fade-out');
-                                pinfoCard.classList.remove('fade-out');
-                                wexpCard.classList.remove('fade-in');
-                            }, 200);
-                        }, 200);
-                    }
-                });
+                if (currentCard.attr('id') !== targetCard) {
+                    currentCard.addClass('animate__animated animate__fadeOut')
+                        .one('animationend', function () {
+                            $(this).addClass('hidden').removeClass('animate__animated animate__fadeOut');
+                            $('#' + targetCard).removeClass('hidden').addClass('animate__animated animate__fadeIn')
+                                .one('animationend', function () {
+                                    $(this).removeClass('animate__animated animate__fadeIn');
+                                });
+                        });
+                }
             });
         });
     </script>
-
-
 </body>
 
 </html>

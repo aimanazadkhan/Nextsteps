@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <header class="navigation bg-tertiary">
   <nav class="navbar navbar-expand-xl navbar-light text-center py-3">
     <div class="container">
@@ -43,11 +46,11 @@
                   <li><a class='dropdown-item' href='profile.php'>Profile</a></li>
                   <li><hr class='dropdown-divider'></li>";
 
-              if (isset($_SESSION['userName']) && $_SESSION['userName'] == 'admin') {
-                echo "<li><a class='dropdown-item' href='../AdminPanel'>Admin Panel</a></li>";
-              }
+          if (isset($_SESSION['userName']) && $_SESSION['userName'] == 'admin') {
+            echo "<li><a class='dropdown-item' href='../AdminPanel'>Admin Panel</a></li>";
+          }
 
-          echo 
+          echo
             "
                   <li><a class='dropdown-item' href='logout.php'>Sign out</a></li>
                 </ul>

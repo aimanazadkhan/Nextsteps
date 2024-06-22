@@ -181,8 +181,8 @@ if (isset($_POST['pInfoSave'])) {
                                 <div class="col-md-4 gradient-custom text-center text-white d-flex justify-content-center align-items-center"
                                     style="height: auto;">
                                     <div>
-                                        <img src="User Photos/blank-profile-picture.jpg" alt="Avatar" class="img-fluid mb-4"
-                                            style="width: 10rem;" />
+                                        <img src="User Photos/blank-profile-picture.jpg" alt="Avatar"
+                                            class="img-fluid mb-4" style="width: 10rem;" />
                                         <h5><?php echo $user['firstname'] . " " . $user['lastname']; ?></h5>
                                     </div>
                                 </div>
@@ -197,14 +197,16 @@ if (isset($_POST['pInfoSave'])) {
                                             <div class="col-6 mb-3">
                                                 <h6>First Name</h6>
                                                 <p class="text-muted"><?php echo $user['firstname']; ?></p>
-                                                <input type="text" class="form-control mb-3 hidden" value="<?php echo $user['firstname']; ?>"
-                                                    name="first_name" pattern="[A-Za-z ]+" />
+                                                <input type="text" class="form-control mb-3 hidden"
+                                                    value="<?php echo $user['firstname']; ?>" name="first_name"
+                                                    pattern="[A-Za-z ]+" />
                                             </div>
                                             <div class="col-6 mb-3">
                                                 <h6>Last Name</h6>
                                                 <p class="text-muted"><?php echo $user['lastname']; ?></p>
-                                                <input type="text" class="form-control mb-3 hidden" value="<?php echo $user['lastname']; ?>"
-                                                    name="last_name" pattern="[A-Za-z]+" />
+                                                <input type="text" class="form-control mb-3 hidden"
+                                                    value="<?php echo $user['lastname']; ?>" name="last_name"
+                                                    pattern="[A-Za-z]+" />
                                             </div>
                                         </div>
                                         <div class="row pt-1">
@@ -212,21 +214,23 @@ if (isset($_POST['pInfoSave'])) {
                                                 <h6>Email</h6>
                                                 <p class="text-muted"><?php echo $user['email']; ?></p>
                                                 <input type="email" class="form-control mb-3 hidden"
-                                                    value="<?php echo $user['email']; ?>" name="email" disabled/>
+                                                    value="<?php echo $user['email']; ?>" name="email" disabled />
                                             </div>
                                             <div class="col-6 mb-3">
                                                 <h6>Phone Number</h6>
                                                 <p class="text-muted"><?php echo $user['phonenumber']; ?></p>
-                                                <input type="tel" class="form-control mb-3 hidden" value="<?php echo $user['phonenumber']; ?>"
-                                                    name="phone_number" pattern="^\d{9,}$" />
+                                                <input type="tel" class="form-control mb-3 hidden"
+                                                    value="<?php echo $user['phonenumber']; ?>" name="phone_number"
+                                                    pattern="^\d{9,}$" />
                                             </div>
                                         </div>
                                         <div class="row pt-1">
                                             <div class="col-6 mb-3">
                                                 <h6>Date of Birth</h6>
                                                 <p class="text-muted"><?php echo $user['dob']; ?></p>
-                                                <input type="date" class="form-control mb-3 hidden" value="<?php echo $user['dob']; ?>"
-                                                    name="date_of_birth" pattern="\d{4}-\d{2}-\d{2}" />
+                                                <input type="date" class="form-control mb-3 hidden"
+                                                    value="<?php echo $user['dob']; ?>" name="date_of_birth"
+                                                    pattern="\d{4}-\d{2}-\d{2}" />
                                             </div>
                                             <div class="col-6 mb-3">
                                                 <h6>Gender</h6>
@@ -251,50 +255,56 @@ if (isset($_POST['pInfoSave'])) {
                                             <div class="col-6 mb-3">
                                                 <h6>Nationality</h6>
                                                 <p class="text-muted"><?php echo $user['nation']; ?></p>
-                                                <input type="text" class="form-control mb-3 hidden" value="<?php echo $user['nation']; ?>"
-                                                    name="nationality" pattern="[A-Za-z]+" />
+                                                <input type="text" class="form-control mb-3 hidden"
+                                                    value="<?php echo $user['nation']; ?>" name="nationality"
+                                                    pattern="[A-Za-z]+" />
                                             </div>
                                         </div>
                                         <div class="row pt-1">
                                             <div class="col-6 mb-3">
                                                 <h6>Address</h6>
                                                 <p class="text-muted"><?php echo $user['address']; ?></p>
-                                                <input type="text" class="form-control mb-3 hidden" value="<?php echo $user['address']; ?>"
-                                                    name="address" />
+                                                <input type="text" class="form-control mb-3 hidden"
+                                                    value="<?php echo $user['address']; ?>" name="address" />
                                             </div>
                                             <div class="col-6 mb-3">
                                                 <h6>Postcode</h6>
                                                 <p class="text-muted"><?php echo $user['postcode']; ?></p>
-                                                <input type="number" class="form-control mb-3 hidden" value="<?php echo $user['postcode']; ?>"
-                                                    name="postcode" pattern="^\d+$" />
+                                                <input type="number" class="form-control mb-3 hidden"
+                                                    value="<?php echo $user['postcode']; ?>" name="postcode"
+                                                    pattern="^\d+$" />
                                             </div>
                                         </div>
                                         <div class="row pt-1">
                                             <div class="col-6 mb-3">
                                                 <h6>Passport Number</h6>
                                                 <p class="text-muted"><?php echo $user['passportnum']; ?></p>
-                                                <input type="number" class="form-control mb-3 hidden" value="<?php echo $user['passportnum']; ?>"
-                                                    name="passport_number" pattern="^[A-Z0-9]+$" />
+                                                <input type="number" class="form-control mb-3 hidden"
+                                                    value="<?php echo $user['passportnum']; ?>" name="passport_number"
+                                                    pattern="^[A-Z0-9]+$" />
                                             </div>
                                             <div class="col-6 mb-3">
                                                 <h6>Issue Country</h6>
                                                 <p class="text-muted"><?php echo $user['issuecountry']; ?></p>
-                                                <input type="text" class="form-control mb-3 hidden" value="<?php echo $user['issuecountry']; ?>"
-                                                    name="issue_country" pattern="[A-Za-z]+" />
+                                                <input type="text" class="form-control mb-3 hidden"
+                                                    value="<?php echo $user['issuecountry']; ?>" name="issue_country"
+                                                    pattern="[A-Za-z]+" />
                                             </div>
                                         </div>
                                         <div class="row pt-1">
                                             <div class="col-6 mb-3">
                                                 <h6>Issue Date</h6>
                                                 <p class="text-muted"><?php echo $user['issuedate']; ?></p>
-                                                <input type="date" class="form-control mb-3 hidden" value="<?php echo $user['issuedate']; ?>"
-                                                    name="issue_date" pattern="\d{4}-\d{2}-\d{2}" />
+                                                <input type="date" class="form-control mb-3 hidden"
+                                                    value="<?php echo $user['issuedate']; ?>" name="issue_date"
+                                                    pattern="\d{4}-\d{2}-\d{2}" />
                                             </div>
                                             <div class="col-6 mb-3">
                                                 <h6>Expiry Date</h6>
                                                 <p class="text-muted"><?php echo $user['expirydate']; ?></p>
-                                                <input type="date" class="form-control mb-3 hidden" value="<?php echo $user['expirydate']; ?>"
-                                                    name="expiry_date" pattern="\d{4}-\d{2}-\d{2}" />
+                                                <input type="date" class="form-control mb-3 hidden"
+                                                    value="<?php echo $user['expirydate']; ?>" name="expiry_date"
+                                                    pattern="\d{4}-\d{2}-\d{2}" />
                                             </div>
                                         </div>
                                         <div class="float-end mb-3">
@@ -309,70 +319,76 @@ if (isset($_POST['pInfoSave'])) {
                         </form>
                     </div>
 
-<!-- Work Experience Card -->
-<div class="card" id="work_experience" style="border-radius: .5rem;">
-    <form action="" method="POST">
-        <div class="row g-0">
-            <div class="col-md-4 gradient-custom text-center text-white d-flex justify-content-center align-items-center"
-                style="height: auto;">
-                <div>
-                    <img src="images/blank-profile-picture.jpg" alt="Avatar" class="img-fluid mb-4"
-                        style="width: 10rem;" />
-                    <h5>Work Experience</h5>
-                </div>
-            </div>
-            <div class="col-md-8">
-                <div class="card-body p-4">
-                    <div class="d-flex justify-content-between mb-1">
-                        <h6>Work Experience</h6>
-                        <i class="far fa-edit editWork"></i>
+                    <!-- Work Experience Card -->
+                    <div class="card" id="work_experience" style="border-radius: .5rem;">
+                        <form action="" method="POST">
+                            <div class="row g-0">
+                                <div class="col-md-4 gradient-custom text-center text-white d-flex justify-content-center align-items-center"
+                                    style="height: auto;">
+                                    <div>
+                                        <img src="images/blank-profile-picture.jpg" alt="Avatar" class="img-fluid mb-4"
+                                            style="width: 10rem;" />
+                                        <h5>Work Experience</h5>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body p-4">
+                                        <div class="d-flex justify-content-between mb-1">
+                                            <h6>Work Experience</h6>
+                                            <i class="far fa-edit editWork"></i>
+                                        </div>
+                                        <hr class="mt-0 mb-4">
+                                        <div class="row pt-1">
+                                            <div class="col-6 mb-3">
+                                                <h6>Company Name</h6>
+                                                <p class="text-muted"><?php echo $work['company_name']; ?></p>
+                                                <input type="text" class="form-control mb-3 hidden"
+                                                    value="<?php echo $work['company_name']; ?>" name="company_name"
+                                                    pattern="[A-Za-z\s]+" />
+                                            </div>
+                                            <div class="col-6 mb-3">
+                                                <h6>Job Title</h6>
+                                                <p class="text-muted"><?php echo $work['job_title']; ?></p>
+                                                <input type="text" class="form-control mb-3 hidden"
+                                                    value="<?php echo $work['job_title']; ?>" name="job_title"
+                                                    pattern="[A-Za-z\s]+" />
+                                            </div>
+                                        </div>
+                                        <div class="row pt-1">
+                                            <div class="col-6 mb-3">
+                                                <h6>Start Date</h6>
+                                                <p class="text-muted"><?php echo $work['start_date']; ?></p>
+                                                <input type="date" class="form-control mb-3 hidden"
+                                                    value="<?php echo $work['start_date']; ?>" name="start_date"
+                                                    pattern="\d{4}-\d{2}-\d{2}" />
+                                            </div>
+                                            <div class="col-6 mb-3">
+                                                <h6>End Date</h6>
+                                                <p class="text-muted"><?php echo $work['end_date']; ?></p>
+                                                <input type="date" class="form-control mb-3 hidden"
+                                                    value="<?php echo $work['end_date']; ?>" name="end_date"
+                                                    pattern="\d{4}-\d{2}-\d{2}" />
+                                            </div>
+                                        </div>
+                                        <div class="row pt-1">
+                                            <div class="col-6 mb-3">
+                                                <h6>Responsibilities</h6>
+                                                <p class="text-muted"><?php echo $work['responsibilities']; ?></p>
+                                                <textarea class="form-control mb-3 hidden" name="responsibilities"
+                                                    pattern="[\s\S]+"><?php echo $work['responsibilities']; ?></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="float-end mb-3">
+                                            <button type="submit" class="btn btn-primary saveWorkBtn hidden"
+                                                name="workSave">Save</button>
+                                            <button type="button"
+                                                class="btn btn-danger discardWorkBtn hidden">Discard</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                    <hr class="mt-0 mb-4">
-                    <div class="row pt-1">
-                        <div class="col-6 mb-3">
-                            <h6>Company Name</h6>
-                            <p class="text-muted"><?php echo $work['company_name']; ?></p>
-                            <input type="text" class="form-control mb-3 hidden" value="<?php echo $work['company_name']; ?>"
-                                name="company_name" pattern="[A-Za-z\s]+" />
-                        </div>
-                        <div class="col-6 mb-3">
-                            <h6>Job Title</h6>
-                            <p class="text-muted"><?php echo $work['job_title']; ?></p>
-                            <input type="text" class="form-control mb-3 hidden" value="<?php echo $work['job_title']; ?>"
-                                name="job_title" pattern="[A-Za-z\s]+" />
-                        </div>
-                    </div>
-                    <div class="row pt-1">
-                        <div class="col-6 mb-3">
-                            <h6>Start Date</h6>
-                            <p class="text-muted"><?php echo $work['start_date']; ?></p>
-                            <input type="date" class="form-control mb-3 hidden" value="<?php echo $work['start_date']; ?>"
-                                name="start_date" pattern="\d{4}-\d{2}-\d{2}" />
-                        </div>
-                        <div class="col-6 mb-3">
-                            <h6>End Date</h6>
-                            <p class="text-muted"><?php echo $work['end_date']; ?></p>
-                            <input type="date" class="form-control mb-3 hidden" value="<?php echo $work['end_date']; ?>"
-                                name="end_date" pattern="\d{4}-\d{2}-\d{2}" />
-                        </div>
-                    </div>
-                    <div class="row pt-1">
-                        <div class="col-6 mb-3">
-                            <h6>Responsibilities</h6>
-                            <p class="text-muted"><?php echo $work['responsibilities']; ?></p>
-                            <textarea class="form-control mb-3 hidden" name="responsibilities"
-                                pattern="[\s\S]+"><?php echo $work['responsibilities']; ?></textarea>
-                        </div>
-                    </div>
-                    <div class="float-end mb-3">
-                        <button type="submit" class="btn btn-primary saveWorkBtn hidden" name="workSave">Save</button>
-                        <button type="button" class="btn btn-danger discardWorkBtn hidden">Discard</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
-</div>
 
                     <!-- Educational Qualification Card -->
                     <div class="card hidden" id="equalif" style="border-radius: .5rem;">

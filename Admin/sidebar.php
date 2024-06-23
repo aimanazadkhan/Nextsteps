@@ -28,14 +28,14 @@
             <p class="ms-3 fs-5 fw-semibold">Admin Panel</p>
         </div>
     </div>
-    <!-- <div>
+    <div>
         <ul class="list-unstyled ps-0">
             <li class="mb-3">
                 <a href="index.php">
                     <div class="p-2">
                         <i class="fa-solid fa-house"></i>
                         <button class="btn btn-toggle rounded border-0 collapsed">
-                            <span>Home</span>
+                            <span>Dashboard</span>
                         </button>
                     </div>
                 </a>
@@ -104,7 +104,7 @@
             </li>
 
             <li class="" style="position: absolute; bottom: 0px; width: 13rem;">
-                <a href="../Authentication/logout.php" class="text-decoration-none">
+                <a href="../logout.php" class="text-decoration-none">
                     <button class="btn rounded border-0">
                         <p><i class="me-3 fa-solid fa-door-open"></i>Log Out</p>
                     </button>
@@ -112,7 +112,7 @@
             </li>
             <hr>
         </ul>
-    </div> -->
+    </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>

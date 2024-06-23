@@ -10,7 +10,6 @@ if (isset($_SESSION['user'])) {
 if (isset($_POST['pInfoSave'])) {
     $firstname = $_POST['first_name'];
     $lastname = $_POST['last_name'];
-    $email = $_POST['email'];
     $phonenumber = $_POST['phone_number'];
     $dob = $_POST['date_of_birth'];
     $gender = $_POST['gender'];
@@ -23,7 +22,6 @@ if (isset($_POST['pInfoSave'])) {
     $issuedate = $_POST['issue_date'];
     $expirydate = $_POST['expiry_date'];
 
-    // SQL update query
     $update_query = "UPDATE `users` SET 
         `firstname`='$firstname',`lastname`='$lastname',
         `phonenumber`='$phonenumber', `dob`='$dob',
@@ -33,15 +31,85 @@ if (isset($_POST['pInfoSave'])) {
         `issuecountry`='$issuecountry', `issuedate`='$issuedate',
         `expirydate`='$expirydate' WHERE email = '{$_SESSION['user']}'";
 
-    // Execute the query and check for errors
     if (mysqli_query($conn, $update_query)) {
-        echo "<script>alert('Information Updated Successfully!')</script>";
-        echo "<script>location.href='profile.php'</script>";
+        $_SESSION['alert'] = "Information Updated Successfully!";
+        echo '<script>';
+        echo 'setTimeout(function() {';
+        echo '  window.location.href = "profile.php";';
+        echo '}, 1000);';
+        echo '</script>';
     } else {
-        echo "<script>alert('Not Updated!')</script>";
-        echo "<script>location.href='profile.php'</script>";
+        $_SESSION['alert'] = "Failed to Update Information!";
+        echo '<script>';
+        echo 'setTimeout(function() {';
+        echo '  window.location.href = "profile.php";';
+        echo '}, 1000);'; 
+        echo '</script>';
     }
 }
+
+if (isset($_POST['aQualSave'])) {
+    $institution_name = $_POST['institution_name'];
+    $study_country = $_POST['study_country'];
+    $qualification = $_POST['qualification'];
+    $cgpa = $_POST['cgpa'];
+    $start_date = $_POST['start_date'];
+    $end_date = $_POST['end_date'];
+    $language = $_POST['language'];
+    $address = $_POST['address'];
+
+    $update_query = "UPDATE `users` SET 
+        `institutionname`='$institution_name', `studycountry`='$study_country', 
+        `qualification`='$qualification', `cgpa`='$cgpa', 
+        `startdate`='$start_date', `enddate`='$end_date', 
+        `language`='$language', `eduaddress`='$address' WHERE email = '{$_SESSION['user']}'";
+
+    if (mysqli_query($conn, $update_query)) {
+        $_SESSION['alert'] = "Information Updated Successfully!";
+        echo '<script>';
+        echo 'setTimeout(function() {';
+        echo '  window.location.href = "profile.php";';
+        echo '}, 1000);';
+        echo '</script>';
+    } else {
+        $_SESSION['alert'] = "Failed to Update Information!";
+        echo '<script>';
+        echo 'setTimeout(function() {';
+        echo '  window.location.href = "profile.php";';
+        echo '}, 1000);';
+        echo '</script>';
+    }
+}
+
+if (isset($_POST['workSave'])) {
+    $company_name = $_POST['company_name'];
+    $job_title = $_POST['job_title'];
+    $start_date = $_POST['start_date'];
+    $end_date = $_POST['end_date'];
+    $responsibilities = $_POST['responsibilities'];
+
+    $update_query = "UPDATE `users` SET 
+        `companyname`='$company_name', `jobtitle`='$job_title', 
+        `jobstartdate`='$start_date', `jobenddate`='$end_date', 
+        `jobresponsibilities`='$responsibilities' WHERE email = '{$_SESSION['user']}'";
+
+    if (mysqli_query($conn, $update_query)) {
+        $_SESSION['alert'] = "Information Updated Successfully!";
+        echo '<script>';
+        echo 'setTimeout(function() {';
+        echo '  window.location.href = "profile.php";';
+        echo '}, 1000);';
+        echo '</script>';
+    } else {
+        $_SESSION['alert'] = "Failed to Update Information!";
+        echo '<script>';
+        echo 'setTimeout(function() {';
+        echo '  window.location.href = "profile.php";';
+        echo '}, 1000);';
+        echo '</script>';
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -51,7 +119,6 @@ if (isset($_POST['pInfoSave'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile</title>
-    <!-- <link rel="stylesheet" href="css/style.css"> -->
     <link rel="stylesheet" href="css/next.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
@@ -59,6 +126,9 @@ if (isset($_POST['pInfoSave'])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
     <style>
         .animate__animated {
             --animate-duration: 0.4s;
@@ -170,6 +240,21 @@ if (isset($_POST['pInfoSave'])) {
                 </div>
             </nav>
         </section>
+
+        <!-- Example of displaying alert -->
+        <?php if (!empty($_SESSION['alert'])): ?>
+            <div class="animate__animated animate__bounceInDown"
+                style="position: absolute; top: 2rem; left: 40%; z-index: 99;">
+                <div class="alert alert-success alert-dismissible fade show w-100 text-center" role="alert">
+                    <?php echo $_SESSION['alert']; ?>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+
+        <?php 
+        unset($_SESSION['alert']);
+        endif; 
+        ?>
 
         <section class="vh-100">
             <div class="container h-100">
@@ -319,86 +404,15 @@ if (isset($_POST['pInfoSave'])) {
                         </form>
                     </div>
 
-                    <!-- Work Experience Card -->
-                    <div class="card" id="work_experience" style="border-radius: .5rem;">
-                        <form action="" method="POST">
-                            <div class="row g-0">
-                                <div class="col-md-4 gradient-custom text-center text-white d-flex justify-content-center align-items-center"
-                                    style="height: auto;">
-                                    <div>
-                                        <img src="images/blank-profile-picture.jpg" alt="Avatar" class="img-fluid mb-4"
-                                            style="width: 10rem;" />
-                                        <h5>Work Experience</h5>
-                                    </div>
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="card-body p-4">
-                                        <div class="d-flex justify-content-between mb-1">
-                                            <h6>Work Experience</h6>
-                                            <i class="far fa-edit editWork"></i>
-                                        </div>
-                                        <hr class="mt-0 mb-4">
-                                        <div class="row pt-1">
-                                            <div class="col-6 mb-3">
-                                                <h6>Company Name</h6>
-                                                <p class="text-muted"><?php echo $work['company_name']; ?></p>
-                                                <input type="text" class="form-control mb-3 hidden"
-                                                    value="<?php echo $work['company_name']; ?>" name="company_name"
-                                                    pattern="[A-Za-z\s]+" />
-                                            </div>
-                                            <div class="col-6 mb-3">
-                                                <h6>Job Title</h6>
-                                                <p class="text-muted"><?php echo $work['job_title']; ?></p>
-                                                <input type="text" class="form-control mb-3 hidden"
-                                                    value="<?php echo $work['job_title']; ?>" name="job_title"
-                                                    pattern="[A-Za-z\s]+" />
-                                            </div>
-                                        </div>
-                                        <div class="row pt-1">
-                                            <div class="col-6 mb-3">
-                                                <h6>Start Date</h6>
-                                                <p class="text-muted"><?php echo $work['start_date']; ?></p>
-                                                <input type="date" class="form-control mb-3 hidden"
-                                                    value="<?php echo $work['start_date']; ?>" name="start_date"
-                                                    pattern="\d{4}-\d{2}-\d{2}" />
-                                            </div>
-                                            <div class="col-6 mb-3">
-                                                <h6>End Date</h6>
-                                                <p class="text-muted"><?php echo $work['end_date']; ?></p>
-                                                <input type="date" class="form-control mb-3 hidden"
-                                                    value="<?php echo $work['end_date']; ?>" name="end_date"
-                                                    pattern="\d{4}-\d{2}-\d{2}" />
-                                            </div>
-                                        </div>
-                                        <div class="row pt-1">
-                                            <div class="col-6 mb-3">
-                                                <h6>Responsibilities</h6>
-                                                <p class="text-muted"><?php echo $work['responsibilities']; ?></p>
-                                                <textarea class="form-control mb-3 hidden" name="responsibilities"
-                                                    pattern="[\s\S]+"><?php echo $work['responsibilities']; ?></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="float-end mb-3">
-                                            <button type="submit" class="btn btn-primary saveWorkBtn hidden"
-                                                name="workSave">Save</button>
-                                            <button type="button"
-                                                class="btn btn-danger discardWorkBtn hidden">Discard</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-
-                    <!-- Educational Qualification Card -->
+                    <!-- Academic Qualification Card -->
                     <div class="card hidden" id="equalif" style="border-radius: .5rem;">
                         <form action="" method="POST">
                             <div class="row g-0">
                                 <div class="col-md-4 gradient-custom text-center text-white d-flex justify-content-center align-items-center"
                                     style="height: auto;">
                                     <div>
-                                        <img src="images/blank-profile-picture.jpg" alt="Avatar" class="img-fluid mb-4"
-                                            style="width: 10rem;" />
+                                        <img src="User Photos/blank-profile-picture.jpg" alt="Avatar"
+                                            class="img-fluid mb-4" style="width: 10rem;" />
                                         <h5>Full Name</h5>
                                     </div>
                                 </div>
@@ -412,45 +426,140 @@ if (isset($_POST['pInfoSave'])) {
                                         <div class="row pt-1">
                                             <div class="col-6 mb-3">
                                                 <h6>Name of the Institution</h6>
-                                                <p class="text-muted">info@example.com</p>
+                                                <p class="text-muted"><?php echo $user['institutionname']; ?></p>
+                                                <input type="text" class="form-control mb-3 hidden"
+                                                    value="<?php echo $user['institutionname']; ?>"
+                                                    name="institution_name" pattern="[A-Za-z ]+" />
                                             </div>
                                             <div class="col-6 mb-3">
                                                 <h6>Country of Study</h6>
-                                                <p class="text-muted">123 456 789</p>
+                                                <p class="text-muted"><?php echo $user['studycountry']; ?></p>
+                                                <input type="text" class="form-control mb-3 hidden"
+                                                    value="<?php echo $user['studycountry']; ?>" name="study_country"
+                                                    pattern="[A-Za-z]+" />
                                             </div>
                                         </div>
                                         <div class="row pt-1">
                                             <div class="col-6 mb-3">
                                                 <h6>Qualification Achieved</h6>
-                                                <p class="text-muted">info@example.com</p>
+                                                <p class="text-muted"><?php echo $user['qualification']; ?></p>
+                                                <input type="text" class="form-control mb-3 hidden"
+                                                    value="<?php echo $user['qualification']; ?>" name="qualification"
+                                                    pattern="[A-Za-z .]+" />
                                             </div>
                                             <div class="col-6 mb-3">
                                                 <h6>CGPA</h6>
-                                                <p class="text-muted">123 456 789</p>
+                                                <p class="text-muted"><?php echo $user['cgpa']; ?></p>
+                                                <input type="text" class="form-control mb-3 hidden"
+                                                    value="<?php echo $user['cgpa']; ?>" name="cgpa"
+                                                    pattern="[0-9.]{1,4}" />
                                             </div>
                                         </div>
                                         <div class="row pt-1">
                                             <div class="col-6 mb-3">
                                                 <h6>Start Date</h6>
-                                                <p class="text-muted">info@example.com</p>
+                                                <p class="text-muted"><?php echo $user['startdate']; ?></p>
+                                                <input type="date" class="form-control mb-3 hidden"
+                                                    value="<?php echo $user['startdate']; ?>" name="start_date"
+                                                    pattern="\d{4}-\d{2}-\d{2}" />
                                             </div>
                                             <div class="col-6 mb-3">
                                                 <h6>End Date</h6>
-                                                <p class="text-muted">123 456 789</p>
+                                                <p class="text-muted"><?php echo $user['enddate']; ?></p>
+                                                <input type="date" class="form-control mb-3 hidden"
+                                                    value="<?php echo $user['enddate']; ?>" name="end_date"
+                                                    pattern="\d{4}-\d{2}-\d{2}" />
                                             </div>
                                         </div>
                                         <div class="row pt-1">
                                             <div class="col-6 mb-3">
                                                 <h6>Primary Language</h6>
-                                                <p class="text-muted">info@example.com</p>
+                                                <p class="text-muted"><?php echo $user['language']; ?></p>
+                                                <input type="text" class="form-control mb-3 hidden"
+                                                    value="<?php echo $user['language']; ?>" name="language"
+                                                    pattern="[A-Za-z]+" />
                                             </div>
                                             <div class="col-6 mb-3">
                                                 <h6>Address</h6>
-                                                <p class="text-muted">123 456 789</p>
+                                                <p class="text-muted"><?php echo $user['eduaddress']; ?></p>
+                                                <input type="text" class="form-control mb-3 hidden"
+                                                    value="<?php echo $user['eduaddress']; ?>" name="address" />
                                             </div>
                                         </div>
                                         <div class="float-end mb-3">
-                                            <button type="submit" class="btn btn-primary saveBtn hidden">Save</button>
+                                            <button type="submit" class="btn btn-primary saveBtn hidden"
+                                                name="aQualSave">Save</button>
+                                            <button type="button"
+                                                class="btn btn-danger discardBtn hidden">Discard</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Work Experience Card -->
+                    <div class="card hidden" id="wexp" style="border-radius: .5rem;">
+                        <form action="" method="POST">
+                            <div class="row g-0">
+                                <div class="col-md-4 gradient-custom text-center text-white d-flex justify-content-center align-items-center"
+                                    style="height: auto;">
+                                    <div>
+                                        <img src="User Photos/blank-profile-picture.jpg" alt="Avatar"
+                                            class="img-fluid mb-4" style="width: 10rem;" />
+                                        <h5>Work Experience</h5>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body p-4">
+                                        <div class="d-flex justify-content-between mb-1">
+                                            <h6>Work Experience</h6>
+                                            <i class="far fa-edit editData"></i>
+                                        </div>
+                                        <hr class="mt-0 mb-4">
+                                        <div class="row pt-1">
+                                            <div class="col-6 mb-3">
+                                                <h6>Company Name</h6>
+                                                <p class="text-muted"><?php echo $user['companyname']; ?></p>
+                                                <input type="text" class="form-control mb-3 hidden"
+                                                    value="<?php echo $user['companyname']; ?>" name="company_name"
+                                                    pattern="[A-Za-z\s]+" />
+                                            </div>
+                                            <div class="col-6 mb-3">
+                                                <h6>Job Title</h6>
+                                                <p class="text-muted"><?php echo $user['jobtitle']; ?></p>
+                                                <input type="text" class="form-control mb-3 hidden"
+                                                    value="<?php echo $user['jobtitle']; ?>" name="job_title"
+                                                    pattern="[A-Za-z\s]+" />
+                                            </div>
+                                        </div>
+                                        <div class="row pt-1">
+                                            <div class="col-6 mb-3">
+                                                <h6>Start Date</h6>
+                                                <p class="text-muted"><?php echo $user['jobstartdate']; ?></p>
+                                                <input type="date" class="form-control mb-3 hidden"
+                                                    value="<?php echo $user['jobstartdate']; ?>" name="start_date"
+                                                    pattern="\d{4}-\d{2}-\d{2}" />
+                                            </div>
+                                            <div class="col-6 mb-3">
+                                                <h6>End Date</h6>
+                                                <p class="text-muted"><?php echo $user['jobenddate']; ?></p>
+                                                <input type="date" class="form-control mb-3 hidden"
+                                                    value="<?php echo $user['jobenddate']; ?>" name="end_date"
+                                                    pattern="\d{4}-\d{2}-\d{2}" />
+                                            </div>
+                                        </div>
+                                        <div class="row pt-1">
+                                            <div class="col-6 mb-3">
+                                                <h6>Responsibilities</h6>
+                                                <p class="text-muted"><?php echo $user['jobresponsibilities']; ?></p>
+                                                <textarea class="form-control mb-3 hidden" name="responsibilities"
+                                                    pattern="[\s\S]+"><?php echo $user['jobresponsibilities']; ?></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="float-end mb-3">
+                                            <button type="submit" class="btn btn-primary saveBtn hidden"
+                                                name="workSave">Save</button>
                                             <button type="button"
                                                 class="btn btn-danger discardBtn hidden">Discard</button>
                                         </div>
@@ -489,26 +598,21 @@ if (isset($_POST['pInfoSave'])) {
             // Edit/Discard in the form
             $('.editData').click(function () {
                 var cardBody = $(this).closest('.card-body');
-                cardBody.find('p.text-muted').each(function () {
-                    $(this).addClass('hidden');
-                    $(this).next('input, select').removeClass('hidden');
-                });
+                cardBody.find('p.text-muted').addClass('hidden');
+                cardBody.find('input, select, textarea').removeClass('hidden');
                 cardBody.find('.saveBtn, .discardBtn').removeClass('hidden');
                 $(this).addClass('hidden');
             });
 
             $('.discardBtn').click(function () {
                 var cardBody = $(this).closest('.card-body');
-                cardBody.find('input, select').each(function () {
-                    $(this).addClass('hidden');
-                    $(this).prev('p.text-muted').removeClass('hidden');
-                });
+                cardBody.find('input, select, textarea').addClass('hidden');
+                cardBody.find('p.text-muted').removeClass('hidden');
                 cardBody.find('.saveBtn, .discardBtn').addClass('hidden');
                 cardBody.find('.editData').removeClass('hidden');
             });
         });
     </script>
-
 </body>
 
 </html>

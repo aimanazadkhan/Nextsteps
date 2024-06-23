@@ -11,7 +11,7 @@ if (isset($_POST['btn_signIn'])) {
     if ($log_user_email === 'admin' && $log_password === 'admin') {
         session_start();
         $_SESSION['user'] = $log_user_email;
-        echo "<script>location.href='../Admin/'</script>";
+        echo "<script>location.href='Admin/'</script>";
     } else if (mysqli_num_rows($result) > 0) {
         session_start();
         $_SESSION['user'] = $log_user_email;
@@ -21,7 +21,7 @@ if (isset($_POST['btn_signIn'])) {
             WHERE email = '$log_user_email' AND BINARY `password` = '$log_password' AND verifystatus = '0'");
         if (mysqli_num_rows($result1) > 0) {
             echo "<script>alert('Your Account has not been verified yet. A verification link has been sent to your registered email address!')</script>";
-            echo "<script>location.href='login.php.php'</script>";
+            echo "<script>location.href='login.php'</script>";
         } else {
             echo "<script>alert('Invalid Username or Password.Please Try Again!')</script>";
             echo "<script>location.href='login.php'</script>";

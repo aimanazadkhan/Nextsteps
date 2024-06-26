@@ -1,3 +1,10 @@
+<?php
+include "../connection.php";
+// All Applications Data
+$applications = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM `applications`"));
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,6 +16,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Fontawesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Animate CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 </head>
 
 <body>
@@ -24,38 +33,38 @@
                     <!-- Cards -->
                     <div class="col-xl-3 col-lg-3 col-sm-5 p-0 card shadow">
                         <div class="p-3">
-                            <h5 class="">All Applications</h5>
-                            <p class="mt-5">10</p>
+                            <h5 class="animate__animated animate__fadeInUp">All Applications</h5>
+                            <p class="animate__animated animate__fadeInUp mt-5"><?php echo $applications ?></p>
                         </div>
                     </div>
                     <div class="col-xl-3 col-lg-3 col-sm-5 p-0 card shadow">
                         <div class="p-3">
-                            <h5 class="">Offers</h5>
-                            <p class="mt-5">10</p>
+                            <h5 class="animate__animated animate__fadeInUp">Offers</h5>
+                            <p class="animate__animated animate__fadeInUp mt-5">10</p>
                         </div>
                     </div>
                     <div class="col-xl-3 col-lg-3 col-sm-5 p-0 card shadow">
                         <div class="p-3">
-                            <h5 class="">Payment</h5>
-                            <p class="mt-5">10</p>
+                            <h5 class="animate__animated animate__fadeInUp">Payment</h5>
+                            <p class="animate__animated animate__fadeInUp mt-5">10</p>
                         </div>
                     </div>
                     <div class="col-xl-3 col-lg-3 col-sm-5 p-0 card shadow">
                         <div class="p-3">
-                            <h5 class="">Visas Recieved</h5>
-                            <p class="mt-5">10</p>
+                            <h5 class="animate__animated animate__fadeInUp">Visas Recieved</h5>
+                            <p class="animate__animated animate__fadeInUp mt-5">10</p>
                         </div>
                     </div>
                     <div class="col-xl-3 col-lg-3 col-sm-5 p-0 card shadow">
                         <div class="p-3">
-                            <h5 class="">Visas Rejected</h5>
-                            <p class="mt-5">10</p>
+                            <h5 class="animate__animated animate__fadeInUp">Visas Rejected</h5>
+                            <p class="animate__animated animate__fadeInUp mt-5">10</p>
                         </div>
                     </div>
                     <div class="col-xl-3 col-lg-3 col-sm-5 p-0 card shadow">
                         <div class="p-3">
-                            <h5 class="">Deferrals</h5>
-                            <p class="mt-5">10</p>
+                            <h5 class="animate__animated animate__fadeInUp">Deferrals</h5>
+                            <p class="animate__animated animate__fadeInUp mt-5">10</p>
                         </div>
                     </div>
                 </div>

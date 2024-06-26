@@ -1,5 +1,30 @@
 <?php
+session_start();
+
 include "connection.php";
+
+
+if(isset($_GET['id'])) {
+    if(isset($_SESSION['user'])) {
+        $uniID = $_GET['id'];
+        $userID = $_SESSION['user'];
+
+        $query = "INSERT INTO `applications`(`uniID`, `userEmail`) VALUES ('$uniID','$userID')";
+        if(mysqli_query($conn, $query)) {
+            echo "<script>alert('Application Applied Successfully!')</script>";
+            echo "<script>location.href='search.php'</script>";
+        } else {
+            echo "<script>alert('Apply Failed!')</script>";
+            echo "<script>location.href='search.php'</script>";
+        }
+
+    } else {
+        echo "<script>alert('User have to be logged in to Apply!!!')</script>";
+    }
+
+}
+
+
 
 // Initialize variables for filters
 $countries = $universities = $levels = $titles = [];
@@ -39,7 +64,7 @@ if ($title_result->num_rows > 0) {
 }
 
 // Fetch filtered results
-$query = "SELECT Country, University, CourseLevel, CourseTitle, NextStarting, TuitionFees, URL FROM search";
+$query = "SELECT ID, Country, University, CourseLevel, CourseTitle, NextStarting, TuitionFees, URL FROM search";
 
 // Handle AJAX request
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax'])) {
@@ -272,6 +297,10 @@ $result = $conn->query($query);
                                             <label>Tuition Fees</label>
                                             <p class='card-title text-success'><?php echo $row['TuitionFees']; ?></p>
                                             <button class='btn btn-primary' onclick='window.open("<?php echo $row['URL']; ?>", "_blank")'>Visit Website</button>
+                                            <a href="search.php?id=<?php echo $row['ID']; ?>">
+                                                <button class='ms-3 btn btn-primary'>Apply Now</button>
+                                            </a>
+                                            
                                         </div>
                                     </div>
                                 </div>

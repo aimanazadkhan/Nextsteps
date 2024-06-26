@@ -12,19 +12,21 @@
 </head>
 
 <body>
-    <div class="d-flex flex-nowrap">
-        <?php include "sidebar.php"; ?>
-        <div style="width: 100%">
-            <div class="d-flex">
-                <button class="btn open-btn"><i class="fa-solid fa-bars-staggered"></i></button>
-                <h3 class="mt-2 ms-1">Manage Application</h3>
+    <div class="container-fluid px-0">
+        <div class="d-flex flex-nowrap">
+            <?php include "sidebar.php"; ?>
+            <div style="width: 100%">
+                <div class="d-flex">
+                    <button class="btn open-btn"><i class="fa-solid fa-bars-staggered"></i></button>
+                    <h3 class="mt-2 ms-1">Manage Application</h3>
+                </div>
                 <div>
-                    
+
                 </div>
             </div>
         </div>
-
     </div>
+
 
 </body>
 

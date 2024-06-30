@@ -43,7 +43,7 @@ if (isset($_POST['pInfoSave'])) {
         echo '<script>';
         echo 'setTimeout(function() {';
         echo '  window.location.href = "profile.php";';
-        echo '}, 1000);'; 
+        echo '}, 1000);';
         echo '</script>';
     }
 }
@@ -125,10 +125,6 @@ if (isset($_POST['workSave'])) {
     <!-- Fontawesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
     <style>
         .animate__animated {
             --animate-duration: 0.4s;
@@ -251,9 +247,9 @@ if (isset($_POST['workSave'])) {
                 </div>
             </div>
 
-        <?php 
-        unset($_SESSION['alert']);
-        endif; 
+            <?php
+            unset($_SESSION['alert']);
+        endif;
         ?>
 
         <section class="vh-100">
@@ -413,7 +409,7 @@ if (isset($_POST['workSave'])) {
                                     <div>
                                         <img src="User Photos/blank-profile-picture.jpg" alt="Avatar"
                                             class="img-fluid mb-4" style="width: 10rem;" />
-                                        <h5>Full Name</h5>
+                                        <h5><?php echo $user['firstname'] . " " . $user['lastname']; ?></h5>
                                     </div>
                                 </div>
                                 <div class="col-md-8">
@@ -507,7 +503,7 @@ if (isset($_POST['workSave'])) {
                                     <div>
                                         <img src="User Photos/blank-profile-picture.jpg" alt="Avatar"
                                             class="img-fluid mb-4" style="width: 10rem;" />
-                                        <h5>Work Experience</h5>
+                                        <h5><?php echo $user['firstname'] . " " . $user['lastname']; ?></h5>
                                     </div>
                                 </div>
                                 <div class="col-md-8">
@@ -575,6 +571,10 @@ if (isset($_POST['workSave'])) {
 
     <?php include "footer.php"; ?>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
     <script>
         $(document).ready(function () {
             // NavBar Card Toggle

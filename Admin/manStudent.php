@@ -60,9 +60,9 @@ include "../connection.php";
                                                 <p class='mt-2'>" . $date . "<br>" . $time . "</p> 
                                             </td>
                                             <td class='p-0'>
-                                                <div>
-                                                    <div>
-                                                        <img src='" . $row[''] . "'>
+                                                <div class='d-flex'>
+                                                    <div class='me-3'>
+                                                        <img class='rounded-pill' src='../" . $row['profilePic'] . "' width='50rem'>
                                                     </div>
                                                     <div>
                                                         <p class='fw-bold mb-1'>" . $row['firstname'] . " " . $row['lastname'] . "</p>
@@ -75,7 +75,11 @@ include "../connection.php";
                                                 <p>" . $row['phonenumber'] . "</p>
                                             </td>
                                             <td>
-                                                <p>" . $row['assignedTo'] . "</p>
+                                                <select class='form-select'>
+                                                    <option value='dummy1' " . ($row['assignedTo'] == 'dummy1' ? 'selected' : '') . ">Dummy Name 1</option>
+                                                    <option value='dummy2' " . ($row['assignedTo'] == 'dummy2' ? 'selected' : '') . ">Dummy Name 2</option>
+                                                    <option value='dummy3' " . ($row['assignedTo'] == 'dummy3' ? 'selected' : '') . ">Dummy Name 3</option>
+                                                </select>
                                             </td>
                                             <td>
                                                 <p class='text-success'>" . $row['applied'] . " Applications Applied</p>

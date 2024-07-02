@@ -30,17 +30,19 @@ include "../connection.php";
                     <button class="btn open-btn"><i class="fa-solid fa-bars-staggered"></i></button>
                     <h3 class="mt-2 ms-1">Manage Application</h3>
                 </div>
-                <div class="ms-5 mt-5">
+                <div class="ms-5 mt-5" style="max-height: 90vh; overflow-y: auto;">
                     <!-- Table Section -->
-                    <div class="col-lg-10 px-5">
+                    <div class="col-lg-11 px-4">
                         <table id="dataTable"
                             class="table align-middle mb-0 bg-white border border-1 border-secondary-subtle rounded p-4 shadow-lg">
                             <thead class="bg-light">
                                 <tr>
                                     <th>ID</th>
-                                    <th>Name</th>
+                                    <th>Created On</th>
+                                    <th>Created By</th>
                                     <th>University</th>
                                     <th>Course</th>
+                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -51,27 +53,57 @@ include "../connection.php";
                                 while ($row = mysqli_fetch_array($applicationData)) {
                                     $user = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM `users` WHERE `email` = '{$row['userEmail']}'"));
                                     $uni = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM `search` WHERE `ID` = '{$row['uniID']}'"));
+                    
+                                    $datetime = $row['createdOn'];
+                                    list($date, $time) = explode(' ', $datetime);
                                     echo "
-                                <tr>
-                                    <td>
-                                        <p>" . $row['id'] . "</p>
-                                    </td>
-                                    <td>
-                                        <div>
-                                            <p class='fw-bold mb-1'>" . $user['firstname'] . " " . $user['lastname'] . " </p>
-                                            <p class='fw-bold text-muted mb-0'>" . $user['email'] . " </p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p>" . $uni['University'] . "</p>
-                                    </td>
-                                    <td>
-                                        <p>" . $uni['CourseTitle'] . "</p>
-                                    </td>
-                                    <td>
-                                        <p>" . "</p>
-                                    </td>
-                                </tr>";
+                                        <tr>
+                                            <td>
+                                                <p>" . $row['id'] . "</p>
+                                            </td>
+                                            <td>
+                                                <p class='mt-2'>" . $date . "<br>" . $time . "</p> 
+                                            </td>
+                                            <td class='p-0'>
+                                                <div>
+                                                    <p class='fw-bold mb-1'>" . $user['firstname'] . " " . $user['lastname'] . "</p>
+                                                    <p class='fw-bold text-muted mb-0'>" . $user['email'] . "</p>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <p>" . $uni['University'] . "</p>
+                                            </td>
+                                            <td>
+                                                <p>" . $uni['CourseTitle'] . "</p>
+                                            </td>
+                                            <td>";
+                                            
+                                        $status = $row['appStatus'];
+                                        $class = '';
+
+                                        switch ($status) {
+                                            case 'Pending':
+                                                $class = 'text-bg-warning';
+                                                break;
+                                            case 'Declined':
+                                                $class = 'text-bg-danger';
+                                                break;
+                                            case 'Success':
+                                                $class = 'text-bg-success';
+                                                break;
+                                            default:
+                                                $class = 'text-bg-warning';
+                                                break;
+                                        }
+
+                                        echo "<p class='badge $class'>" . $status . "</p>";
+
+                                        echo "
+                                            </td>
+                                            <td>
+                                                <p></p>
+                                            </td>
+                                        </tr>";
                                 }
                                 ?>
                             </tbody>
@@ -90,7 +122,10 @@ include "../connection.php";
     <script>
         // DataTable Initialization
         $(document).ready(function () {
-            $('#dataTable').DataTable();
+            $('#dataTable').DataTable({
+                "lengthMenu": [[7, 10, 25, 50, -1], [7, 10, 25, 50, "All"]],
+                "pageLength": 7 
+            });
         });
     </script>
 </body>

@@ -45,14 +45,16 @@
 
             <li class="mb-3">
                 <button class="btn btn-toggle align-items-center rounded border-0">
-                    <a class="text-decoration-none" href="manApp.php"><span><i class="fa-solid fa-folder-open me-3"></i>Manage Application</span></a>
+                    <a class="text-decoration-none" href="manApp.php"><span><i
+                                class="fa-solid fa-folder-open me-3"></i>Manage Application</span></a>
                 </button>
             </li>
 
             <li class="mb-3">
-                <button class="btn btn-toggle align-items-center rounded border-0" data-bs-toggle="collapse"
-                    data-bs-target="#orders-collapse">
-                    <span><i class="fa-brands fa-google-scholar me-3"></i>Manage Student</span>
+                <button class="btn btn-toggle align-items-center rounded border-0">
+                    <a class="text-decoration-none" href="manStudent.php"><span><i
+                                class="fa-brands fa-google-scholar me-3"></i>Manage
+                            Student</span></a>
                 </button>
             </li>
 

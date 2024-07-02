@@ -61,7 +61,7 @@
             <li class="mb-3">
                 <button class="btn btn-toggle align-items-center rounded border-0" data-bs-toggle="collapse"
                     data-bs-target="#med-collapse">
-                    <span><i class="fa-solid fa-bars-progress me-3"></i>Search Programs</span>
+                    <span><i class="fa-solid fa-bars-progress me-3"></i>Programs</span>
                 </button>
             </li>
 

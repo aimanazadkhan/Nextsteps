@@ -262,7 +262,7 @@ if (isset($_POST['workSave'])) {
                                 <div class="col-md-4 gradient-custom text-center text-white d-flex justify-content-center align-items-center"
                                     style="height: auto;">
                                     <div>
-                                        <img src="User Photos/blank-profile-picture.jpg" alt="Avatar"
+                                        <img src="<?php echo $user['profilePic']; ?>" alt="Avatar"
                                             class="img-fluid mb-4" style="width: 10rem;" />
                                         <h5><?php echo $user['firstname'] . " " . $user['lastname']; ?></h5>
                                     </div>
@@ -407,7 +407,7 @@ if (isset($_POST['workSave'])) {
                                 <div class="col-md-4 gradient-custom text-center text-white d-flex justify-content-center align-items-center"
                                     style="height: auto;">
                                     <div>
-                                        <img src="User Photos/blank-profile-picture.jpg" alt="Avatar"
+                                        <img src="<?php echo $user['profilePic']; ?>" alt="Avatar"
                                             class="img-fluid mb-4" style="width: 10rem;" />
                                         <h5><?php echo $user['firstname'] . " " . $user['lastname']; ?></h5>
                                     </div>
@@ -501,7 +501,7 @@ if (isset($_POST['workSave'])) {
                                 <div class="col-md-4 gradient-custom text-center text-white d-flex justify-content-center align-items-center"
                                     style="height: auto;">
                                     <div>
-                                        <img src="User Photos/blank-profile-picture.jpg" alt="Avatar"
+                                        <img src="<?php echo $user['profilePic']; ?>" alt="Avatar"
                                             class="img-fluid mb-4" style="width: 10rem;" />
                                         <h5><?php echo $user['firstname'] . " " . $user['lastname']; ?></h5>
                                     </div>

@@ -4,26 +4,30 @@ session_start();
 include "connection.php";
 
 
-if(isset($_GET['id'])) {
-    if(isset($_SESSION['user'])) {
+if (isset($_GET['id'])) {
+    if (isset($_SESSION['user'])) {
         $uniID = $_GET['id'];
-        $userID = $_SESSION['user'];
-
-        $query = "INSERT INTO `applications`(`uniID`, `userEmail`) VALUES ('$uniID','$userID')";
-        if(mysqli_query($conn, $query)) {
+        $userEmail = $_SESSION['user']; 
+        
+        $result = mysqli_query($conn, "SELECT * FROM `users` WHERE `email` = '$userEmail'");
+        $row = mysqli_fetch_array($result);
+        $applied = $row['applied'] + 1;
+        
+        $query = "INSERT INTO `applications` (`uniID`, `userEmail`) VALUES ('$uniID', '$userEmail')";
+        if (mysqli_query($conn, $query)) {
+            $updateQuery = "UPDATE `users` SET `applied` = '$applied' WHERE `email` = '$userEmail'";
+            mysqli_query($conn, $updateQuery);
+            
             echo "<script>alert('Application Applied Successfully!')</script>";
             echo "<script>location.href='search.php'</script>";
         } else {
             echo "<script>alert('Apply Failed!')</script>";
             echo "<script>location.href='search.php'</script>";
         }
-
     } else {
-        echo "<script>alert('User have to be logged in to Apply!!!')</script>";
+        echo "<script>alert('User must be logged in to apply!')</script>";
     }
-
 }
-
 
 
 // Initialize variables for filters

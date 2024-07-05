@@ -75,14 +75,6 @@
                 </a>
             </li>
 
-            <!-- <li class="mb-1">
-                <a href="../Homepage/" class="text-decoration-none">
-                    <button class="btn rounded border-0">
-                        <span><i class="fa-solid fa-users-rays me-3"></i>NexusHealth</span>
-                    </button>
-                </a>
-            </li> -->
-
             <li class="" style="position: absolute; bottom: 0px; width: 13rem;">
                 <a href="../logout.php" class="text-decoration-none">
                     <button class="btn rounded border-0">

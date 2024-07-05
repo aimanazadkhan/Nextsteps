@@ -28,12 +28,43 @@ include "../connection.php";
                     <h3 class="mt-2 ms-1">Wallet</h3>
                 </div>
                 <div style="max-height: 90vh; overflow-y: auto;">
-
+                    <div class="mt-4 d-flex justify-content-center">
+                        <!-- Cards -->
+                        <div class="col-xl-3 col-lg-3 col-sm-5 p-2 card shadow">
+                            <div class="p-3">
+                                <i class="p-3 mb-3 fa-solid fa-wallet text-bg-primary rounded-pill"></i>
+                                <p>My Wallet</p>
+                                <em>Add Money to Your Wallet for instant application fee</em>
+                                <div class="mt-3 d-flex justify-content-end">
+                                    <i class="fa-solid fa-arrow-right text-primary"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-3 ms-4 col-sm-5 p-2 card shadow">
+                            <div class="p-3">
+                                <i class="p-3 mb-3 fa-solid fa-wallet text-bg-primary rounded-pill"></i>
+                                <p>Comission Structure</p>
+                                <em>Check the latest comission structure.</em>
+                                <div class="mt-3 d-flex justify-content-end">
+                                    <i class="fa-solid fa-arrow-right text-primary"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-3 ms-4 col-sm-5 p-2 card shadow">
+                            <div class="p-3">
+                                <i class="p-3 mb-3 fa-solid fa-wallet text-bg-primary rounded-pill"></i>
+                                <p>Manage Counselor</p>
+                                <em>Add counselor and manage access of them.</em>
+                                <div class="mt-3 d-flex justify-content-end">
+                                    <i class="fa-solid fa-arrow-right text-primary"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
 
 </body>
 

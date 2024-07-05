@@ -25,7 +25,7 @@ include "../connection.php";
             <div style="width: 100%">
                 <div class="d-flex">
                     <button class="btn open-btn"><i class="fa-solid fa-bars-staggered"></i></button>
-                    <h3 class="mt-2 ms-1">Manage Application</h3>
+                    <h3 class="mt-2 ms-1">Wallet</h3>
                 </div>
                 <div style="max-height: 90vh; overflow-y: auto;">
 

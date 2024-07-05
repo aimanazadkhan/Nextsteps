@@ -67,6 +67,14 @@
 
             <li class="border-top my-4"></li>
 
+            <li class="">
+                <a href="wallet.php" class="text-decoration-none">
+                    <button class="btn rounded border-0">
+                        <p><i class="me-3 fa-solid fa-wallet"></i>Wallet</p>
+                    </button>
+                </a>
+            </li>
+
             <!-- <li class="mb-1">
                 <a href="../Homepage/" class="text-decoration-none">
                     <button class="btn rounded border-0">

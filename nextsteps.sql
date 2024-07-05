@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 12, 2024 at 09:05 AM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Generation Time: Jul 05, 2024 at 04:17 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,6 +20,41 @@ SET time_zone = "+00:00";
 --
 -- Database: `nextsteps`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `applications`
+--
+
+CREATE TABLE `applications` (
+  `id` int(255) NOT NULL,
+  `uniID` int(255) NOT NULL,
+  `userEmail` varchar(255) NOT NULL,
+  `createdOn` timestamp NOT NULL DEFAULT current_timestamp(),
+  `appStatus` varchar(255) NOT NULL DEFAULT 'Pending'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `applications`
+--
+
+INSERT INTO `applications` (`id`, `uniID`, `userEmail`, `createdOn`, `appStatus`) VALUES
+(1, 2, 'abdullahalmasrur8@gmail.com', '2024-07-02 15:48:18', 'pending'),
+(2, 4, 'abdullahalmasrur8@gmail.com', '2024-07-02 15:48:18', 'pending'),
+(3, 4, 'abdullahalmasrur8@gmail.com', '2024-07-02 15:48:18', 'Declined'),
+(4, 12, 'abdullahalmasrur8@gmail.com', '2024-07-02 15:49:20', 'pending'),
+(5, 2, 'abdullahalmasrur8@gmail.com', '2024-07-02 15:57:57', 'Success'),
+(6, 3, 'abdullahalmasrur8@gmail.com', '2024-07-02 15:58:00', 'pending'),
+(7, 9, 'abdullahalmasrur8@gmail.com', '2024-07-02 15:58:04', 'pending'),
+(8, 9, 'abdullahalmasrur8@gmail.com', '2024-07-02 15:58:13', 'pending'),
+(9, 2, 'abdullahalmasrur8@gmail.com', '2024-07-02 15:59:51', 'Success'),
+(10, 282, 'abdullahalmasrur8@gmail.com', '2024-07-02 16:51:49', 'Pending'),
+(11, 2, 'abdullahalmasrur8@gmail.com', '2024-07-02 16:51:54', 'Pending'),
+(12, 15, 'abdullahalmasrur8@gmail.com', '2024-07-02 16:53:04', 'Pending'),
+(13, 5, 'abdullahalmasrur8@gmail.com', '2024-07-02 16:54:32', 'Pending'),
+(14, 5, 'abdullahalmasrur8@gmail.com', '2024-07-02 16:56:29', 'Pending'),
+(15, 2, 'abdullahalmasrur8@gmail.com', '2024-07-02 16:56:32', 'Pending');
 
 -- --------------------------------------------------------
 
@@ -12636,9 +12671,66 @@ INSERT INTO `search` (`ID`, `Country`, `University`, `CourseLevel`, `CourseTitle
 (12542, 'UK', 'Leeds Beckett University', 'UG', 'BA (Hons) Sport Business Management', '9/23/2024', '£14,000', 'https://www.leedsbeckett.ac.uk/courses/sport-business-management-ba'),
 (12543, 'UK', 'Leeds Beckett University', 'UG', 'BA (Hons) History and Media', '9/23/2024', '£14,000', 'https://www.leedsbeckett.ac.uk/courses/history-media-ba');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(255) NOT NULL,
+  `firstname` varchar(255) NOT NULL,
+  `lastname` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `phonenumber` varchar(255) NOT NULL,
+  `verifytoken` varchar(255) NOT NULL,
+  `verifystatus` int(255) NOT NULL,
+  `dob` varchar(255) NOT NULL,
+  `gender` varchar(255) NOT NULL,
+  `marital` varchar(255) NOT NULL,
+  `nation` varchar(255) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `postcode` varchar(255) NOT NULL,
+  `passportnum` varchar(255) NOT NULL,
+  `issuecountry` varchar(255) NOT NULL,
+  `issuedate` varchar(255) NOT NULL,
+  `expirydate` varchar(255) NOT NULL,
+  `institutionname` varchar(255) NOT NULL,
+  `studycountry` varchar(255) NOT NULL,
+  `cgpa` varchar(255) NOT NULL,
+  `qualification` varchar(255) NOT NULL,
+  `startdate` varchar(255) NOT NULL,
+  `enddate` varchar(255) NOT NULL,
+  `language` varchar(255) NOT NULL,
+  `eduaddress` varchar(255) NOT NULL,
+  `companyname` varchar(255) NOT NULL,
+  `jobtitle` varchar(255) NOT NULL,
+  `jobstartdate` varchar(255) NOT NULL,
+  `jobenddate` varchar(255) NOT NULL,
+  `jobresponsibilities` varchar(255) NOT NULL,
+  `createdOn` timestamp NOT NULL DEFAULT current_timestamp(),
+  `assignedTo` varchar(255) NOT NULL DEFAULT 'None',
+  `applied` int(255) NOT NULL,
+  `profilePic` varchar(255) NOT NULL DEFAULT 'User Photos/blank-profile-picture.jpg'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `firstname`, `lastname`, `password`, `email`, `phonenumber`, `verifytoken`, `verifystatus`, `dob`, `gender`, `marital`, `nation`, `address`, `postcode`, `passportnum`, `issuecountry`, `issuedate`, `expirydate`, `institutionname`, `studycountry`, `cgpa`, `qualification`, `startdate`, `enddate`, `language`, `eduaddress`, `companyname`, `jobtitle`, `jobstartdate`, `jobenddate`, `jobresponsibilities`, `createdOn`, `assignedTo`, `applied`, `profilePic`) VALUES
+(3, 'Abdullah', 'Masrur', '123!Abd', 'abdullahalmasrur8@gmail.com', '01791040256', '91c3f073e8a12c0254d42d7bbd20abc3', 1, '2021-05-05', 'Male', 'Married', 'Bangladesh', 'Sylhet', '3100', '1231231232', 'Bangladesh', '2024-06-28', '2024-06-29', 'Leading', 'Bangladesh', '3.50', 'BSc In Architecture', '2024-06-23', '2024-06-28', 'English', 'Sylhet, Bangladesh', 'TechNext', 'Software Developer', '2024-06-11', '2024-06-27', 'Working', '2024-07-02 16:31:14', 'None', 2, 'User Photos/abd.jpg');
+
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `applications`
+--
+ALTER TABLE `applications`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `search`
@@ -12647,14 +12739,32 @@ ALTER TABLE `search`
   ADD PRIMARY KEY (`ID`);
 
 --
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `applications`
+--
+ALTER TABLE `applications`
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `search`
 --
 ALTER TABLE `search`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12544;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

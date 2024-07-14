@@ -49,82 +49,110 @@ if (isset($_POST['pInfoSave'])) {
 }
 
 if (isset($_POST['aQualSave'])) {
-    if (isset($_FILES['uploadedFile'])) {
-        echo "1";
-        $file = $_FILES['uploadedFile'];
-        $fileName = $file['name'];
-        $fileTmpName = $file['tmp_name'];
-        $fileError = $file['error'];
+    $institution_name = $_POST['institution_name'];
+    $study_country = $_POST['study_country'];
+    $qualification = $_POST['qualification'];
+    $cgpa = $_POST['cgpa'];
+    $start_date = $_POST['start_date'];
+    $end_date = $_POST['end_date'];
+    $language = $_POST['language'];
+    $address = $_POST['address'];
 
-        if ($fileError === UPLOAD_ERR_OK) {
-            echo "File uploaded successfully.<br>";
-
-            $userFirstName = $user['firstname'];
-            $currentDateTime = date('Y-m-d_H-i-s');
-            $newFileName = $userFirstName . "_" . $currentDateTime . "_" . $fileName;
-            $uploadDir = 'Education Documents/';
-            $destinationPath = $uploadDir . $newFileName;
-
-            if (move_uploaded_file($fileTmpName, $destinationPath)) {
-                echo "File moved to destination.<br>";
-
-                $query = "SELECT eduDoc FROM users WHERE id = {$user['id']}";
-                $result = mysqli_query($conn, $query);
-                if ($result) {
-                    $row = mysqli_fetch_assoc($result);
-                    $oldFilePaths = $row['eduDoc'];
-
-                    $newFilePaths = $oldFilePaths ? $oldFilePaths . "/" . $destinationPath : $destinationPath;
-
-                    $updateQuery = "UPDATE users SET eduDoc = '$newFilePaths' WHERE id = {$user['id']}";
-                    if (mysqli_query($conn, $updateQuery)) {
-                        echo "File uploaded and database updated successfully.";
-                    } else {
-                        echo "Database update failed: " . mysqli_error($conn);
-                    }
-                } else {
-                    echo "Error fetching user data: " . mysqli_error($conn);
-                }
-            } else {
-                echo "File move failed.";
-            }
-        } else {
-            echo "File upload error: " . $fileError;
-        }
-    } else {
-        $institution_name = $_POST['institution_name'];
-        $study_country = $_POST['study_country'];
-        $qualification = $_POST['qualification'];
-        $cgpa = $_POST['cgpa'];
-        $start_date = $_POST['start_date'];
-        $end_date = $_POST['end_date'];
-        $language = $_POST['language'];
-        $address = $_POST['address'];
-
-        $update_query = "UPDATE `users` SET 
+    $update_query = "UPDATE `users` SET 
             `institutionname`='$institution_name', `studycountry`='$study_country', 
             `qualification`='$qualification', `cgpa`='$cgpa', 
             `startdate`='$start_date', `enddate`='$end_date', 
             `language`='$language', `eduaddress`='$address' WHERE email = '{$_SESSION['user']}'";
 
-        if (mysqli_query($conn, $update_query)) {
-            $_SESSION['alert'] = "Information Updated Successfully!";
-            echo '<script>';
-            echo 'setTimeout(function() {';
-            echo '  window.location.href = "profile.php";';
-            echo '}, 1000);';
-            echo '</script>';
+    if (mysqli_query($conn, $update_query)) {
+        $_SESSION['alert'] = "Information Updated Successfully!";
+        echo '<script>';
+        echo 'setTimeout(function() {';
+        echo '  window.location.href = "profile.php";';
+        echo '}, 1000);';
+        echo '</script>';
+    } else {
+        $_SESSION['alert'] = "Failed to Update Information!";
+        echo '<script>';
+        echo 'setTimeout(function() {';
+        echo '  window.location.href = "profile.php";';
+        echo '}, 1000);';
+        echo '</script>';
+    }
+}
+
+if (isset($_FILES['uploadedFile'])) {
+    $file = $_FILES['uploadedFile'];
+    $fileName = $file['name'];
+    $fileTmpName = $file['tmp_name'];
+    $fileError = $file['error'];
+
+    $userFirstName = $user['firstname'];
+    $currentDateTime = date('Y-m-d_H-i-s');
+    $newFileName = $userFirstName . "_" . $currentDateTime . "_" . $fileName;
+    $uploadDir = 'Education Documents/';
+    $destinationPath = $uploadDir . $newFileName;
+
+    if (move_uploaded_file($fileTmpName, $destinationPath)) {
+        $query = "SELECT eduDoc FROM users WHERE email = '{$_SESSION['user']}'";
+        $result = mysqli_query($conn, $query);
+        if ($result) {
+            $row = mysqli_fetch_assoc($result);
+            $oldFilePaths = $row['eduDoc'];
+            $newFilePaths = $oldFilePaths ? $oldFilePaths . "|" . $destinationPath : $destinationPath;
+
+            $updateQuery = "UPDATE users SET eduDoc = '$newFilePaths' WHERE id = {$user['id']}";
+            if (mysqli_query($conn, $updateQuery)) {
+                $_SESSION['alert'] = "File uploaded and database updated successfully.";
+            } else {
+                $_SESSION['alert'] = "Database update failed: " . mysqli_error($conn);
+            }
         } else {
-            $_SESSION['alert'] = "Failed to Update Information!";
-            echo '<script>';
-            echo 'setTimeout(function() {';
-            echo '  window.location.href = "profile.php";';
-            echo '}, 1000);';
-            echo '</script>';
+            $_SESSION['alert'] = "Error fetching user data: " . mysqli_error($conn);
+        }
+    } else {
+        $_SESSION['alert'] = "File move failed";
+    }
+    echo '<script>';
+    echo 'setTimeout(function() {';
+    echo '  window.location.href = "profile.php";';
+    echo '}, 1000);';
+    echo '</script>';
+}
+
+if (isset($_GET['delDocPath'])) {
+    $docPathToDelete = $_GET['delDocPath'];
+    $currentDocs = explode('|', $user['eduDoc']);
+
+    if (count($currentDocs) == 1 && $currentDocs[0] == $docPathToDelete) {
+        $updatedEduDoc = '';
+
+    } else {
+        $indexToDelete = array_search($docPathToDelete, $currentDocs);
+        if ($indexToDelete !== false) {
+            array_splice($currentDocs, $indexToDelete, 1);
+            $updatedEduDoc = implode('|', $currentDocs);
+        } else {
+            $_SESSION['alert'] = "Document path not found!";
         }
     }
 
+    $sql = "UPDATE users SET eduDoc = '$updatedEduDoc' WHERE email = '{$_SESSION['user']}'";
+
+    if (file_exists($docPathToDelete)) {
+        unlink($docPathToDelete);
+        mysqli_query($conn, $sql);
+        $_SESSION['alert'] = "Document deleted successfully!";
+    } else {
+        $_SESSION['alert'] = "File not found: " . $docPathToDelete;
+    }
+    echo '<script>';
+    echo 'setTimeout(function() {';
+    echo '  window.location.href = "profile.php";';
+    echo '}, 1000);';
+    echo '</script>';
 }
+
 
 if (isset($_POST['workSave'])) {
     $company_name = $_POST['company_name'];
@@ -527,12 +555,28 @@ if (isset($_POST['workSave'])) {
                                                     value="<?php echo $user['eduaddress']; ?>" name="address" />
                                             </div>
                                         </div>
+                                        <div class="row pt-1">
+                                            <?php
+                                            if ($user['eduDoc'] !== "") {
+                                                $docs = explode('|', $user['eduDoc']);
+                                                $count = 1;
+                                                foreach ($docs as $doc) {
+                                                    ?>
+                                                    <div class="col-6 mb-3">
+                                                        <h6>Document <?php echo $count; ?></h6>
+                                                        <a href="<?php echo $doc; ?>" target="_blank">View Document
+                                                            <?php echo $count; ?></a>
+                                                        <a href="profile.php?delDocPath=<?php echo $doc ?>"><span
+                                                                style="cursor: pointer"><i
+                                                                    class="fa-regular fa-trash-can"></i></span></a>
+                                                    </div>
+                                                    <?php
+                                                    $count++;
+                                                }
+                                            }
+                                            ?>
+                                        </div>
                                         <div class="float-end mb-3">
-                                            <input type="file" name="uploadedFile" id="uploadedFile"
-                                                style="display: none;" required />
-                                            <button type="submit" name="uploadDoc"
-                                                class="btn btn-success docUpBtn hidden" id="uploadButton">Upload
-                                                Documents</button>
                                             <button type="submit" class="btn btn-primary saveBtn hidden"
                                                 name="aQualSave">Save</button>
                                             <button type="button"
@@ -542,6 +586,16 @@ if (isset($_POST['workSave'])) {
                                 </div>
                             </div>
                         </form>
+                        <div class="d-flex justify-content-end me-4 mb-2">
+                            <form action="" id="formDoc" METHOD="POST" enctype="multipart/form-data">
+                                <input type="file" name="uploadedFile" id="uploadedFile" style="display: none;"
+                                    required />
+                                <button type="" name="uploadDoc" class="btn btn-success docUpBtn"
+                                    id="uploadButton">Upload
+                                    Documents</button>
+                            </form>
+                        </div>
+
                     </div>
 
                     <!-- Work Experience Card -->

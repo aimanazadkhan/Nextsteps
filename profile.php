@@ -49,36 +49,81 @@ if (isset($_POST['pInfoSave'])) {
 }
 
 if (isset($_POST['aQualSave'])) {
-    $institution_name = $_POST['institution_name'];
-    $study_country = $_POST['study_country'];
-    $qualification = $_POST['qualification'];
-    $cgpa = $_POST['cgpa'];
-    $start_date = $_POST['start_date'];
-    $end_date = $_POST['end_date'];
-    $language = $_POST['language'];
-    $address = $_POST['address'];
+    if (isset($_FILES['uploadedFile'])) {
+        echo "1";
+        $file = $_FILES['uploadedFile'];
+        $fileName = $file['name'];
+        $fileTmpName = $file['tmp_name'];
+        $fileError = $file['error'];
 
-    $update_query = "UPDATE `users` SET 
-        `institutionname`='$institution_name', `studycountry`='$study_country', 
-        `qualification`='$qualification', `cgpa`='$cgpa', 
-        `startdate`='$start_date', `enddate`='$end_date', 
-        `language`='$language', `eduaddress`='$address' WHERE email = '{$_SESSION['user']}'";
+        if ($fileError === UPLOAD_ERR_OK) {
+            echo "File uploaded successfully.<br>";
 
-    if (mysqli_query($conn, $update_query)) {
-        $_SESSION['alert'] = "Information Updated Successfully!";
-        echo '<script>';
-        echo 'setTimeout(function() {';
-        echo '  window.location.href = "profile.php";';
-        echo '}, 1000);';
-        echo '</script>';
+            $userFirstName = $user['firstname'];
+            $currentDateTime = date('Y-m-d_H-i-s');
+            $newFileName = $userFirstName . "_" . $currentDateTime . "_" . $fileName;
+            $uploadDir = 'Education Documents/';
+            $destinationPath = $uploadDir . $newFileName;
+
+            if (move_uploaded_file($fileTmpName, $destinationPath)) {
+                echo "File moved to destination.<br>";
+
+                $query = "SELECT eduDoc FROM users WHERE id = {$user['id']}";
+                $result = mysqli_query($conn, $query);
+                if ($result) {
+                    $row = mysqli_fetch_assoc($result);
+                    $oldFilePaths = $row['eduDoc'];
+
+                    $newFilePaths = $oldFilePaths ? $oldFilePaths . "/" . $destinationPath : $destinationPath;
+
+                    $updateQuery = "UPDATE users SET eduDoc = '$newFilePaths' WHERE id = {$user['id']}";
+                    if (mysqli_query($conn, $updateQuery)) {
+                        echo "File uploaded and database updated successfully.";
+                    } else {
+                        echo "Database update failed: " . mysqli_error($conn);
+                    }
+                } else {
+                    echo "Error fetching user data: " . mysqli_error($conn);
+                }
+            } else {
+                echo "File move failed.";
+            }
+        } else {
+            echo "File upload error: " . $fileError;
+        }
     } else {
-        $_SESSION['alert'] = "Failed to Update Information!";
-        echo '<script>';
-        echo 'setTimeout(function() {';
-        echo '  window.location.href = "profile.php";';
-        echo '}, 1000);';
-        echo '</script>';
+        $institution_name = $_POST['institution_name'];
+        $study_country = $_POST['study_country'];
+        $qualification = $_POST['qualification'];
+        $cgpa = $_POST['cgpa'];
+        $start_date = $_POST['start_date'];
+        $end_date = $_POST['end_date'];
+        $language = $_POST['language'];
+        $address = $_POST['address'];
+
+        $update_query = "UPDATE `users` SET 
+            `institutionname`='$institution_name', `studycountry`='$study_country', 
+            `qualification`='$qualification', `cgpa`='$cgpa', 
+            `startdate`='$start_date', `enddate`='$end_date', 
+            `language`='$language', `eduaddress`='$address' WHERE email = '{$_SESSION['user']}'";
+
+        if (mysqli_query($conn, $update_query)) {
+            $_SESSION['alert'] = "Information Updated Successfully!";
+            echo '<script>';
+            echo 'setTimeout(function() {';
+            echo '  window.location.href = "profile.php";';
+            echo '}, 1000);';
+            echo '</script>';
+        } else {
+            $_SESSION['alert'] = "Failed to Update Information!";
+            echo '<script>';
+            echo 'setTimeout(function() {';
+            echo '  window.location.href = "profile.php";';
+            echo '}, 1000);';
+            echo '</script>';
+        }
     }
+
 }
 
 if (isset($_POST['workSave'])) {
@@ -402,7 +447,7 @@ if (isset($_POST['workSave'])) {
 
                     <!-- Academic Qualification Card -->
                     <div class="card hidden" id="equalif" style="border-radius: .5rem;">
-                        <form action="" method="POST">
+                        <form action="" id="eduForm" method="POST" enctype="multipart/form-data">
                             <div class="row g-0">
                                 <div class="col-md-4 gradient-custom text-center text-white d-flex justify-content-center align-items-center"
                                     style="height: auto;">
@@ -483,6 +528,11 @@ if (isset($_POST['workSave'])) {
                                             </div>
                                         </div>
                                         <div class="float-end mb-3">
+                                            <input type="file" name="uploadedFile" id="uploadedFile"
+                                                style="display: none;" required />
+                                            <button type="submit" name="uploadDoc"
+                                                class="btn btn-success docUpBtn hidden" id="uploadButton">Upload
+                                                Documents</button>
                                             <button type="submit" class="btn btn-primary saveBtn hidden"
                                                 name="aQualSave">Save</button>
                                             <button type="button"
@@ -600,7 +650,7 @@ if (isset($_POST['workSave'])) {
                 var cardBody = $(this).closest('.card-body');
                 cardBody.find('p.text-muted').addClass('hidden');
                 cardBody.find('input, select, textarea').removeClass('hidden');
-                cardBody.find('.saveBtn, .discardBtn').removeClass('hidden');
+                cardBody.find('.saveBtn, .discardBtn, .docUpBtn').removeClass('hidden');
                 $(this).addClass('hidden');
             });
 
@@ -611,6 +661,15 @@ if (isset($_POST['workSave'])) {
                 cardBody.find('.saveBtn, .discardBtn').addClass('hidden');
                 cardBody.find('.editData').removeClass('hidden');
             });
+        });
+
+        // Document Upload
+        document.getElementById('uploadButton').addEventListener('click', function () {
+            document.getElementById('uploadedFile').click();
+        });
+
+        document.getElementById('uploadedFile').addEventListener('change', function () {
+            document.getElementById('formDoc').submit();
         });
     </script>
 </body>

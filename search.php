@@ -1,34 +1,6 @@
 <?php
 session_start();
-
 include "connection.php";
-
-
-if (isset($_GET['id'])) {
-    if (isset($_SESSION['user'])) {
-        $uniID = $_GET['id'];
-        $userEmail = $_SESSION['user']; 
-        
-        $result = mysqli_query($conn, "SELECT * FROM `users` WHERE `email` = '$userEmail'");
-        $row = mysqli_fetch_array($result);
-        $applied = $row['applied'] + 1;
-        
-        $query = "INSERT INTO `applications` (`uniID`, `userEmail`) VALUES ('$uniID', '$userEmail')";
-        if (mysqli_query($conn, $query)) {
-            $updateQuery = "UPDATE `users` SET `applied` = '$applied' WHERE `email` = '$userEmail'";
-            mysqli_query($conn, $updateQuery);
-            
-            echo "<script>alert('Application Applied Successfully!')</script>";
-            echo "<script>location.href='search.php'</script>";
-        } else {
-            echo "<script>alert('Apply Failed!')</script>";
-            echo "<script>location.href='search.php'</script>";
-        }
-    } else {
-        echo "<script>alert('User must be logged in to apply!')</script>";
-    }
-}
-
 
 // Initialize variables for filters
 $countries = $universities = $levels = $titles = [];
@@ -67,9 +39,6 @@ if ($title_result->num_rows > 0) {
     }
 }
 
-// Fetch filtered results
-$query = "SELECT ID, Country, University, CourseLevel, CourseTitle, NextStarting, TuitionFees, URL FROM search";
-
 // Handle AJAX request
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax'])) {
     $filters = [];
@@ -96,9 +65,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax'])) {
         $selectedTitles = $_POST['selectedTitles'];
         $filters[] = "CourseTitle IN ('" . implode("','", $selectedTitles) . "')";
     }
-    
 
     // Construct query with filters
+    $query = "SELECT ID, Country, University, CourseLevel, CourseTitle, NextStarting, TuitionFees, URL FROM search";
     if (!empty($filters)) {
         $query .= " WHERE " . implode(" AND ", $filters);
     }
@@ -108,18 +77,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax'])) {
 
     // Output JSON response
     $output = [];
-    if ($result && $result->num_rows > 0) {
+    if ($result !== false && $result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
             $output[] = $row;
         }
+    } else {
+        // If no results found, return empty array
+        $output = [];
     }
+
     echo json_encode($output);
     exit;
 }
-
-// Fetch initial results
-$result = $conn->query($query);
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -288,7 +259,7 @@ $result = $conn->query($query);
                 <!-- Content Column -->
                 <div class="col-lg-9">
                     <div class="row" id="course-results">
-                        <?php if ($result->num_rows > 0): ?>
+                        <?php if (isset($result) && $result && $result->num_rows > 0): ?>
                             <?php while ($row = $result->fetch_assoc()): ?>
                                 <div class='col-12 mb-4'>
                                     <div class='custom-card'>
@@ -304,12 +275,11 @@ $result = $conn->query($query);
                                             <a href="search.php?id=<?php echo $row['ID']; ?>">
                                                 <button class='ms-3 btn btn-primary'>Apply Now</button>
                                             </a>
-                                            
                                         </div>
                                     </div>
                                 </div>
                             <?php endwhile; ?>
-                        <?php else: ?>
+                        <?php elseif (isset($result) && $result && $result->num_rows === 0): ?>
                             <p>No results found.</p>
                         <?php endif; ?>
                     </div>
@@ -340,38 +310,32 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
             });
         });
-    $(document).ready(function () {
-        // Function to handle checkbox change events
-        $('input[type="checkbox"]').change(function () {
-            applyFilters();
-        });
+        $(document).ready(function () {
+    // Function to handle checkbox change events
+    $('input[type="checkbox"]').change(function () {
+        applyFilters();
+    });
 
-        // Function to handle filter button click event
-        // $('#apply-filters-btn').click(function () {
-        //     applyFilters();
-        // });
+    // Function to apply filters and fetch data
+    function applyFilters() {
+        var selectedCountries = $('input[name="selectedCountries[]"]:checked').map(function () {
+            return this.value;
+        }).get();
 
-        // Function to apply filters and fetch data
-        function applyFilters() {
-            var selectedCountries = $('input[name="selectedCountries[]"]:checked').map(function () {
-                return this.value;
-            }).get();
+        var selectedUniversities = $('input[name="selectedUniversities[]"]:checked').map(function () {
+            return this.value;
+        }).get();
 
-            var selectedUniversities = $('input[name="selectedUniversities[]"]:checked').map(function () {
-                return this.value;
-            }).get();
+        var selectedLevels = $('input[name="selectedLevels[]"]:checked').map(function () {
+            return this.value;
+        }).get();
 
-            var selectedLevels = $('input[name="selectedLevels[]"]:checked').map(function () {
-                return this.value;
-            }).get();
+        var selectedTitles = $('input[name="selectedTitles[]"]:checked').map(function () {
+            return this.value;
+        }).get();
 
-            var selectedTitles = $('input[name="selectedTitles[]"]:checked').map(function () {
-                return this.value;
-            }).get();
-
-           
-
-            // Send AJAX request with selected values
+        // Send AJAX request only if at least one filter is selected
+        if (selectedCountries.length > 0 || selectedUniversities.length > 0 || selectedLevels.length > 0 || selectedTitles.length > 0) {
             $.ajax({
                 type: 'POST',
                 url: 'search.php',
@@ -381,7 +345,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     selectedUniversities: selectedUniversities,
                     selectedLevels: selectedLevels,
                     selectedTitles: selectedTitles
-                
                 },
                 success: function (response) {
                     // Update content section with new data
@@ -400,24 +363,27 @@ document.addEventListener('DOMContentLoaded', function () {
                                             <label>Next Starting</label>
                                             <p class='card-title text-success'>${course.NextStarting}</p>
                                             <label>Tuition Fees</label>
-                                            <p class='card-title text-success'>${course.TuitionFees
-                                            }</p>
-                                          <button class='btn btn-primary' onclick='window.open("${course.URL}", "_blank")'>Visit Website</button>
-                                     </div>
-                                     </div>
-                                 </div>`;
-                                    courseResults.append(html);
-                                        });
-                                        } else {
-                                        courseResults.append("<p>No results found.</p>");
-                                        }
-                                        },
-                                        error: function (error) {
-                                        console.error('Error:', error);
-                                        }
-                                        });
-                                        }
-                                        });
+                                            <p class='card-title text-success'>${course.TuitionFees}</p>
+                                            <button class='btn btn-primary' onclick='window.open("${course.URL}", "_blank")'>Visit Website</button>
+                                        </div>
+                                    </div>
+                                </div>`;
+                            courseResults.append(html);
+                        });
+                    } else {
+                        courseResults.append("<p>No results found.</p>");
+                    }
+                },
+                error: function (error) {
+                    console.error('Error:', error);
+                }
+            });
+        } else {
+            // If no filters selected, display a message or handle accordingly
+            $('#course-results').html("<p>Please select at least one filter option.</p>");
+        }
+    }
+});
 </script>
 
 </html>

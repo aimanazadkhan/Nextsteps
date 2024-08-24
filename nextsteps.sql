@@ -3,10 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 05, 2024 at 04:17 PM
+-- Generation Time: Aug 24, 2024 at 10:41 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
-
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -55,7 +54,9 @@ INSERT INTO `applications` (`id`, `uniID`, `userEmail`, `createdOn`, `appStatus`
 (12, 15, 'abdullahalmasrur8@gmail.com', '2024-07-02 16:53:04', 'Pending'),
 (13, 5, 'abdullahalmasrur8@gmail.com', '2024-07-02 16:54:32', 'Pending'),
 (14, 5, 'abdullahalmasrur8@gmail.com', '2024-07-02 16:56:29', 'Pending'),
-(15, 2, 'abdullahalmasrur8@gmail.com', '2024-07-02 16:56:32', 'Pending');
+(15, 2, 'abdullahalmasrur8@gmail.com', '2024-07-02 16:56:32', 'Pending'),
+(16, 70, 'abdullahalmasrur8@gmail.com', '2024-07-08 10:21:50', 'Pending'),
+(17, 2, 'abdullahalmasrur8@gmail.com', '2024-07-13 15:49:36', 'Pending');
 
 -- --------------------------------------------------------
 
@@ -12713,15 +12714,16 @@ CREATE TABLE `users` (
   `createdOn` timestamp NOT NULL DEFAULT current_timestamp(),
   `assignedTo` varchar(255) NOT NULL DEFAULT 'None',
   `applied` int(255) NOT NULL,
-  `profilePic` varchar(255) NOT NULL DEFAULT 'User Photos/blank-profile-picture.jpg'
+  `profilePic` varchar(255) NOT NULL DEFAULT 'User Photos/blank-profile-picture.jpg',
+  `eduDoc` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `firstname`, `lastname`, `password`, `email`, `phonenumber`, `verifytoken`, `verifystatus`, `dob`, `gender`, `marital`, `nation`, `address`, `postcode`, `passportnum`, `issuecountry`, `issuedate`, `expirydate`, `institutionname`, `studycountry`, `cgpa`, `qualification`, `startdate`, `enddate`, `language`, `eduaddress`, `companyname`, `jobtitle`, `jobstartdate`, `jobenddate`, `jobresponsibilities`, `createdOn`, `assignedTo`, `applied`, `profilePic`) VALUES
-(3, 'Abdullah', 'Masrur', '123!Abd', 'abdullahalmasrur8@gmail.com', '01791040256', '91c3f073e8a12c0254d42d7bbd20abc3', 1, '2021-05-05', 'Male', 'Married', 'Bangladesh', 'Sylhet', '3100', '1231231232', 'Bangladesh', '2024-06-28', '2024-06-29', 'Leading', 'Bangladesh', '3.50', 'BSc In Architecture', '2024-06-23', '2024-06-28', 'English', 'Sylhet, Bangladesh', 'TechNext', 'Software Developer', '2024-06-11', '2024-06-27', 'Working', '2024-07-02 16:31:14', 'None', 2, 'User Photos/abd.jpg');
+INSERT INTO `users` (`id`, `firstname`, `lastname`, `password`, `email`, `phonenumber`, `verifytoken`, `verifystatus`, `dob`, `gender`, `marital`, `nation`, `address`, `postcode`, `passportnum`, `issuecountry`, `issuedate`, `expirydate`, `institutionname`, `studycountry`, `cgpa`, `qualification`, `startdate`, `enddate`, `language`, `eduaddress`, `companyname`, `jobtitle`, `jobstartdate`, `jobenddate`, `jobresponsibilities`, `createdOn`, `assignedTo`, `applied`, `profilePic`, `eduDoc`) VALUES
+(3, 'Abdullah Al', 'Masrur', '123!Abd', 'abdullahalmasrur8@gmail.com', '01721090782', '91c3f073e8a12c0254d42d7bbd20abc3', 1, '2003-01-08', 'Male', 'Married', 'Bangladesh', 'Sylhet', '3100', '1231231232', 'Bangladesh', '2024-06-28', '2024-06-29', 'Leading University', 'Bangladesh', '4.00', 'BSc In CSE', '2024-06-23', '2024-06-28', 'English', 'Sylhet, Bangladesh', 'AppifyLab', 'Backend Developer', '2024-06-11', '2024-06-27', 'Working', '2024-07-02 16:31:14', 'None', 4, 'User Photos/abd.jpg', 'Education Documents/Abdullah Al_2024-07-14_23-59-24_Dashboard.pdf|Education Documents/Abdullah Al_2024-07-15_11-13-22_Resume of Tahmid(1).pdf|Education Documents/Abdullah Al_2024-07-15_11-15-07_Dashboard.pdf');
 
 --
 -- Indexes for dumped tables
@@ -12753,7 +12755,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `applications`
 --
 ALTER TABLE `applications`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `search`

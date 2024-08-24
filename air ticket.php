@@ -7,8 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Air Ticketing</title>
     <meta name="NextSteps" content="A student counselling website">
-  
-    <link rel="icon" href="images/Next Steps logo.png" >
+
+    <link rel="icon" href="images/Next Steps logo.png">
     <link rel="stylesheet" type="text/css"
         href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css">
     <link rel="stylesheet" type="text/css"
@@ -41,7 +41,7 @@
             <div class="row align-items-center justify-content-center">
                 <div class="col-lg-7 mb-5 mb-lg-0">
                     <div class="block text-center text-lg-start pe-0 pe-xl-5">
-                        <h3 class="text-capitalize mb-4 typewriter">Book your Air ticket</h3>
+                        <h3 class="text-capitalize mb-4 typewriter">Book your Air Ticket</h3>
                         <p>To assist us in finding the
                             best ticket for you, please provide the following details:</p>
 
@@ -112,13 +112,15 @@
                                             <div class="col-lg-6 mb-4 pb-2">
                                                 <div class="form-group">
                                                     <label for="from_input" class="form-label">From</label>
-                                                    <input type="text" placeholder="Airport Name/code"  class="form-control shadow-none" id="from_input">
+                                                    <input type="text" placeholder="Airport Name/code"
+                                                        class="form-control shadow-none" id="from_input">
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 mb-4 pb-2">
                                                 <div class="form-group">
                                                     <label for="to_input" class="form-label">To</label>
-                                                    <input type="text" placeholder="Airport Name/code" class="form-control shadow-none" id="to_input">
+                                                    <input type="text" placeholder="Airport Name/code"
+                                                        class="form-control shadow-none" id="to_input">
                                                 </div>
                                             </div>
                                         </div>
@@ -127,8 +129,8 @@
                                             <div class="col-lg-6 mb-4 pb-2">
                                                 <div class="form-group">
                                                     <label for="departure_input" class="form-label">Departure</label>
-                                                    <input type="Date" placeholder="Airport Name/code" class="form-control shadow-none"
-                                                        id="departure_input">
+                                                    <input type="Date" placeholder="Airport Name/code"
+                                                        class="form-control shadow-none" id="departure_input">
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 mb-4 pb-2">
@@ -156,14 +158,15 @@
                                             <div class="col-lg-6 mb-4 pb-2">
                                                 <div class="form-group">
                                                     <label for="loan_amount" class="form-label">Baggage</label>
-                                                    <input type="text"  placeholder="weight(kg)" class="form-control shadow-none">
+                                                    <input type="text" placeholder="weight(kg)"
+                                                        class="form-control shadow-none">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="form-group mb-4 pb-2">
                                             <label for="exampleFormControlTextarea1" class="form-label">Write
                                                 Message</label>
-                                            <textarea  class="form-control shadow-none" id="exampleFormControlTextarea1"
+                                            <textarea class="form-control shadow-none" id="exampleFormControlTextarea1"
                                                 rows="3"></textarea>
                                         </div>
                                         <button class="btn btn-primary w-100" type="submit">Send Message</button>

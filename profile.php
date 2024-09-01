@@ -128,36 +128,41 @@ if (isset($_FILES['file']) && isset($_POST['documentType'])) {
 
 if (isset($_GET['delDocPath'])) {
     $docPathToDelete = $_GET['delDocPath'];
+    $userEmail = $_SESSION['user'];
+
+    $query = mysqli_query($conn, "SELECT eduDoc FROM users WHERE email = '$userEmail'");
+    $user = mysqli_fetch_assoc($query);
     $currentDocs = explode('|', $user['eduDoc']);
 
-    if (count($currentDocs) == 1 && $currentDocs[0] == $docPathToDelete) {
-        $updatedEduDoc = '';
+    $indexToDelete = array_search($docPathToDelete, $currentDocs);
+    if ($indexToDelete !== false) {
+        unset($currentDocs[$indexToDelete]);
+        $updatedEduDoc = implode('|', array_filter($currentDocs));
 
-    } else {
-        $indexToDelete = array_search($docPathToDelete, $currentDocs);
-        if ($indexToDelete !== false) {
-            array_splice($currentDocs, $indexToDelete, 1);
-            $updatedEduDoc = implode('|', $currentDocs);
+        $sql = "UPDATE users SET eduDoc = '$updatedEduDoc' WHERE email = '$userEmail'";
+
+        if (mysqli_query($conn, $sql)) {
+            list($docType, $docDelete) = explode(':', $docPathToDelete);
+            if (file_exists($docDelete)) {
+                unlink($docDelete);
+                $_SESSION['alert'] = "Document deleted successfully!";
+            } else {
+                $_SESSION['alert'] = "File not found: " . $docPathToDelete;
+            }
         } else {
-            $_SESSION['alert'] = "Document path not found!";
+            $_SESSION['alert'] = "Error updating database!";
         }
-    }
-
-    $sql = "UPDATE users SET eduDoc = '$updatedEduDoc' WHERE email = '{$_SESSION['user']}'";
-
-    if (file_exists($docPathToDelete)) {
-        unlink($docPathToDelete);
-        mysqli_query($conn, $sql);
-        $_SESSION['alert'] = "Document deleted successfully!";
     } else {
-        $_SESSION['alert'] = "File not found: " . $docPathToDelete;
+        $_SESSION['alert'] = "Document path not found!";
     }
-    echo '<script>';
-    echo 'setTimeout(function() {';
-    echo '  window.location.href = "profile.php";';
-    echo '}, 1000);';
-    echo '</script>';
+
+    // echo '<script>';
+    // echo 'setTimeout(function() {';
+    // echo '  window.location.href = "profile.php";';
+    // echo '}, 1000);';
+    // echo '</script>';
 }
+
 
 
 if (isset($_POST['workSave'])) {
@@ -625,14 +630,20 @@ if (isset($_POST['workSave'])) {
                                                     list($docFolder, $docName) = explode('/', $docPath);
                                                     ?>
                                                     <div class="mb-3 px-3 py-2 rounded doc-container"
-                                                        onclick="window.open('<?php echo htmlspecialchars($docPath); ?>', '_blank')">
-                                                        <p class="mb-3 fw-semibold"><?php echo htmlspecialchars($docType); ?>
-                                                        </p>
+                                                        onclick="window.open('<?php echo $docPath; ?>', '_blank')">
+                                                        <div class="d-flex justify-content-between">
+                                                            <p class="mb-3 fw-semibold"><?php echo $docType; ?></p>
+                                                            <a href="#"
+                                                                onclick="event.stopPropagation(); window.location.href='?delDocPath=<?php echo urlencode($doc); ?>';">
+                                                                <i class="fa-solid fa-trash cursor-pointer z-3"></i>
+                                                            </a>
+                                                        </div>
+
                                                         <div class="d-flex gap-3">
-                                                            <img src="<?php echo htmlspecialchars($docPath); ?>" alt="documents"
+                                                            <img src="<?php echo $docPath; ?>" alt="documents"
                                                                 class="img-thumbnail" style="width: 4rem;">
                                                             <p class="d-flex flex-column justify-content-center lead">
-                                                                <?php echo htmlspecialchars($docName); ?>
+                                                                <?php echo $docName; ?>
                                                             </p>
                                                         </div>
                                                     </div>

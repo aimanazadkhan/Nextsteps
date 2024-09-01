@@ -366,7 +366,7 @@ if (isset($_POST['workSave'])) {
                                 <div class="col-md-8">
                                     <div class="card-body p-4">
                                         <div class="d-flex justify-content-between mb-1">
-                                            <h6>Personal Information</h6>
+                                            <h6 class="text-secondary fs-5">Personal Information</h6>
                                             <i class="far fa-edit editData"></i>
                                         </div>
                                         <hr class="mt-0 mb-4">
@@ -511,7 +511,7 @@ if (isset($_POST['workSave'])) {
                                 <div class="col-md-8">
                                     <div class="card-body p-4">
                                         <div class="d-flex justify-content-between mb-1">
-                                            <h6>Academic Qualification</h6>
+                                            <h6 class="text-secondary fs-5">Academic Qualification</h6>
                                             <i class="far fa-edit editData"></i>
                                         </div>
                                         <hr class="mt-0 mb-4">
@@ -578,27 +578,6 @@ if (isset($_POST['workSave'])) {
                                                     value="<?php echo $user['eduaddress']; ?>" name="address" />
                                             </div>
                                         </div>
-                                        <div class="row pt-1">
-                                            <?php
-                                            if ($user['eduDoc'] !== "") {
-                                                $docs = explode('|', $user['eduDoc']);
-                                                $count = 1;
-                                                foreach ($docs as $doc) {
-                                                    ?>
-                                                    <div class="col-6 mb-3">
-                                                        <h6>Document <?php echo $count; ?></h6>
-                                                        <a href="<?php echo $doc; ?>" target="_blank">View Document
-                                                            <?php echo $count; ?></a>
-                                                        <a href="profile.php?delDocPath=<?php echo $doc ?>"><span
-                                                                style="cursor: pointer"><i
-                                                                    class="fa-regular fa-trash-can"></i></span></a>
-                                                    </div>
-                                                    <?php
-                                                    $count++;
-                                                }
-                                            }
-                                            ?>
-                                        </div>
                                         <div class="float-end mb-3">
                                             <button type="submit" class="btn btn-primary saveBtn hidden"
                                                 name="aQualSave">Save</button>
@@ -613,55 +592,57 @@ if (isset($_POST['workSave'])) {
 
                     <!-- Documents Card -->
                     <div class="card hidden" id="docs" style="border-radius: .5rem;">
-                        <form action="" method="POST">
-                            <div class="row g-0">
-                                <div class="col-md-4 gradient-custom text-center text-white d-flex justify-content-center align-items-center"
-                                    style="height: auto;">
-                                    <div>
-                                        <img src="<?php echo $user['profilePic']; ?>" alt="Avatar"
-                                            class="img-fluid mb-4" style="width: 10rem;" />
-                                        <h5><?php echo $user['firstname'] . " " . $user['lastname']; ?></h5>
-                                    </div>
+                        <div class="row g-0">
+                            <div class="col-md-4 gradient-custom text-center text-white d-flex justify-content-center align-items-center"
+                                style="height: auto;">
+                                <div>
+                                    <img src="<?php echo $user['profilePic']; ?>" alt="Avatar" class="img-fluid mb-4"
+                                        style="width: 10rem;" />
+                                    <h5><?php echo $user['firstname'] . " " . $user['lastname']; ?></h5>
                                 </div>
-                                <div class="col-md-8">
-                                    <div class="card-body p-4">
-                                        <div class="d-flex justify-content-between mb-1">
-                                            <h6 class="">Documents</h6>
-                                            <i class="fa-solid fa-file-circle-plus cursor-pointer"
-                                                data-bs-toggle="modal" data-bs-target="#documentModal"></i>
-                                        </div>
-                                        <hr class="mt-0 mb-4">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body p-4">
+                                    <div class="d-flex justify-content-between mb-1">
+                                        <h6 class="text-secondary fs-5">Documents</h6>
+                                        <i class="fa-solid fa-file-circle-plus cursor-pointer" data-bs-toggle="modal"
+                                            data-bs-target="#documentModal"></i>
+                                    </div>
+                                    <hr class="mt-0 mb-4">
 
-                                        <div class="d-flex flex-column gap-3">
+                                    <div class="" style="height: 40rem; overflow: auto;">
+                                        <div>
                                             <?php
                                             $query = mysqli_query($conn, "SELECT eduDoc FROM `users` WHERE email = '{$_SESSION['user']}'");
                                             $documents = mysqli_fetch_assoc($query)['eduDoc'];
 
-                                            $documentArray = explode('|', $documents);
-
-                                            // Iterate over each document
-                                            foreach ($documentArray as $doc) {
-                                                list($docType, $docPath) = explode(':', $doc);
-                                                list($docFolder, $docName) = explode('/', $docPath);
-                                                ?>
-                                                <div class="px-3 py-2 rounded doc-container"
-                                                    onclick="window.open('<?php echo htmlspecialchars($docPath); ?>', '_blank')">
-                                                    <p class="mb-3 fw-semibold"><?php echo $docType; ?>
-                                                    </p>
-                                                    <div class="d-flex gap-3">
-                                                        <img src="<?php echo $docPath; ?>" alt="documents"
-                                                            class="img-thumbnail" style="width: 4rem;">
-                                                        <p class="d-flex flex-column justify-content-center lead">
-                                                            <?php echo htmlspecialchars($docName); ?>
+                                            if (empty($documents)) {
+                                                echo '<p class="text-center fw-bold">No document found</p>';
+                                            } else {
+                                                $documentArray = explode('|', $documents);
+                                                foreach ($documentArray as $doc) {
+                                                    list($docType, $docPath) = explode(':', $doc);
+                                                    list($docFolder, $docName) = explode('/', $docPath);
+                                                    ?>
+                                                    <div class="mb-3 px-3 py-2 rounded doc-container"
+                                                        onclick="window.open('<?php echo htmlspecialchars($docPath); ?>', '_blank')">
+                                                        <p class="mb-3 fw-semibold"><?php echo htmlspecialchars($docType); ?>
                                                         </p>
+                                                        <div class="d-flex gap-3">
+                                                            <img src="<?php echo htmlspecialchars($docPath); ?>" alt="documents"
+                                                                class="img-thumbnail" style="width: 4rem;">
+                                                            <p class="d-flex flex-column justify-content-center lead">
+                                                                <?php echo htmlspecialchars($docName); ?>
+                                                            </p>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            <?php } ?>
+                                                <?php }
+                                            } ?>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </form>
+                        </div>
                     </div>
 
                     <!-- Document Upload Modal -->
@@ -718,7 +699,7 @@ if (isset($_POST['workSave'])) {
                                 <div class="col-md-8">
                                     <div class="card-body p-4">
                                         <div class="d-flex justify-content-between mb-1">
-                                            <h6>Work Experience</h6>
+                                            <h6 class="text-secondary fs-5">Work Experience</h6>
                                             <i class="far fa-edit editData"></i>
                                         </div>
                                         <hr class="mt-0 mb-4">

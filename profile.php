@@ -102,7 +102,7 @@ if (isset($_FILES['file']) && isset($_POST['documentType'])) {
             $oldFilePaths = $row['eduDoc'];
 
             // Add the document type to the path
-            $newFilePathWithDocType = $documentType . "-" . $destinationPath;
+            $newFilePathWithDocType = $documentType . ":" . $destinationPath;
             $newFilePaths = $oldFilePaths ? $oldFilePaths . "|" . $newFilePathWithDocType : $newFilePathWithDocType;
 
             $updateQuery = "UPDATE users SET eduDoc = '$newFilePaths' WHERE id = {$user['id']}";
@@ -280,6 +280,15 @@ if (isset($_POST['workSave'])) {
 
         .hidden {
             display: none;
+        }
+
+        .doc-container {
+            background-color: hsl(0, 0%, 85%);
+        }
+
+        .doc-container:hover {
+            cursor: pointer;
+            background-color: hsl(0, 0%, 65%);
         }
     </style>
 </head>
@@ -622,6 +631,33 @@ if (isset($_POST['workSave'])) {
                                                 data-bs-toggle="modal" data-bs-target="#documentModal"></i>
                                         </div>
                                         <hr class="mt-0 mb-4">
+
+                                        <div class="d-flex flex-column gap-3">
+                                            <?php
+                                            $query = mysqli_query($conn, "SELECT eduDoc FROM `users` WHERE email = '{$_SESSION['user']}'");
+                                            $documents = mysqli_fetch_assoc($query)['eduDoc'];
+
+                                            $documentArray = explode('|', $documents);
+
+                                            // Iterate over each document
+                                            foreach ($documentArray as $doc) {
+                                                list($docType, $docPath) = explode(':', $doc);
+                                                list($docFolder, $docName) = explode('/', $docPath);
+                                                ?>
+                                                <div class="px-3 py-2 rounded doc-container"
+                                                    onclick="window.open('<?php echo htmlspecialchars($docPath); ?>', '_blank')">
+                                                    <p class="mb-3 fw-semibold"><?php echo $docType; ?>
+                                                    </p>
+                                                    <div class="d-flex gap-3">
+                                                        <img src="<?php echo $docPath; ?>" alt="documents"
+                                                            class="img-thumbnail" style="width: 4rem;">
+                                                        <p class="d-flex flex-column justify-content-center lead">
+                                                            <?php echo htmlspecialchars($docName); ?>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            <?php } ?>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

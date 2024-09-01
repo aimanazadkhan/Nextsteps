@@ -81,12 +81,13 @@ if (isset($_POST['aQualSave'])) {
     }
 }
 
-if (isset($_FILES['uploadedFile'])) {
+if (isset($_FILES['uploadedFile']) && isset($_POST['documentType'])) {
     $file = $_FILES['uploadedFile'];
     $fileName = $file['name'];
     $fileTmpName = $file['tmp_name'];
     $fileError = $file['error'];
 
+    $documentType = $_POST['documentType'];
     $userFirstName = $user['firstname'];
     $currentDateTime = date('Y-m-d_H-i-s');
     $newFileName = $userFirstName . "_" . $currentDateTime . "_" . $fileName;
@@ -99,7 +100,10 @@ if (isset($_FILES['uploadedFile'])) {
         if ($result) {
             $row = mysqli_fetch_assoc($result);
             $oldFilePaths = $row['eduDoc'];
-            $newFilePaths = $oldFilePaths ? $oldFilePaths . "|" . $destinationPath : $destinationPath;
+
+            // Add the document type to the path
+            $newFilePathWithDocType = $documentType . "-" . $destinationPath;
+            $newFilePaths = $oldFilePaths ? $oldFilePaths . "|" . $newFilePathWithDocType : $newFilePathWithDocType;
 
             $updateQuery = "UPDATE users SET eduDoc = '$newFilePaths' WHERE id = {$user['id']}";
             if (mysqli_query($conn, $updateQuery)) {
@@ -113,12 +117,14 @@ if (isset($_FILES['uploadedFile'])) {
     } else {
         $_SESSION['alert'] = "File move failed";
     }
+
     echo '<script>';
     echo 'setTimeout(function() {';
     echo '  window.location.href = "profile.php";';
-    echo '}, 1000);';
+    echo '}, 700);';
     echo '</script>';
 }
+
 
 if (isset($_GET['delDocPath'])) {
     $docPathToDelete = $_GET['delDocPath'];
@@ -594,15 +600,6 @@ if (isset($_POST['workSave'])) {
                                 </div>
                             </div>
                         </form>
-                        <div class="d-flex justify-content-end me-4 mb-2">
-                            <form action="" id="formDoc" METHOD="POST" enctype="multipart/form-data">
-                                <input type="file" name="uploadedFile" id="uploadedFile" style="display: none;"
-                                    required />
-                                <button type="" name="uploadDoc" class="btn btn-success docUpBtn"
-                                    id="uploadButton">Upload
-                                    Documents</button>
-                            </form>
-                        </div>
                     </div>
 
                     <!-- Documents Card -->

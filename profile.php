@@ -620,19 +620,58 @@ if (isset($_POST['workSave'])) {
                                 <div class="col-md-8">
                                     <div class="card-body p-4">
                                         <div class="d-flex justify-content-between mb-1">
-                                            <h6>Documents</h6>
-                                            <i class="fa-solid fa-file-circle-plus"></i>
+                                            <h6 class="">Documents</h6>
+                                            <i class="fa-solid fa-file-circle-plus cursor-pointer"
+                                                data-bs-toggle="modal" data-bs-target="#documentModal"></i>
                                         </div>
                                         <hr class="mt-0 mb-4">
-
                                     </div>
                                 </div>
                             </div>
                         </form>
                     </div>
 
-                    <!-- Work Experience Card -->
+                    <!-- Document Upload Modal -->
+                    <div class="modal fade" id="documentModal" tabindex="-1" aria-labelledby="documentModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="documentModalLabel">Upload Document</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="" method="POST" enctype="multipart/form-data">
+                                        <div class="mb-3">
+                                            <label for="documentType" class="form-label">Document Type</label>
+                                            <select class="form-select" id="documentType" name="documentType" required>
+                                                <option selected disabled>Select Document Type</option>
+                                                <option value="IELTS">IELTS</option>
+                                                <option value="SSC_Certificate">SSC Certificate</option>
+                                                <option value="SSC_Transcript">SSC Transcript</option>
+                                                <option value="HSC_Certificate">HSC Certificate</option>
+                                                <option value="HSC_Transcript">HSC Transcript</option>
+                                            </select>
+                                        </div>
+                                        <div class="">
+                                            <label for="fileInput" class="form-label">Upload File</label>
+                                            <input class="form-control" type="file" id="fileInput" name="file"
+                                                accept="image/*" required>
+                                        </div>
 
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Upload</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Work Experience Card -->
                     <div class="card hidden" id="wexp" style="border-radius: .5rem;">
                         <form action="" method="POST">
                             <div class="row g-0">

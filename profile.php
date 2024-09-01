@@ -81,8 +81,8 @@ if (isset($_POST['aQualSave'])) {
     }
 }
 
-if (isset($_FILES['uploadedFile']) && isset($_POST['documentType'])) {
-    $file = $_FILES['uploadedFile'];
+if (isset($_FILES['file']) && isset($_POST['documentType'])) {
+    $file = $_FILES['file'];
     $fileName = $file['name'];
     $fileTmpName = $file['tmp_name'];
     $fileError = $file['error'];
@@ -638,8 +638,8 @@ if (isset($_POST['workSave'])) {
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
-                                <div class="modal-body">
-                                    <form action="" method="POST" enctype="multipart/form-data">
+                                <form action="" method="POST" enctype="multipart/form-data">
+                                    <div class="modal-body">
                                         <div class="mb-3">
                                             <label for="documentType" class="form-label">Document Type</label>
                                             <select class="form-select" id="documentType" name="documentType" required>
@@ -656,14 +656,13 @@ if (isset($_POST['workSave'])) {
                                             <input class="form-control" type="file" id="fileInput" name="file"
                                                 accept="image/*" required>
                                         </div>
-
-                                    </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary">Upload</button>
-                                </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Upload</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>

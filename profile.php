@@ -128,9 +128,8 @@ if (isset($_FILES['file']) && isset($_POST['documentType'])) {
 
 if (isset($_GET['delDocPath'])) {
     $docPathToDelete = $_GET['delDocPath'];
-    $userEmail = $_SESSION['user'];
 
-    $query = mysqli_query($conn, "SELECT eduDoc FROM users WHERE email = '$userEmail'");
+    $query = mysqli_query($conn, "SELECT eduDoc FROM users WHERE email = '{$_SESSION['user']}'");
     $user = mysqli_fetch_assoc($query);
     $currentDocs = explode('|', $user['eduDoc']);
 
@@ -139,7 +138,7 @@ if (isset($_GET['delDocPath'])) {
         unset($currentDocs[$indexToDelete]);
         $updatedEduDoc = implode('|', array_filter($currentDocs));
 
-        $sql = "UPDATE users SET eduDoc = '$updatedEduDoc' WHERE email = '$userEmail'";
+        $sql = "UPDATE users SET eduDoc = '$updatedEduDoc' WHERE  email = '{$_SESSION['user']}'";
 
         if (mysqli_query($conn, $sql)) {
             list($docType, $docDelete) = explode(':', $docPathToDelete);
@@ -156,14 +155,12 @@ if (isset($_GET['delDocPath'])) {
         $_SESSION['alert'] = "Document path not found!";
     }
 
-    // echo '<script>';
-    // echo 'setTimeout(function() {';
-    // echo '  window.location.href = "profile.php";';
-    // echo '}, 1000);';
-    // echo '</script>';
+    echo '<script>';
+    echo 'setTimeout(function() {';
+    echo '  window.location.href = "profile.php";';
+    echo '}, 1);';
+    echo '</script>';
 }
-
-
 
 if (isset($_POST['workSave'])) {
     $company_name = $_POST['company_name'];
@@ -193,6 +190,75 @@ if (isset($_POST['workSave'])) {
         echo '</script>';
     }
 }
+
+function isPersonalInfoComplete($user)
+{
+    $fields = [
+        'firstname',
+        'lastname',
+        'email',
+        'phonenumber',
+        'dob',
+        'gender',
+        'marital',
+        'nation',
+        'address',
+        'postcode',
+        'passportnum',
+        'issuecountry',
+        'issuedate',
+        'expirydate'
+    ];
+
+    foreach ($fields as $field) {
+        if (empty($user[$field])) {
+            return false;
+        }
+    }
+    return true;
+}
+$isComplete = isPersonalInfoComplete($user);
+
+function isAcademicInfoComplete($user)
+{
+    $fields = [
+        'institutionname',
+        'studycountry',
+        'qualification',
+        'cgpa',
+        'startdate',
+        'enddate',
+        'language',
+        'eduaddress'
+    ];
+
+    foreach ($fields as $field) {
+        if (empty($user[$field])) {
+            return false;
+        }
+    }
+    return true;
+}
+$isAcademicComplete = isAcademicInfoComplete($user);
+
+function isWorkExperienceComplete($user)
+{
+    $fields = [
+        'companyname',
+        'jobtitle',
+        'jobstartdate',
+        'jobenddate',
+        'jobresponsibilities'
+    ];
+
+    foreach ($fields as $field) {
+        if (empty($user[$field])) {
+            return false;
+        }
+    }
+    return true;
+}
+$isWorkExperienceComplete = isWorkExperienceComplete($user);
 
 ?>
 
@@ -308,14 +374,18 @@ if (isset($_POST['workSave'])) {
                         <li class="nav-item" style="flex: 1;">
                             <a class="nav-link text-center d-block pt-3" href="#pinfo">
                                 Personal Information<br>
-                                <p class="text-success">Complete</p>
+                                <p class="<?php echo $isComplete ? 'text-success' : 'text-danger'; ?>">
+                                    <?php echo $isComplete ? 'Complete' : 'Incomplete'; ?>
+                                </p>
                             </a>
                         </li>
                         <div class="vr"></div>
                         <li class="nav-item" style="flex: 1;">
                             <a class="nav-link text-center d-block pt-3" href="#equalif">
                                 Academic Qualification<br>
-                                <p class="text-success">Complete</p>
+                                <p class="<?php echo $isAcademicComplete ? 'text-success' : 'text-danger'; ?>">
+                                    <?php echo $isAcademicComplete ? 'Complete' : 'Incomplete'; ?>
+                                </p>
                             </a>
                         </li>
                         <div class="vr"></div>
@@ -329,10 +399,11 @@ if (isset($_POST['workSave'])) {
                         <li class="nav-item" style="flex: 1;">
                             <a class="nav-link text-center d-block pt-3" href="#wexp">
                                 Work Experience<br>
-                                <p class="text-success">Complete</p>
+                                <p class="<?php echo $isWorkExperienceComplete ? 'text-success' : 'text-danger'; ?>">
+                                    <?php echo $isWorkExperienceComplete ? 'Complete' : 'Incomplete'; ?>
+                                </p>
                             </a>
                         </li>
-
                     </ul>
                 </div>
             </nav>

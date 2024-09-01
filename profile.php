@@ -300,11 +300,19 @@ if (isset($_POST['workSave'])) {
                         </li>
                         <div class="vr"></div>
                         <li class="nav-item" style="flex: 1;">
+                            <a class="nav-link text-center d-block pt-3" href="#docs">
+                                Documents<br>
+                                <p class="text-success">Complete</p>
+                            </a>
+                        </li>
+                        <div class="vr"></div>
+                        <li class="nav-item" style="flex: 1;">
                             <a class="nav-link text-center d-block pt-3" href="#wexp">
                                 Work Experience<br>
                                 <p class="text-success">Complete</p>
                             </a>
                         </li>
+
                     </ul>
                 </div>
             </nav>
@@ -595,10 +603,36 @@ if (isset($_POST['workSave'])) {
                                     Documents</button>
                             </form>
                         </div>
+                    </div>
 
+                    <!-- Documents Card -->
+                    <div class="card hidden" id="docs" style="border-radius: .5rem;">
+                        <form action="" method="POST">
+                            <div class="row g-0">
+                                <div class="col-md-4 gradient-custom text-center text-white d-flex justify-content-center align-items-center"
+                                    style="height: auto;">
+                                    <div>
+                                        <img src="<?php echo $user['profilePic']; ?>" alt="Avatar"
+                                            class="img-fluid mb-4" style="width: 10rem;" />
+                                        <h5><?php echo $user['firstname'] . " " . $user['lastname']; ?></h5>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body p-4">
+                                        <div class="d-flex justify-content-between mb-1">
+                                            <h6>Documents</h6>
+                                            <i class="fa-solid fa-file-circle-plus"></i>
+                                        </div>
+                                        <hr class="mt-0 mb-4">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     </div>
 
                     <!-- Work Experience Card -->
+
                     <div class="card hidden" id="wexp" style="border-radius: .5rem;">
                         <form action="" method="POST">
                             <div class="row g-0">

@@ -114,19 +114,15 @@ include "../connection.php";
                                                 }
                                                 ?>
                                             </div>
-
                                         </td>
                                         <td>
                                             <p
                                                 class='<?php echo $row['applied'] == 0 ? "text-danger" : "text-success"; ?> fw-light m-0 p-0'>
                                                 <?php echo $row['applied']; ?> Applications Applied
                                             </p>
-
                                         </td>
                                     </tr>
-
                                 <?php } ?>
-
                             </tbody>
                         </table>
                     </div>

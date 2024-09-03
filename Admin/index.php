@@ -1,4 +1,9 @@
 <?php
+session_start();
+if (!isset($_SESSION['user']) || $_SESSION['user'] !== 'admin') {
+    echo "<script>alert('You have to Login First!!!')</script>";
+    echo "<script>location.href='../login.php'</script>";
+}
 include "../connection.php";
 // All Applications Data
 $applications = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM `applications`"));
@@ -17,7 +22,7 @@ $applications = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM `applications
     <!-- Fontawesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- Animate CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 </head>
 
 <body>

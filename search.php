@@ -2,6 +2,8 @@
 session_start();
 include "connection.php";
 
+
+
 // Initialize variables for filters
 $countries = $universities = $levels = $titles = [];
 $selectedCountries = $selectedUniversities = $selectedLevels = $selectedTitles = [];
@@ -365,6 +367,9 @@ document.addEventListener('DOMContentLoaded', function () {
                                             <label>Tuition Fees</label>
                                             <p class='card-title text-success'>${course.TuitionFees}</p>
                                             <button class='btn btn-primary' onclick='window.open("${course.URL}", "_blank")'>Visit Website</button>
+                                            <a href="search.php?id=${course.ID}">
+                                                <button class='ms-3 btn btn-primary'>Apply Now</button>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>`;

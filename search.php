@@ -6,9 +6,14 @@ if (!isset($_SESSION['user'])) {
 }
 include "connection.php";
 
-if(isset($_GET['id'])) {
-    $id = $_GET['id'];
-    $email = $_SESSION['user'];
+if (isset($_GET['createApp'])) {
+    $id = $_GET['createApp'];
+
+    if (isset($_GET['email']) && !empty($_GET['email'])) {
+        $email = $_GET['email'];
+    } else {
+        $email = $_SESSION['user'];
+    }
 
     $query = "INSERT INTO `applications`(`uniID`, `userEmail`) VALUES ('$id', '$email')";
     if (!mysqli_query($conn, $query)) {
@@ -289,7 +294,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax'])) {
                                             <label>Tuition Fees</label>
                                             <p class='card-title text-success'><?php echo $row['TuitionFees']; ?></p>
                                             <button class='btn btn-primary' onclick='window.open("<?php echo $row['URL']; ?>", "_blank")'>Visit Website</button>
-                                            <a href="search.php?id=<?php echo $row['ID']; ?>">
+                                            <a href="search.php?createApp=<?php echo $row['ID']; ?>&&email=<?php echo $_GET['email']; ?>">
                                                 <button class='ms-3 btn btn-primary'>Apply Now</button>
                                             </a>
                                         </div>
@@ -309,101 +314,107 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax'])) {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 <script>
+    document.addEventListener('DOMContentLoaded', function () {
+    const toggleButtons = document.querySelectorAll('.toggle-btn');
 
-document.addEventListener('DOMContentLoaded', function () {
-            const toggleButtons = document.querySelectorAll('.toggle-btn');
-
-            toggleButtons.forEach(button => {
-                button.addEventListener('click', function () {
-                    const id = this.id.split('-')[2];
-                    const subcategories = document.getElementById(`subcategories-${id}`);
-                    if (subcategories.style.display === 'none' || subcategories.style.display === '') {
-                        subcategories.style.display = 'block';
-                        this.textContent = '-';
-                    } else {
-                        subcategories.style.display = 'none';
-                        this.textContent = '+';
-                    }
-                });
-            });
+    toggleButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            const id = this.id.split('-')[2];
+            const subcategories = document.getElementById(`subcategories-${id}`);
+            if (subcategories.style.display === 'none' || subcategories.style.display === '') {
+                subcategories.style.display = 'block';
+                this.textContent = '-';
+            } else {
+                subcategories.style.display = 'none';
+                this.textContent = '+';
+            }
         });
-        $(document).ready(function () {
-    // Function to handle checkbox change events
-    $('input[type="checkbox"]').change(function () {
-        applyFilters();
     });
 
-    // Function to apply filters and fetch data
-    function applyFilters() {
-        var selectedCountries = $('input[name="selectedCountries[]"]:checked').map(function () {
-            return this.value;
-        }).get();
+    $(document).ready(function () {
+        // Function to handle checkbox change events
+        $('input[type="checkbox"]').change(function () {
+            applyFilters();
+        });
 
-        var selectedUniversities = $('input[name="selectedUniversities[]"]:checked').map(function () {
-            return this.value;
-        }).get();
+        // Function to apply filters and fetch data
+        function applyFilters() {
+            var selectedCountries = $('input[name="selectedCountries[]"]:checked').map(function () {
+                return this.value;
+            }).get();
 
-        var selectedLevels = $('input[name="selectedLevels[]"]:checked').map(function () {
-            return this.value;
-        }).get();
+            var selectedUniversities = $('input[name="selectedUniversities[]"]:checked').map(function () {
+                return this.value;
+            }).get();
 
-        var selectedTitles = $('input[name="selectedTitles[]"]:checked').map(function () {
-            return this.value;
-        }).get();
+            var selectedLevels = $('input[name="selectedLevels[]"]:checked').map(function () {
+                return this.value;
+            }).get();
 
-        // Send AJAX request only if at least one filter is selected
-        if (selectedCountries.length > 0 || selectedUniversities.length > 0 || selectedLevels.length > 0 || selectedTitles.length > 0) {
-            $.ajax({
-                type: 'POST',
-                url: 'search.php',
-                data: {
-                    ajax: true,
-                    selectedCountries: selectedCountries,
-                    selectedUniversities: selectedUniversities,
-                    selectedLevels: selectedLevels,
-                    selectedTitles: selectedTitles
-                },
-                success: function (response) {
-                    // Update content section with new data
-                    var courses = JSON.parse(response);
-                    var courseResults = $('#course-results');
-                    courseResults.empty();
-                    if (courses.length > 0) {
-                        courses.forEach(function (course) {
-                            var html = `
-                                <div class='col-12 mb-4'>
-                                    <div class='custom-card'>
-                                        <div class='card-body'>
-                                            <h3 class='card-text fw-bold'>${course.University}</h3>
-                                            <h5 class='card-text'>${course.CourseLevel}</h5>
-                                            <p class='card-title text-primary'>${course.CourseTitle}</p>
-                                            <label>Next Starting</label>
-                                            <p class='card-title text-success'>${course.NextStarting}</p>
-                                            <label>Tuition Fees</label>
-                                            <p class='card-title text-success'>${course.TuitionFees}</p>
-                                            <button class='btn btn-primary' onclick='window.open("${course.URL}", "_blank")'>Visit Website</button>
-                                            <a href="search.php?id=${course.ID}">
-                                                <button class='ms-3 btn btn-primary'>Apply Now</button>
-                                            </a>
+            var selectedTitles = $('input[name="selectedTitles[]"]:checked').map(function () {
+                return this.value;
+            }).get();
+
+            // Send AJAX request only if at least one filter is selected
+            if (selectedCountries.length > 0 || selectedUniversities.length > 0 || selectedLevels.length > 0 || selectedTitles.length > 0) {
+                $.ajax({
+                    type: 'POST',
+                    url: 'search.php',
+                    data: {
+                        ajax: true,
+                        selectedCountries: selectedCountries,
+                        selectedUniversities: selectedUniversities,
+                        selectedLevels: selectedLevels,
+                        selectedTitles: selectedTitles
+                    },
+                    success: function (response) {
+                        // Update content section with new data
+                        var courses = JSON.parse(response);
+                        var courseResults = $('#course-results');
+                        courseResults.empty();
+                        if (courses.length > 0) {
+                            courses.forEach(function (course) {
+                                var html = `
+                                    <div class='col-12 mb-4'>
+                                        <div class='custom-card'>
+                                            <div class='card-body'>
+                                                <h3 class='card-text fw-bold'>${course.University}</h3>
+                                                <h5 class='card-text'>${course.CourseLevel}</h5>
+                                                <p class='card-title text-primary'>${course.CourseTitle}</p>
+                                                <label>Next Starting</label>
+                                                <p class='card-title text-success'>${course.NextStarting}</p>
+                                                <label>Tuition Fees</label>
+                                                <p class='card-title text-success'>${course.TuitionFees}</p>
+                                                <button class='btn btn-primary' onclick='window.open("${course.URL}", "_blank")'>Visit Website</button>
+                                                <button class='ms-3 btn btn-primary' onclick='applyNow(${course.ID})'>Apply Now</button>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>`;
-                            courseResults.append(html);
-                        });
-                    } else {
-                        courseResults.append("<p>No results found.</p>");
+                                    </div>`;
+                                courseResults.append(html);
+                            });
+                        } else {
+                            courseResults.append("<p>No results found.</p>");
+                        }
+                    },
+                    error: function (error) {
+                        console.error('Error:', error);
                     }
-                },
-                error: function (error) {
-                    console.error('Error:', error);
-                }
-            });
-        } else {
-            // If no filters selected, display a message or handle accordingly
-            $('#course-results').html("<p>Please select at least one filter option.</p>");
+                });
+            } else {
+                // If no filters selected, display a message or handle accordingly
+                $('#course-results').html("<p>Please select at least one filter option.</p>");
+            }
         }
-    }
+
+        // Function to handle "Apply Now" button click
+        window.applyNow = function(courseID) {
+            const email = new URLSearchParams(window.location.search).get('email');
+            const url = `search.php?createApp=${courseID}&email=${email ? email : ''}`;
+            window.location.href = url;
+        }
+    });
 });
+
 </script>
 
 </html>

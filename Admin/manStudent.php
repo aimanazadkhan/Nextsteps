@@ -116,10 +116,14 @@ include "../connection.php";
                                             </div>
                                         </td>
                                         <td>
-                                            <p
-                                                class='<?php echo $row['applied'] == 0 ? "text-danger" : "text-success"; ?> fw-light m-0 p-0'>
-                                                <?php echo $row['applied']; ?> Applications Applied
-                                            </p>
+                                            <a href="../search.php?email=<?php echo $row['email']; ?>"
+                                                class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">
+                                                <p
+                                                    class='<?php echo $row['applied'] == 0 ? "text-danger" : "text-success"; ?> fw-light m-0 p-0'>
+                                                    <?php echo $row['applied']; ?> Applications Applied
+                                                </p>
+                                            </a>
+
                                         </td>
                                     </tr>
                                 <?php } ?>

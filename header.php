@@ -31,13 +31,15 @@
           </li>
         </ul>
 
-        <?php if (isset($_SESSION['user'])) {
+        <?php if (isset($_SESSION['user']) && $_SESSION['user'] !== 'admin') {
+          $proPicQuery = mysqli_query($conn, "SELECT `profilePic` FROM `users` WHERE email = '{$_SESSION['user']}'");
+          $row = mysqli_fetch_assoc($proPicQuery);
           echo
             "
               <div class='dropdown text-end'>
                 <a href='#' class='d-block link-body-emphasis text-decoration-none dropdown-toggle'
                   data-bs-toggle='dropdown' aria-expanded='false'>
-                  <img src='User Photos/abd.jpg' alt='' width='32' height='32' class='rounded-circle'>
+                  <img src='" . $row['profilePic'] . "' alt='' width='32' height='32' class='rounded-circle'>
                 </a>
                 <ul class='dropdown-menu text-small'>
                   <li><a class='dropdown-item' href='profile.php'>Profile</a></li>
@@ -59,7 +61,6 @@
                   <a href='register.php' class='btn btn-primary ms-2 ms-lg-3'>Sign Up</a>
                 </div>";
         }
-
         ?>
       </div>
     </div>

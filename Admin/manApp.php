@@ -12,6 +12,7 @@ include "../connection.php";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Home</title>
+    <link rel="icon" href="images/Next Steps logo.png">
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Fontawesome Icons -->
@@ -53,7 +54,7 @@ include "../connection.php";
                                 while ($row = mysqli_fetch_array($applicationData)) {
                                     $user = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM `users` WHERE `email` = '{$row['userEmail']}'"));
                                     $uni = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM `search` WHERE `ID` = '{$row['uniID']}'"));
-                    
+
                                     $datetime = $row['createdOn'];
                                     list($date, $time) = explode(' ', $datetime);
                                     echo "
@@ -77,28 +78,28 @@ include "../connection.php";
                                                 <p>" . $uni['CourseTitle'] . "</p>
                                             </td>
                                             <td>";
-                                            
-                                        $status = $row['appStatus'];
-                                        $class = '';
 
-                                        switch ($status) {
-                                            case 'Pending':
-                                                $class = 'text-bg-warning';
-                                                break;
-                                            case 'Declined':
-                                                $class = 'text-bg-danger';
-                                                break;
-                                            case 'Success':
-                                                $class = 'text-bg-success';
-                                                break;
-                                            default:
-                                                $class = 'text-bg-warning';
-                                                break;
-                                        }
+                                    $status = $row['appStatus'];
+                                    $class = '';
 
-                                        echo "<p class='badge $class'>" . $status . "</p>";
+                                    switch ($status) {
+                                        case 'Pending':
+                                            $class = 'text-bg-warning';
+                                            break;
+                                        case 'Declined':
+                                            $class = 'text-bg-danger';
+                                            break;
+                                        case 'Success':
+                                            $class = 'text-bg-success';
+                                            break;
+                                        default:
+                                            $class = 'text-bg-warning';
+                                            break;
+                                    }
 
-                                        echo "
+                                    echo "<p class='badge $class'>" . $status . "</p>";
+
+                                    echo "
                                             </td>
                                             <td>
                                                 <p></p>
@@ -124,7 +125,7 @@ include "../connection.php";
         $(document).ready(function () {
             $('#dataTable').DataTable({
                 "lengthMenu": [[7, 10, 25, 50, -1], [7, 10, 25, 50, "All"]],
-                "pageLength": 7 
+                "pageLength": 7
             });
         });
     </script>

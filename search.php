@@ -19,10 +19,17 @@ if (isset($_GET['createApp'])) {
     if (!mysqli_query($conn, $query)) {
         die("Not Inserted!!");
     } else {
-        echo "<script>alert('Application Created Successfully. Wait for an admin to contact you.')</script>";
-        echo "<script>location.href='search.php'</script>";
+        // Increment the applied column
+        $updateQuery = "UPDATE `users` SET `applied` = `applied` + 1 WHERE `email` = '$email'";
+        if (!mysqli_query($conn, $updateQuery)) {
+            die("Failed to update applied count!");
+        } else {
+            echo "<script>alert('Application Created Successfully. Wait for an admin to contact you.')</script>";
+            echo "<script>location.href='search.php'</script>";
+        }
     }
 }
+
 
 // Initialize variables for filters
 $countries = $universities = $levels = $titles = [];

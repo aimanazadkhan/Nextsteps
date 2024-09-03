@@ -1,8 +1,23 @@
 <?php
 session_start();
+if (!isset($_SESSION['user'])) {
+    echo "<script>alert('You have to Login First!!!')</script>";
+    echo "<script>location.href='./login.php'</script>";
+}
 include "connection.php";
 
+if(isset($_GET['id'])) {
+    $id = $_GET['id'];
+    $email = $_SESSION['user'];
 
+    $query = "INSERT INTO `applications`(`uniID`, `userEmail`) VALUES ('$id', '$email')";
+    if (!mysqli_query($conn, $query)) {
+        die("Not Inserted!!");
+    } else {
+        echo "<script>alert('Application Created Successfully. Wait for an admin to contact you.')</script>";
+        echo "<script>location.href='search.php'</script>";
+    }
+}
 
 // Initialize variables for filters
 $countries = $universities = $levels = $titles = [];

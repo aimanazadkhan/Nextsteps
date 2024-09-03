@@ -443,7 +443,14 @@ $isWorkExperienceComplete = isWorkExperienceComplete($user);
                                     <div class="card-body p-4">
                                         <div class="d-flex justify-content-between mb-1">
                                             <h6 class="text-secondary fs-5">Personal Information</h6>
-                                            <i class="far fa-edit editData"></i>
+                                            <?php
+                                            $appQuery = mysqli_query($conn, "SELECT `applied` FROM `users` WHERE email = '{$_SESSION['user']}'");
+                                            $appNum = mysqli_fetch_assoc($appQuery);
+
+                                            if (empty($appNum['applied']) || $appNum['applied'] == 0) {
+                                                echo '<i class="far fa-edit editData"></i>';
+                                            }
+                                            ?>
                                         </div>
                                         <hr class="mt-0 mb-4">
                                         <div class="row pt-1">
@@ -588,7 +595,14 @@ $isWorkExperienceComplete = isWorkExperienceComplete($user);
                                     <div class="card-body p-4">
                                         <div class="d-flex justify-content-between mb-1">
                                             <h6 class="text-secondary fs-5">Academic Qualification</h6>
-                                            <i class="far fa-edit editData"></i>
+                                            <?php
+                                            $appQuery = mysqli_query($conn, "SELECT `applied` FROM `users` WHERE email = '{$_SESSION['user']}'");
+                                            $appNum = mysqli_fetch_assoc($appQuery);
+
+                                            if (empty($appNum['applied']) || $appNum['applied'] == 0) {
+                                                echo '<i class="far fa-edit editData"></i>';
+                                            }
+                                            ?>
                                         </div>
                                         <hr class="mt-0 mb-4">
                                         <div class="row pt-1">
@@ -681,8 +695,15 @@ $isWorkExperienceComplete = isWorkExperienceComplete($user);
                                 <div class="card-body p-4">
                                     <div class="d-flex justify-content-between mb-1">
                                         <h6 class="text-secondary fs-5">Documents</h6>
-                                        <i class="fa-solid fa-file-circle-plus cursor-pointer" data-bs-toggle="modal"
-                                            data-bs-target="#documentModal"></i>
+                                        <?php
+                                        $appQuery = mysqli_query($conn, "SELECT `applied` FROM `users` WHERE email = '{$_SESSION['user']}'");
+                                        $appNum = mysqli_fetch_assoc($appQuery);
+
+                                        if (empty($appNum['applied']) || $appNum['applied'] == 0) {
+                                            echo '<i class="fa-solid fa-file-circle-plus cursor-pointer" data-bs-toggle="modal"
+                                            data-bs-target="#documentModal"></i>';
+                                        }
+                                        ?>
                                     </div>
                                     <hr class="mt-0 mb-4">
 
@@ -782,7 +803,14 @@ $isWorkExperienceComplete = isWorkExperienceComplete($user);
                                     <div class="card-body p-4">
                                         <div class="d-flex justify-content-between mb-1">
                                             <h6 class="text-secondary fs-5">Work Experience</h6>
-                                            <i class="far fa-edit editData"></i>
+                                            <?php
+                                            $appQuery = mysqli_query($conn, "SELECT `applied` FROM `users` WHERE email = '{$_SESSION['user']}'");
+                                            $appNum = mysqli_fetch_assoc($appQuery);
+
+                                            if (empty($appNum['applied']) || $appNum['applied'] == 0) {
+                                                echo '<i class="far fa-edit editData"></i>';
+                                            }
+                                            ?>
                                         </div>
                                         <hr class="mt-0 mb-4">
                                         <div class="row pt-1">

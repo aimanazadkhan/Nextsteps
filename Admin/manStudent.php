@@ -45,6 +45,7 @@ include "../connection.php";
                                     <th>Name</th>
                                     <th>Mobile Phone</th>
                                     <th>Assigned To</th>
+                                    <th>Remarks</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
@@ -54,44 +55,78 @@ include "../connection.php";
 
                                 while ($row = mysqli_fetch_array($userData)) {
                                     $datetime = $row['createdOn'];
-                                    list($date, $time) = explode(' ', $datetime);
-                                    echo "
-                                        <tr>
-                                            <td>
-                                                <p>" . $row['id'] . "</p>
-                                            </td>
-                                            <td>
-                                                <p class='mt-2'>" . $date . "<br>" . $time . "</p> 
-                                            </td>
-                                            <td class='p-0'>
-                                                <div class='d-flex'>
-                                                    <div class='me-3'>
-                                                        <img class='rounded-pill' src='../" . $row['profilePic'] . "' width='50rem'>
-                                                    </div>
-                                                    <div>
-                                                        <p class='fw-bold mb-1'>" . $row['firstname'] . " " . $row['lastname'] . "</p>
-                                                        <p class='fw-bold text-muted mb-0'>" . $row['email'] . "</p>
-                                                    </div>
-                                                    
+                                    list($date, $time) = explode(' ', $datetime); ?>
+
+                                    <tr>
+                                        <td>
+                                            <p><?php echo $row['id']; ?></p>
+                                        </td>
+                                        <td>
+                                            <p class='mt-2'><?php echo $date; ?><br><?php echo $time; ?></p>
+                                        </td>
+                                        <td class='p-0'>
+                                            <div class='d-flex'>
+                                                <div class='me-3'>
+                                                    <img class='rounded-pill' src='../<?php echo $row['profilePic']; ?>'
+                                                        width='50rem'>
                                                 </div>
-                                            </td>
-                                            <td>
-                                                <p>" . $row['phonenumber'] . "</p>
-                                            </td>
-                                            <td>
-                                                <select class='form-select'>
-                                                    <option value='dummy1' " . ($row['assignedTo'] == 'dummy1' ? 'selected' : '') . ">Dummy Name 1</option>
-                                                    <option value='dummy2' " . ($row['assignedTo'] == 'dummy2' ? 'selected' : '') . ">Dummy Name 2</option>
-                                                    <option value='dummy3' " . ($row['assignedTo'] == 'dummy3' ? 'selected' : '') . ">Dummy Name 3</option>
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <p class='text-success'>" . $row['applied'] . " Applications Applied</p>
-                                            </td>
-                                        </tr>
-                                    ";
-                                }
-                                ?>
+                                                <div>
+                                                    <p class='fw-bold mb-1'>
+                                                        <?php echo $row['firstname'] . " " . $row['lastname']; ?>
+                                                    </p>
+                                                    <p class='fw-semibold text-muted mb-0'><?php echo $row['email']; ?></p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <p class="m-0 p-0"><?php echo $row['phonenumber']; ?></p>
+                                        </td>
+                                        <td>
+                                            <select class='form-select'>
+                                                <option value='dummy1' <?php echo ($row['assignedTo'] == 'dummy1') ? 'selected' : ''; ?>>Dummy Name 1</option>
+                                                <option value='dummy2' <?php echo ($row['assignedTo'] == 'dummy2') ? 'selected' : ''; ?>>Dummy Name 2</option>
+                                                <option value='dummy3' <?php echo ($row['assignedTo'] == 'dummy3') ? 'selected' : ''; ?>>Dummy Name 3</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <div>
+                                                <?php
+                                                $eduDoc = $row['eduDoc']; // Get the documents string
+                                            
+                                                $documents = ['IELTS', 'HSC_Certificate', 'SSC_Certificate']; // Documents to check
+                                                $missingDocs = [];
+
+                                                // Loop through each document type and check if it's in the string
+                                                foreach ($documents as $doc) {
+                                                    if (strpos($eduDoc, $doc) === false) {
+                                                        $missingDocs[] = $doc;
+                                                    }
+                                                }
+
+                                                if (!empty($missingDocs)) {
+                                                    // Show "not found" messages for each missing document
+                                                    foreach ($missingDocs as $missingDoc) {
+                                                        echo '<p class="fs-6 text-danger fw-light m-0 p-0">' . $missingDoc . ' Not Found</p>';
+                                                    }
+                                                } else {
+                                                    // If no documents are missing, show "No missing document"
+                                                    echo '<p class="fs-6 text-success fw-light m-0 p-0">No missing document</p>';
+                                                }
+                                                ?>
+                                            </div>
+
+                                        </td>
+                                        <td>
+                                            <p
+                                                class='<?php echo $row['applied'] == 0 ? "text-danger" : "text-success"; ?> fw-light m-0 p-0'>
+                                                <?php echo $row['applied']; ?> Applications Applied
+                                            </p>
+
+                                        </td>
+                                    </tr>
+
+                                <?php } ?>
+
                             </tbody>
                         </table>
                     </div>
@@ -101,7 +136,7 @@ include "../connection.php";
     </div>
 
     <!-- DataTable -->
-    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src=" https://code.jquery.com/jquery-3.7.0.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
 

@@ -1,44 +1,43 @@
-
 <footer class="section-sm bg-tertiary">
-    <div class="container">
-      <div class="row justify-content-between">
-        <div class="col-lg-2 col-md-4 col-6 mb-4">
-          <div class="footer-widget">
-            <h5 class="mb-4 text-primary font-secondary">Service</h5>
-            <ul class="list-unstyled">
-              <li class="mb-2"><a href="studentvisa.php">Student Visa</a>
-              </li>
-              <li class="mb-2"><a href="visitvisa.php">Visit Visa</a>
-              </li>
-              <li class="mb-2"><a href="air ticket.php">Air Ticketing</a>
-              </li>
-            </ul>
-          </div>
+  <div class="container">
+    <div class="row justify-content-between">
+      <div class="col-lg-2 col-md-4 col-6 mb-4">
+        <div class="footer-widget">
+          <h5 class="mb-4 text-primary font-secondary">Service</h5>
+          <ul class="list-unstyled">
+            <li class="mb-2"><a href="studentvisa.php">Student Visa</a>
+            </li>
+            <li class="mb-2"><a href="visitvisa.php">Visit Visa</a>
+            </li>
+            <li class="mb-2"><a href="air ticket.php">Air Ticketing</a>
+            </li>
+          </ul>
         </div>
-        <div class="col-lg-2 col-md-4 col-6 mb-4">
-          <div class="footer-widget">
-            <h5 class="mb-4 text-primary font-secondary">About</h5>
-            <ul class="list-unstyled">
-              <li class="mb-2"><a href="#!">Benefits</a>
-              </li>
-              <li class="mb-2"><a href="#!">Careers</a>
-              </li>
-              <li class="mb-2"><a href="#!">Our Story</a>
-              </li>
-              <li class="mb-2"><a href="#!">Team</a>
-              </li>
-            </ul>
-          </div>
+      </div>
+      <div class="col-lg-2 col-md-4 col-6 mb-4">
+        <div class="footer-widget">
+          <h5 class="mb-4 text-primary font-secondary">About</h5>
+          <ul class="list-unstyled">
+            <li class="mb-2"><a href="#!">Benefits</a>
+            </li>
+            <li class="mb-2"><a href="#!">Careers</a>
+            </li>
+            <li class="mb-2"><a href="#!">Our Story</a>
+            </li>
+            <li class="mb-2"><a href="#!">Team</a>
+            </li>
+          </ul>
         </div>
-        <div class="col-lg-2 col-md-4 col-6 mb-4">
-          <div class="footer-widget">
-            <h5 class="mb-4 text-primary font-secondary">Help</h5>
-            <ul class="list-unstyled">
-              <li class="mb-2"><a href="contact.html">Contact Us</a>
-            </ul>
-          </div>
+      </div>
+      <div class="col-lg-2 col-md-4 col-6 mb-4">
+        <div class="footer-widget">
+          <h5 class="mb-4 text-primary font-secondary">Help</h5>
+          <ul class="list-unstyled">
+            <li class="mb-2"><a href="contact.html">Contact Us</a>
+          </ul>
         </div>
-        <!-- <div class="col-lg-4 col-md-12 newsletter-form">
+      </div>
+      <!-- <div class="col-lg-4 col-md-12 newsletter-form">
           <div style="background-color: #F4F4F4; padding: 35px;">
             <h5 class="mb-4 text-primary font-secondary">Subscribe</h5>
             <div class="pe-0 pe-xl-5">
@@ -59,35 +58,35 @@
               tempor invidunt ut labore et dolore magna aliquyam erat</p>
           </div>
         </div> -->
+    </div>
+    <div class="row align-items-center mt-5 text-center text-md-start">
+      <div class="col-lg-4">
+        <a href="index.html">
+          <img loading="prelaod" decoding="async" class="img-fluid" width="70" src="images/Next Steps logo.png"
+            alt="NextSteps">
+        </a>
       </div>
-      <div class="row align-items-center mt-5 text-center text-md-start">
-        <div class="col-lg-4">
-          <a href="index.html">
-            <img loading="prelaod" decoding="async" class="img-fluid" width="70" src="images/Next Steps logo.png"
-              alt="NextSteps">
-          </a>
-        </div>
-        <div class="col-lg-4 col-md-6 mt-4 mt-lg-0">
-          <ul class="list-unstyled list-inline mb-0 text-lg-center">
-            <li class="list-inline-item me-4"><a class="text-black" href="privacy-policy.html">Privacy Policy</a>
-            </li>
-            <li class="list-inline-item me-4"><a class="text-black" href="terms.html">Terms &amp; Conditions</a>
-            </li>
-          </ul>
-        </div>
-        <div class="col-lg-4 col-md-6 text-md-end mt-4 mt-md-0">
-          <ul class="list-unstyled list-inline mb-0 social-icons">
-            <li class="list-inline-item me-3"><a title="Explorer Facebook Profile" class="text-black"
-                href="https://www.facebook.com/nextstepsfbpage/"><i class="fab fa-facebook-f"></i></a>
-            </li>
-            <li class="list-inline-item me-3"><a title="Explorer Twitter Profile" class="text-black"
-                href="https://twitter.com/"><i class="fab fa-twitter"></i></a>
-            </li>
-            <li class="list-inline-item me-3"><a title="Explorer Instagram Profile" class="text-black"
-                href="https://instagram.com/"><i class="fab fa-instagram"></i></a>
-            </li>
-          </ul>
-        </div>
+      <div class="col-lg-4 col-md-6 mt-4 mt-lg-0">
+        <ul class="list-unstyled list-inline mb-0 text-lg-center">
+          <li class="list-inline-item me-4"><a class="text-black" href="privacy-policy.html">Privacy Policy</a>
+          </li>
+          <li class="list-inline-item me-4"><a class="text-black" href="terms.html">Terms &amp; Conditions</a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-lg-4 col-md-6 text-md-end mt-4 mt-md-0">
+        <ul class="list-unstyled list-inline mb-0 social-icons">
+          <li class="list-inline-item me-3"><a title="Explorer Facebook Profile" class="text-black"
+              href="https://www.facebook.com/nextstepsfbpage/"><i class="fab fa-facebook-f"></i></a>
+          </li>
+          <li class="list-inline-item me-3"><a title="Explorer Twitter Profile" class="text-black"
+              href="https://twitter.com/"><i class="fab fa-twitter"></i></a>
+          </li>
+          <li class="list-inline-item me-3"><a title="Explorer Instagram Profile" class="text-black"
+              href="https://instagram.com/"><i class="fab fa-instagram"></i></a>
+          </li>
+        </ul>
       </div>
     </div>
-  </footer>
+  </div>
+</footer>

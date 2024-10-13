@@ -265,6 +265,29 @@ function isWorkExperienceComplete($user)
 }
 $isWorkExperienceComplete = isWorkExperienceComplete($user);
 
+function isDocumentsComplete($documentString)
+{
+    // Define the required documents
+    $requiredDocs = [
+        'IELTS',
+        'SSC_Certificate',
+        'SSC_Transcript',
+        'HSC_Certificate',
+        'HSC_Transcript'
+    ];
+
+    foreach ($requiredDocs as $doc) {
+        if (strpos($documentString, $doc) === false) {
+            return false;
+        }
+    }
+    return true;
+}
+
+$document = mysqli_fetch_array(mysqli_query($conn, "SELECT eduDoc FROM users WHERE email = '{$_SESSION['user']}'"));
+$documentString = $document['eduDoc'];
+$isDocumentsComplete = isDocumentsComplete($documentString);
+
 ?>
 
 <!DOCTYPE html>
@@ -398,7 +421,9 @@ $isWorkExperienceComplete = isWorkExperienceComplete($user);
                         <li class="nav-item" style="flex: 1;">
                             <a class="nav-link text-center d-block pt-3" href="#docs">
                                 Documents<br>
-                                <p class="text-success">Complete</p>
+                                <p class="<?php echo $isDocumentsComplete ? 'text-success' : 'text-danger'; ?>">
+                                    <?php echo $isDocumentsComplete ? 'Complete' : 'Incomplete'; ?>
+                                </p>
                             </a>
                         </li>
                         <div class="vr"></div>

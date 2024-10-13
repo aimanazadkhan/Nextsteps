@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 24, 2024 at 10:41 AM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Generation Time: Oct 13, 2024 at 05:05 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -12715,7 +12715,7 @@ CREATE TABLE `users` (
   `assignedTo` varchar(255) NOT NULL DEFAULT 'None',
   `applied` int(255) NOT NULL,
   `profilePic` varchar(255) NOT NULL DEFAULT 'User Photos/blank-profile-picture.jpg',
-  `eduDoc` varchar(255) NOT NULL
+  `eduDoc` longtext NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -12723,7 +12723,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `firstname`, `lastname`, `password`, `email`, `phonenumber`, `verifytoken`, `verifystatus`, `dob`, `gender`, `marital`, `nation`, `address`, `postcode`, `passportnum`, `issuecountry`, `issuedate`, `expirydate`, `institutionname`, `studycountry`, `cgpa`, `qualification`, `startdate`, `enddate`, `language`, `eduaddress`, `companyname`, `jobtitle`, `jobstartdate`, `jobenddate`, `jobresponsibilities`, `createdOn`, `assignedTo`, `applied`, `profilePic`, `eduDoc`) VALUES
-(3, 'Abdullah Al', 'Masrur', '123!Abd', 'abdullahalmasrur8@gmail.com', '01721090782', '91c3f073e8a12c0254d42d7bbd20abc3', 1, '2003-01-08', 'Male', 'Married', 'Bangladesh', 'Sylhet', '3100', '1231231232', 'Bangladesh', '2024-06-28', '2024-06-29', 'Leading University', 'Bangladesh', '4.00', 'BSc In CSE', '2024-06-23', '2024-06-28', 'English', 'Sylhet, Bangladesh', 'AppifyLab', 'Backend Developer', '2024-06-11', '2024-06-27', 'Working', '2024-07-02 16:31:14', 'None', 4, 'User Photos/abd.jpg', 'Education Documents/Abdullah Al_2024-07-14_23-59-24_Dashboard.pdf|Education Documents/Abdullah Al_2024-07-15_11-13-22_Resume of Tahmid(1).pdf|Education Documents/Abdullah Al_2024-07-15_11-15-07_Dashboard.pdf');
+(3, 'Abdullah Al', 'Masrur', '123!Abd', 'abdullahalmasrur8@gmail.com', '01721090782', '91c3f073e8a12c0254d42d7bbd20abc3', 1, '2003-01-08', 'Male', 'Married', 'Bangladesh', 'Sylhet', '3100', '1231231232', 'Bangladesh', '2024-06-28', '2024-06-29', 'Leading University', 'Bangladesh', '4.00', 'BSc In CSE', '2024-06-23', '2024-06-28', 'English', 'Sylhet, Bangladesh', 'AppifyLab', 'Backend Developer', '2024-06-11', '2024-06-27', 'Working', '2024-07-02 16:31:14', 'None', 4, 'User Photos/abd.jpg', 'Education Documents/Abdullah Al_2024-07-14_23-59-24_Dashboard.pdf|Education Documents/Abdullah Al_2024-07-15_11-13-22_Resume of Tahmid(1).pdf|Education Documents/Abdullah Al_2024-07-15_11-15-07_Dashboard.pdf'),
+(6, 'Abdullah Al', 'Masrur', '123Abd', 'masrurabdullah43@gmail.com', '01747641363', '60487cd6ddb825b016c536786df3ed6d', 1, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '2024-10-13 14:57:10', 'None', 0, 'User Photos/blank-profile-picture.jpg', 'IELTS:Education Documents/Abdullah Al_2024-10-13_17-03-23_DSC_0003.JPG|SSC_Certificate:Education Documents/Abdullah Al_2024-10-13_17-03-42_DSC_0002.JPG|SSC_Transcript:Education Documents/Abdullah Al_2024-10-13_17-03-57_DSC_0001.JPG|HSC_Certificate:Education Documents/Abdullah Al_2024-10-13_17-05-03_DSC_0004.JPG|HSC_Transcript:Education Documents/Abdullah Al_2024-10-13_17-05-12_DSC_0005.JPG');
 
 --
 -- Indexes for dumped tables
@@ -12767,7 +12768,7 @@ ALTER TABLE `search`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

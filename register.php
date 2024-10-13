@@ -44,6 +44,8 @@ if (isset($_POST['signup'])) {
     <title>Register</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <!-- # Main Style Sheet -->
+    <link rel="stylesheet" href="css/next.css">
 </head>
 
 <body class="bg-body-tertiary">
@@ -52,12 +54,12 @@ if (isset($_POST['signup'])) {
             <a href="./index.php"><img src="images/Next Steps logo.png" class="mb-4 img-fluid" alt="Logo"
                     style="width: 200px;"></a><br>
 
-            <span class="font" style="font: size 1.2rem;">Sign-Up</span>
+            <span class="lead" style="font: size 1.2rem;">Sign-Up</span>
         </div>
 
         <div class="row justify-content-center g-5">
             <div class="col-md-6 col-lg-5">
-                <div class="border border-2 border-primary-subtle rounded p-4 shadow-lg">
+                <div class="border border-1 border-primary rounded p-4 shadow-lg">
                     <form action="register.php" method="POST" autocomplete="on">
                         <div class="row g-3">
                             <div class="col-sm-6">
@@ -105,7 +107,7 @@ if (isset($_POST['signup'])) {
 
 
                         <div class="d-flex justify-content-center">
-                            <button class="w-50 btn btn-outline-primary" type="submit" name="signup">Sign-Up
+                            <button class="btn btn-outline-primary" type="submit" name="signup">Sign-Up
                             </button>
                         </div>
                     </form>
@@ -114,14 +116,14 @@ if (isset($_POST['signup'])) {
                 <h5 class="text-center mt-4 mb-3">Already Have an Account?</h5>
 
                 <div class="d-flex justify-content-center">
-                    <a href="login.php"><button class="w-100 btn btn-outline-danger" type="submit"
+                    <a href="login.php"><button class="w-100 btn btn-success" type="submit"
                             name="signin">Sign-In</button></a>
                 </div>
 
             </div>
         </div>
 
-        <?php //include "footer.php"; ?>
+        <?php include "footer.php"; ?>
 
     </div>
 

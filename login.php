@@ -40,6 +40,8 @@ if (isset($_POST['btn_signIn'])) {
     <title>Login</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <!-- # Main Style Sheet -->
+    <link rel="stylesheet" href="css/next.css">
 </head>
 
 <body>
@@ -53,7 +55,7 @@ if (isset($_POST['btn_signIn'])) {
                 </div>
 
                 <div class="col-md-8 col-lg-6 col-xl-4 pt-2">
-                    <div class="border border-2 border-primary-subtle rounded p-5 shadow-lg">
+                    <div class="border border-1 border-primary rounded p-5 shadow-lg">
                         <form action="" method="POST">
                             <div class="py-5 text-center">
                                 <span class="font" style="font-size: 1.2rem;">Sign-In</span>
@@ -75,7 +77,7 @@ if (isset($_POST['btn_signIn'])) {
 
                             <div class="text-center text-lg-start mt-4 pt-2">
                                 <div class="d-flex justify-content-center">
-                                    <button type="submit" class="btn btn-outline-success btn-lg" name="btn_signIn"
+                                    <button type="submit" class="btn btn-success btn-lg" name="btn_signIn"
                                         style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
                                 </div>
 
@@ -91,6 +93,8 @@ if (isset($_POST['btn_signIn'])) {
                 </div>
             </div>
         </div>
+
+        <?php include "footer.php"; ?>
 
     </section>
 

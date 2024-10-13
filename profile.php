@@ -473,13 +473,16 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
                                 <div class="col-md-8">
                                     <div class="card-body p-4">
                                         <div class="d-flex justify-content-between mb-1">
-                                            <h6 class="text-secondary fs-5">Personal Information</h6>
+                                            <h6 class="text-secondary fs-5 mt-1">Personal Information</h6>
                                             <?php
                                             $appQuery = mysqli_query($conn, "SELECT `applied` FROM `users` WHERE email = '{$_SESSION['user']}'");
                                             $appNum = mysqli_fetch_assoc($appQuery);
 
                                             if (empty($appNum['applied']) || $appNum['applied'] == 0) {
-                                                echo '<i class="far fa-edit editData"></i>';
+                                                echo '
+                                                    <button class="btn border mb-1">
+                                                        <i class="far fa-edit editData"><span class="h6 ms-1">Edit</span></i>
+                                                    </button>';
                                             }
                                             ?>
                                         </div>
@@ -631,7 +634,11 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
                                             $appNum = mysqli_fetch_assoc($appQuery);
 
                                             if (empty($appNum['applied']) || $appNum['applied'] == 0) {
-                                                echo '<i class="far fa-edit editData"></i>';
+                                                echo '
+                                                    <button class="btn border mb-1">
+                                                        <i class="far fa-edit editData"><span class="h6 ms-1">Edit</span></i>
+                                                    </button>';
+                                                ;
                                             }
                                             ?>
                                         </div>
@@ -731,8 +738,10 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
                                         $appNum = mysqli_fetch_assoc($appQuery);
 
                                         if (empty($appNum['applied']) || $appNum['applied'] == 0) {
-                                            echo '<i class="fa-solid fa-file-circle-plus cursor-pointer" data-bs-toggle="modal"
-                                            data-bs-target="#documentModal"></i>';
+                                            echo '
+                                                <button class="btn border mb-1" data-bs-toggle="modal" data-bs-target="#documentModal">
+                                                    <i class="fa-solid fa-file-circle-plus cursor-pointer"><span class="h6 ms-1">Upload</span></i>
+                                                 </button>';
                                         }
                                         ?>
                                     </div>
@@ -839,7 +848,11 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
                                             $appNum = mysqli_fetch_assoc($appQuery);
 
                                             if (empty($appNum['applied']) || $appNum['applied'] == 0) {
-                                                echo '<i class="far fa-edit editData"></i>';
+                                                echo '
+                                                    <button class="btn border mb-1">
+                                                        <i class="far fa-edit editData"><span class="h6 ms-1">Edit</span></i>
+                                                    </button>';
+                                                ;
                                             }
                                             ?>
                                         </div>

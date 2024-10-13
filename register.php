@@ -10,7 +10,7 @@ if (isset($_POST['signup'])) {
     $reg_pass = $_POST['pass'];
     $reg_conPass = $_POST['con_pass'];
     $verifytoken = md5(rand());
-    
+
     $insert_query = "INSERT INTO `users`(`firstName`,`lastName`,`email`,`password`,`phonenumber`,`verifytoken`) 
         VALUES ('$reg_firstName','$reg_lastName','$reg_email','$reg_pass','$reg_phoneNumber','$verifytoken')";
 
@@ -49,7 +49,7 @@ if (isset($_POST['signup'])) {
 <body class="bg-body-tertiary">
     <div class="container-fluid">
         <div class="py-5 text-center">
-            <a href="../Homepage/index.php"><img src="images/Next Steps logo.png" class="mb-4 img-fluid" alt="Logo"
+            <a href="./index.php"><img src="images/Next Steps logo.png" class="mb-4 img-fluid" alt="Logo"
                     style="width: 200px;"></a><br>
 
             <span class="font" style="font: size 1.2rem;">Sign-Up</span>
@@ -91,8 +91,7 @@ if (isset($_POST['signup'])) {
                             <div class="col-sm-6">
                                 <label class="form-label">Password</label>
                                 <input type="password" class="form-control" name="pass"
-                                    pattern="(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%&*()]).{6,20}"
-                                    title="Password must be 6-20 characters long, contain at least one uppercase letter, 
+                                    pattern="(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%&*()]).{6,20}" title="Password must be 6-20 characters long, contain at least one uppercase letter, 
                                     one lowercase letter, one digit, and one special character" required>
                             </div>
 

@@ -13,5 +13,3 @@ if (!$conn) {
 // else {
 //     echo "<script>alert('DB connected!!!')</script>";
 // }
-
-?>

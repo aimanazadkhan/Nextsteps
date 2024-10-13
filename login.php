@@ -15,7 +15,7 @@ if (isset($_POST['btn_signIn'])) {
     } else if (mysqli_num_rows($result) > 0) {
         session_start();
         $_SESSION['user'] = $log_user_email;
-        echo "<script>location.href='index.php'</script>";
+        echo "<script>location.href='profile.php'</script>";
     } else {
         $result1 = mysqli_query($conn, "SELECT * FROM `users` 
             WHERE email = '$log_user_email' AND BINARY `password` = '$log_password' AND verifystatus = '0'");

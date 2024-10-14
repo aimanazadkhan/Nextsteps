@@ -589,16 +589,19 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
                                             <div class="col-6 mb-3">
                                                 <h6>Issue Date</h6>
                                                 <p class="text-muted"><?php echo $user['issuedate']; ?></p>
-                                                <input type="date" class="form-control mb-3 hidden"
+                                                <input type="date" class="form-control mb-3 hidden" id="issue_date"
                                                     value="<?php echo $user['issuedate']; ?>" name="issue_date"
                                                     pattern="\d{4}-\d{2}-\d{2}" />
                                             </div>
                                             <div class="col-6 mb-3">
                                                 <h6>Expiry Date</h6>
                                                 <p class="text-muted"><?php echo $user['expirydate']; ?></p>
-                                                <input type="date" class="form-control mb-3 hidden"
+                                                <input type="date" class="form-control hidden" id="expiry_date"
                                                     value="<?php echo $user['expirydate']; ?>" name="expiry_date"
                                                     pattern="\d{4}-\d{2}-\d{2}" />
+                                                <p class="text-danger hidden warning mb-0 text-end">*Must be at least 6
+                                                    month
+                                                </p>
                                             </div>
                                         </div>
                                         <div class="float-end mb-3">
@@ -949,6 +952,7 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
             $('.editData').click(function () {
                 var cardBody = $(this).closest('.card-body');
                 cardBody.find('p.text-muted').addClass('hidden');
+                cardBody.find('p.warning').removeClass('hidden');
                 cardBody.find('input, select, textarea').removeClass('hidden');
                 cardBody.find('.saveBtn, .discardBtn, .docUpBtn').removeClass('hidden');
             });
@@ -959,6 +963,18 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
                 cardBody.find('p.text-muted').removeClass('hidden');
                 cardBody.find('.saveBtn, .discardBtn').addClass('hidden');
                 cardBody.find('.editData').removeClass('hidden');
+            });
+
+            document.getElementById('issue_date').addEventListener('change', function () {
+                let issueDate = new Date(this.value);
+                if (!isNaN(issueDate.getTime())) {
+                    // Add 6 months to the issue date
+                    issueDate.setMonth(issueDate.getMonth() + 6);
+
+                    // Set min attribute on the expiry date field
+                    let minExpiryDate = issueDate.toISOString().split('T')[0]; // Format as YYYY-MM-DD
+                    document.getElementById('expiry_date').setAttribute('min', minExpiryDate);
+                }
             });
         });
 

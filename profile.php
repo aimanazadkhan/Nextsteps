@@ -480,7 +480,7 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
 
                                             if (empty($appNum['applied']) || $appNum['applied'] == 0) {
                                                 echo '
-                                                    <button class="btn border mb-1">
+                                                    <button class="btn border mb-1 editBtn">
                                                         <i class="far fa-edit editData"><span class="h6 ms-1">Edit</span></i>
                                                     </button>';
                                             }
@@ -635,7 +635,7 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
 
                                             if (empty($appNum['applied']) || $appNum['applied'] == 0) {
                                                 echo '
-                                                    <button class="btn border mb-1">
+                                                    <button class="btn border mb-1 editBtn">
                                                         <i class="far fa-edit editData"><span class="h6 ms-1">Edit</span></i>
                                                     </button>';
                                                 ;
@@ -849,7 +849,7 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
 
                                             if (empty($appNum['applied']) || $appNum['applied'] == 0) {
                                                 echo '
-                                                    <button class="btn border mb-1">
+                                                    <button class="btn border mb-1 editBtn">
                                                         <i class="far fa-edit editData"><span class="h6 ms-1">Edit</span></i>
                                                     </button>';
                                                 ;
@@ -920,6 +920,12 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
     <script>
+        document.querySelectorAll('.editBtn').forEach(function (button) {
+            button.addEventListener('click', function (event) {
+                event.preventDefault();
+            });
+        });
+
         $(document).ready(function () {
             // NavBar Card Toggle
             $('.nav-link').click(function (e) {
@@ -945,7 +951,6 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
                 cardBody.find('p.text-muted').addClass('hidden');
                 cardBody.find('input, select, textarea').removeClass('hidden');
                 cardBody.find('.saveBtn, .discardBtn, .docUpBtn').removeClass('hidden');
-                $(this).addClass('hidden');
             });
 
             $('.discardBtn').click(function () {

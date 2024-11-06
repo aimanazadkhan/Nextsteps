@@ -450,7 +450,7 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
                 </div>
             </div>
 
-            <?php
+        <?php
             unset($_SESSION['alert']);
         endif;
         ?>
@@ -549,10 +549,208 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
                                             <div class="col-6 mb-3">
                                                 <h6>Nationality</h6>
                                                 <p class="text-muted"><?php echo $user['nation']; ?></p>
-                                                <input type="text" class="form-control mb-3 hidden"
-                                                    value="<?php echo $user['nation']; ?>" name="nationality"
-                                                    pattern="[A-Za-z]+" />
+                                                <select class="form-control mb-3 hidden" name="nationality" id="nationality">
+                                                    <?php
+                                                    $countries = [
+                                                        'Afghanistan',
+                                                        'Albania',
+                                                        'Algeria',
+                                                        'Andorra',
+                                                        'Angola',
+                                                        'Argentina',
+                                                        'Armenia',
+                                                        'Australia',
+                                                        'Austria',
+                                                        'Azerbaijan',
+                                                        'Bahamas',
+                                                        'Bahrain',
+                                                        'Bangladesh',
+                                                        'Barbados',
+                                                        'Belarus',
+                                                        'Belgium',
+                                                        'Belize',
+                                                        'Benin',
+                                                        'Bhutan',
+                                                        'Bolivia',
+                                                        'Bosnia and Herzegovina',
+                                                        'Botswana',
+                                                        'Brazil',
+                                                        'Brunei',
+                                                        'Bulgaria',
+                                                        'Burkina Faso',
+                                                        'Burundi',
+                                                        'Cabo Verde',
+                                                        'Cambodia',
+                                                        'Cameroon',
+                                                        'Canada',
+                                                        'Central African Republic',
+                                                        'Chad',
+                                                        'Chile',
+                                                        'China',
+                                                        'Colombia',
+                                                        'Comoros',
+                                                        'Congo (Congo-Brazzaville)',
+                                                        'Costa Rica',
+                                                        'Croatia',
+                                                        'Cuba',
+                                                        'Cyprus',
+                                                        'Czechia (Czech Republic)',
+                                                        'Denmark',
+                                                        'Djibouti',
+                                                        'Dominica',
+                                                        'Dominican Republic',
+                                                        'Ecuador',
+                                                        'Egypt',
+                                                        'El Salvador',
+                                                        'Equatorial Guinea',
+                                                        'Eritrea',
+                                                        'Estonia',
+                                                        'Eswatini (fmr. "Swaziland")',
+                                                        'Ethiopia',
+                                                        'Fiji',
+                                                        'Finland',
+                                                        'France',
+                                                        'Gabon',
+                                                        'Gambia',
+                                                        'Georgia',
+                                                        'Germany',
+                                                        'Ghana',
+                                                        'Greece',
+                                                        'Grenada',
+                                                        'Guatemala',
+                                                        'Guinea',
+                                                        'Guinea-Bissau',
+                                                        'Guyana',
+                                                        'Haiti',
+                                                        'Honduras',
+                                                        'Hungary',
+                                                        'Iceland',
+                                                        'India',
+                                                        'Indonesia',
+                                                        'Iran',
+                                                        'Iraq',
+                                                        'Ireland',
+                                                        'Israel',
+                                                        'Italy',
+                                                        'Jamaica',
+                                                        'Japan',
+                                                        'Jordan',
+                                                        'Kazakhstan',
+                                                        'Kenya',
+                                                        'Kiribati',
+                                                        'Kuwait',
+                                                        'Kyrgyzstan',
+                                                        'Laos',
+                                                        'Latvia',
+                                                        'Lebanon',
+                                                        'Lesotho',
+                                                        'Liberia',
+                                                        'Libya',
+                                                        'Liechtenstein',
+                                                        'Lithuania',
+                                                        'Luxembourg',
+                                                        'Madagascar',
+                                                        'Malawi',
+                                                        'Malaysia',
+                                                        'Maldives',
+                                                        'Mali',
+                                                        'Malta',
+                                                        'Marshall Islands',
+                                                        'Mauritania',
+                                                        'Mauritius',
+                                                        'Mexico',
+                                                        'Micronesia',
+                                                        'Moldova',
+                                                        'Monaco',
+                                                        'Mongolia',
+                                                        'Montenegro',
+                                                        'Morocco',
+                                                        'Mozambique',
+                                                        'Myanmar (formerly Burma)',
+                                                        'Namibia',
+                                                        'Nauru',
+                                                        'Nepal',
+                                                        'Netherlands',
+                                                        'New Zealand',
+                                                        'Nicaragua',
+                                                        'Niger',
+                                                        'Nigeria',
+                                                        'North Macedonia',
+                                                        'Norway',
+                                                        'Oman',
+                                                        'Pakistan',
+                                                        'Palau',
+                                                        'Palestine State',
+                                                        'Panama',
+                                                        'Papua New Guinea',
+                                                        'Paraguay',
+                                                        'Peru',
+                                                        'Philippines',
+                                                        'Poland',
+                                                        'Portugal',
+                                                        'Qatar',
+                                                        'Romania',
+                                                        'Russia',
+                                                        'Rwanda',
+                                                        'Saint Kitts and Nevis',
+                                                        'Saint Lucia',
+                                                        'Saint Vincent and the Grenadines',
+                                                        'Samoa',
+                                                        'San Marino',
+                                                        'Sao Tome and Principe',
+                                                        'Saudi Arabia',
+                                                        'Senegal',
+                                                        'Serbia',
+                                                        'Seychelles',
+                                                        'Sierra Leone',
+                                                        'Singapore',
+                                                        'Slovakia',
+                                                        'Slovenia',
+                                                        'Solomon Islands',
+                                                        'Somalia',
+                                                        'South Africa',
+                                                        'South Korea',
+                                                        'South Sudan',
+                                                        'Spain',
+                                                        'Sri Lanka',
+                                                        'Sudan',
+                                                        'Suriname',
+                                                        'Sweden',
+                                                        'Switzerland',
+                                                        'Syria',
+                                                        'Tajikistan',
+                                                        'Tanzania',
+                                                        'Thailand',
+                                                        'Timor-Leste',
+                                                        'Togo',
+                                                        'Tonga',
+                                                        'Trinidad and Tobago',
+                                                        'Tunisia',
+                                                        'Turkey',
+                                                        'Turkmenistan',
+                                                        'Tuvalu',
+                                                        'Uganda',
+                                                        'Ukraine',
+                                                        'United Arab Emirates',
+                                                        'United Kingdom',
+                                                        'United States of America',
+                                                        'Uruguay',
+                                                        'Uzbekistan',
+                                                        'Vanuatu',
+                                                        'Venezuela',
+                                                        'Vietnam',
+                                                        'Yemen',
+                                                        'Zambia',
+                                                        'Zimbabwe'
+                                                    ];
+                                                    foreach ($countries as $country) {
+                                                        $selected = ($user['nation'] === $country) ? 'selected' : '';
+                                                        echo "<option value=\"$country\" $selected>$country</option>";
+                                                    }
+                                                    ?>
+                                                </select>
                                             </div>
+
                                         </div>
                                         <div class="row pt-1">
                                             <div class="col-6 mb-3">
@@ -640,8 +838,7 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
                                                 echo '
                                                     <button class="btn border mb-1 editBtn">
                                                         <i class="far fa-edit editData"><span class="h6 ms-1">Edit</span></i>
-                                                    </button>';
-                                                ;
+                                                    </button>';;
                                             }
                                             ?>
                                         </div>
@@ -763,7 +960,7 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
                                                 foreach ($documentArray as $doc) {
                                                     list($docType, $docPath) = explode(':', $doc);
                                                     list($docFolder, $docName) = explode('/', $docPath);
-                                                    ?>
+                                            ?>
                                                     <div class="mb-3 px-3 py-2 rounded doc-container"
                                                         onclick="window.open('<?php echo $docPath; ?>', '_blank')">
                                                         <div class="d-flex justify-content-between">
@@ -782,7 +979,7 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
                                                             </p>
                                                         </div>
                                                     </div>
-                                                <?php }
+                                            <?php }
                                             } ?>
                                         </div>
                                     </div>
@@ -854,8 +1051,7 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
                                                 echo '
                                                     <button class="btn border mb-1 editBtn">
                                                         <i class="far fa-edit editData"><span class="h6 ms-1">Edit</span></i>
-                                                    </button>';
-                                                ;
+                                                    </button>';;
                                             }
                                             ?>
                                         </div>
@@ -923,25 +1119,25 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
     <script>
-        document.querySelectorAll('.editBtn').forEach(function (button) {
-            button.addEventListener('click', function (event) {
+        document.querySelectorAll('.editBtn').forEach(function(button) {
+            button.addEventListener('click', function(event) {
                 event.preventDefault();
             });
         });
 
-        $(document).ready(function () {
+        $(document).ready(function() {
             // NavBar Card Toggle
-            $('.nav-link').click(function (e) {
+            $('.nav-link').click(function(e) {
                 e.preventDefault();
                 var targetCard = $(this).attr('href').substring(1);
                 var currentCard = $('.card:visible');
 
                 if (currentCard.attr('id') !== targetCard) {
                     currentCard.addClass('animate__animated animate__fadeOut')
-                        .one('animationend', function () {
+                        .one('animationend', function() {
                             $(this).addClass('hidden').removeClass('animate__animated animate__fadeOut');
                             $('#' + targetCard).removeClass('hidden').addClass('animate__animated animate__fadeIn')
-                                .one('animationend', function () {
+                                .one('animationend', function() {
                                     $(this).removeClass('animate__animated animate__fadeIn');
                                 });
                         });
@@ -949,7 +1145,7 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
             });
 
             // Edit/Discard in the form
-            $('.editData').click(function () {
+            $('.editData').click(function() {
                 var cardBody = $(this).closest('.card-body');
                 cardBody.find('p.text-muted').addClass('hidden');
                 cardBody.find('p.warning').removeClass('hidden');
@@ -957,7 +1153,7 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
                 cardBody.find('.saveBtn, .discardBtn, .docUpBtn').removeClass('hidden');
             });
 
-            $('.discardBtn').click(function () {
+            $('.discardBtn').click(function() {
                 var cardBody = $(this).closest('.card-body');
                 cardBody.find('input, select, textarea').addClass('hidden');
                 cardBody.find('p.text-muted').removeClass('hidden');
@@ -965,7 +1161,7 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
                 cardBody.find('.editData').removeClass('hidden');
             });
 
-            document.getElementById('issue_date').addEventListener('change', function () {
+            document.getElementById('issue_date').addEventListener('change', function() {
                 let issueDate = new Date(this.value);
                 if (!isNaN(issueDate.getTime())) {
                     // Add 6 months to the issue date
@@ -979,11 +1175,11 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
         });
 
         // Document Upload
-        document.getElementById('uploadButton').addEventListener('click', function () {
+        document.getElementById('uploadButton').addEventListener('click', function() {
             document.getElementById('uploadedFile').click();
         });
 
-        document.getElementById('uploadedFile').addEventListener('change', function () {
+        document.getElementById('uploadedFile').addEventListener('change', function() {
             document.getElementById('formDoc').submit();
         });
     </script>

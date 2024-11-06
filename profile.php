@@ -58,6 +58,7 @@ if (isset($_POST['aQualSave'])) {
     $study_country = $_POST['study_country'];
     $qualification = $_POST['qualification'];
     $cgpa = $_POST['cgpa'];
+
     $start_date = $_POST['start_date'];
     $end_date = $_POST['end_date'];
     $language = $_POST['language'];
@@ -1059,19 +1060,32 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
                                         </div>
                                         <div class="row pt-1">
                                             <div class="col-6 mb-3">
-                                                <h6>Qualification Achieved</h6>
+                                                <h6>Highest Level of Qualification</h6>
                                                 <p class="text-muted"><?php echo $user['qualification']; ?></p>
                                                 <input type="text" class="form-control mb-3 hidden"
                                                     value="<?php echo $user['qualification']; ?>" name="qualification"
                                                     pattern="[A-Za-z .]+" />
                                             </div>
                                             <div class="col-6 mb-3">
-                                                <h6>CGPA</h6>
+                                                <h6>Result</h6>
                                                 <p class="text-muted"><?php echo $user['cgpa']; ?></p>
-                                                <input type="text" class="form-control mb-3 hidden"
-                                                    value="<?php echo $user['cgpa']; ?>" name="cgpa"
-                                                    pattern="[0-9.]{1,4}" />
+                                                <div class="input-group mb-3 hidden cgpa">
+                                                    <select class="form-select" id="main-select">
+                                                        <option selected>Select Result Type</option>
+                                                        <option value="CGPA">CGPA (Out of 4)</option>
+                                                        <option value="GPA">GPA (Out of 5)</option>
+                                                        <option value="Grades">Grade</option>
+                                                        <option value="Percentage">Percentage Score</option>
+                                                        <option value="Class Rank">Class Rank</option>
+                                                    </select>
+
+                                                    <select class="form-select" id="sub-select">
+                                                        <option>Select a corresponding result</option>
+                                                    </select>
+                                                </div>
                                             </div>
+                                            <!-- Hidden input to store combined result -->
+                                            <input type="hidden" id="combined-result" name="cgpa">
                                         </div>
                                         <div class="row pt-1">
                                             <div class="col-6 mb-3">
@@ -1347,13 +1361,13 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
                 var cardBody = $(this).closest('.card-body');
                 cardBody.find('p.text-muted').addClass('hidden');
                 cardBody.find('p.warning').removeClass('hidden');
-                cardBody.find('input, select, textarea').removeClass('hidden');
+                cardBody.find('input, select, textarea, .input-group').removeClass('hidden');
                 cardBody.find('.saveBtn, .discardBtn, .docUpBtn').removeClass('hidden');
             });
 
             $('.discardBtn').click(function() {
                 var cardBody = $(this).closest('.card-body');
-                cardBody.find('input, select, textarea').addClass('hidden');
+                cardBody.find('input, select, textarea, .input-group').addClass('hidden');
                 cardBody.find('p.text-muted').removeClass('hidden');
                 cardBody.find('.saveBtn, .discardBtn').addClass('hidden');
                 cardBody.find('.editData').removeClass('hidden');
@@ -1370,13 +1384,117 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
                     document.getElementById('expiry_date').setAttribute('min', minExpiryDate);
                 }
             });
+
+            // Script for CGPA Calculation
+            const mainSelect = document.getElementById("main-select");
+            const subSelect = document.getElementById("sub-select");
+            const combinedResult = document.getElementById("combined-result");
+
+            const resultOptions = {
+                CGPA: [{
+                    value: "4.0",
+                    label: "4.0"
+                }, {
+                    value: "3.5",
+                    label: "3.5"
+                }, {
+                    value: "3.0",
+                    label: "3.0",
+                }, {
+                    value: "2.5",
+                    label: "2.5",
+                }, {
+                    value: "2.0",
+                    label: "2.0",
+                }],
+                GPA: [{
+                    value: "5.0",
+                    label: "5.0"
+                }, {
+                    value: "4.5",
+                    label: "4.5"
+                }, {
+                    value: "4.0",
+                    label: "4.0"
+                }, {
+                    value: "3.5",
+                    label: "3.5"
+                }, {
+                    value: "3.0",
+                    label: "3.0"
+                }, {
+                    value: "2.5",
+                    label: "2.5"
+                }, ],
+                Grades: [{
+                    value: "A+",
+                    label: "A+ (Excellent)"
+                }, {
+                    value: "A",
+                    label: "A (Good)"
+                }, {
+                    value: "A-",
+                    label: "A- (Satisfactory)"
+                }, {
+                    value: "B+",
+                    label: "B+ (Pass)"
+                }, {
+                    value: "B",
+                    label: "B (Permissible)"
+                }, ],
+                Percentage: [{
+                    value: "90-100%",
+                    label: "90-100%"
+                }, {
+                    value: "75-89%",
+                    label: "75-89%"
+                }, {
+                    value: "<50%",
+                    label: "<50%"
+                }, {
+                    value: "75-89",
+                    label: "75-89%"
+                }, ],
+                "Class Rank": [{
+                    value: "First Class",
+                    label: "First Class"
+                }, {
+                    value: "Second Class",
+                    label: "Second Class"
+                }, {
+                    value: "Third Class",
+                    label: "Third Class"
+                }, ]
+            };
+
+            mainSelect.addEventListener("change", function() {
+                const selectedType = mainSelect.value;
+                subSelect.innerHTML = `<option>Select a corresponding result</option>`;
+
+                if (resultOptions[selectedType]) {
+                    resultOptions[selectedType].forEach(option => {
+                        const opt = document.createElement("option");
+                        opt.value = option.value;
+                        opt.textContent = option.label;
+                        subSelect.appendChild(opt);
+                    });
+                }
+                updateCombinedResult();
+            });
+
+            subSelect.addEventListener("change", updateCombinedResult);
+
+            function updateCombinedResult() {
+                const mainValue = mainSelect.value;
+                const subValue = subSelect.value;
+                combinedResult.value = mainValue && subValue ? `${mainValue}: ${subValue}` : "";
+            }
         });
 
         // Document Upload
         document.getElementById('uploadButton').addEventListener('click', function() {
             document.getElementById('uploadedFile').click();
         });
-
         document.getElementById('uploadedFile').addEventListener('change', function() {
             document.getElementById('formDoc').submit();
         });

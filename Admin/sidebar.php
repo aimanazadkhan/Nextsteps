@@ -75,6 +75,13 @@
                 </a>
             </li>
 
+            <li class="" style="position: absolute; bottom: 50px; width: 13rem;">
+                <a href="setting.php" class="text-decoration-none">
+                    <button class="btn rounded border-0">
+                        <p><i class="me-3 fa-solid fa-cog"></i>Settings</p>
+                    </button>
+                </a>
+            </li>
             <li class="" style="position: absolute; bottom: 0px; width: 13rem;">
                 <a href="../logout.php" class="text-decoration-none">
                     <button class="btn rounded border-0">
@@ -90,8 +97,8 @@
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
 <script>
     // Sidebar toggle
-    $(document).ready(function () {
-        $('.open-btn').on('click', function () {
+    $(document).ready(function() {
+        $('.open-btn').on('click', function() {
             $('.sidebar').toggleClass('active');
         });
     });

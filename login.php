@@ -8,12 +8,14 @@ if (isset($_POST['btn_signIn'])) {
 
     $result = mysqli_query($conn, "SELECT * FROM `users` 
         WHERE email = '$log_user_email' AND BINARY `password` = '$log_password' AND verifystatus = '1'");
-    $adminResult = mysqli_query($conn, "SELECT * FROM `admin` 
-        WHERE adminName = '$log_user_email' AND BINARY `password` = '$log_password'");
-    if (mysqli_num_rows($adminResult) > 0) {
+
+    $adminResult = mysqli_query($conn, "SELECT * FROM `admin` WHERE `adminName` = '$log_user_email'");
+    $adminData = mysqli_fetch_assoc($adminResult);
+
+    if ($adminData && password_verify($log_password, $adminData['password'])) {
         session_start();
         $_SESSION['user'] = $log_user_email;
-        echo "<script>location.href='Admin/'</script>";
+        echo "<script>location.href='admin/';</script>";
     } else if (mysqli_num_rows($result) > 0) {
         session_start();
         $_SESSION['user'] = $log_user_email;

@@ -1,10 +1,12 @@
 <?php
+include "../connection.php";
 session_start();
-if (!isset($_SESSION['user']) || $_SESSION['user'] !== 'admin') {
+// Admin Data
+$adminData = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM `admin`"));
+if (!isset($_SESSION['user']) || $_SESSION['user'] !== $adminData['adminName']) {
     echo "<script>alert('You have to Login First!!!')</script>";
     echo "<script>location.href='../login.php'</script>";
 }
-include "../connection.php";
 
 ?>
 

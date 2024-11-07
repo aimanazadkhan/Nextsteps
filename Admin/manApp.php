@@ -1,10 +1,12 @@
 <?php
 session_start();
-if (!isset($_SESSION['user']) || $_SESSION['user'] !== 'admin') {
+include "../connection.php";
+// Admin Data
+$adminData = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM `admin`"));
+if (!isset($_SESSION['user']) || $_SESSION['user'] !== $adminData['adminName']) {
     echo "<script>alert('You have to Login First!!!')</script>";
     echo "<script>location.href='../login.php'</script>";
 }
-include "../connection.php";
 
 ?>
 
@@ -125,9 +127,12 @@ include "../connection.php";
 
     <script>
         // DataTable Initialization
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('#dataTable').DataTable({
-                "lengthMenu": [[7, 10, 25, 50, -1], [7, 10, 25, 50, "All"]],
+                "lengthMenu": [
+                    [7, 10, 25, 50, -1],
+                    [7, 10, 25, 50, "All"]
+                ],
                 "pageLength": 7
             });
         });

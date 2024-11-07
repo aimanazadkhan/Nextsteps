@@ -5,6 +5,48 @@ if (!isset($_SESSION['user']) || $_SESSION['user'] !== 'admin') {
     echo "<script>location.href='../login.php'</script>";
 }
 include "../connection.php";
+
+// Handle the form submissions
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['adminName'])) {
+        // Update the admin username
+        $newAdminName = mysqli_real_escape_string($conn, $_POST['adminName']);
+        $updateNameQuery = "UPDATE `admin` SET `adminName` = '$newAdminName' WHERE `id` = 1";
+
+        if (mysqli_query($conn, $updateNameQuery)) {
+            echo "<script>alert('Admin name updated successfully.')</script>";
+        } else {
+            echo "<script>alert('Failed to update admin name.')</script>";
+        }
+    } elseif (isset($_POST['oldPass'], $_POST['newPass'])) {
+        // Update the admin password
+        $oldPass = $_POST['oldPass'];
+        $newPass = password_hash($_POST['newPass'], PASSWORD_BCRYPT);
+
+        // Verify the old password
+        $verifyPassQuery = "SELECT `password` FROM `admin` WHERE `id` = 1";
+        $result = mysqli_query($conn, $verifyPassQuery);
+        $adminPassData = mysqli_fetch_assoc($result);
+
+        if (password_verify($oldPass, $adminPassData['password'])) {
+            $updatePassQuery = "UPDATE `admin` SET `password` = '$newPass' WHERE `id` = 1";
+
+            if (mysqli_query($conn, $updatePassQuery)) {
+                echo "<script>alert('Password updated successfully.')</script>";
+            } else {
+                echo "<script>alert('Failed to update password.')</script>";
+            }
+        } else {
+            // echo $oldPass;
+            // echo $adminPassData['password'];
+            // die();
+            echo "<script>alert('Old password is incorrect.')</script>";
+        }
+    }
+    echo "<script>location.href='setting.php'</script>";
+}
+
+
 // Admin Data
 $adminData = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM `admin`"));
 
@@ -38,7 +80,7 @@ $adminData = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM `admin`"));
                 <div class="ms-5 mt-5">
                     <h4 class="mb-5">Change Username</h4>
                     <div class="rounded shadow-lg p-4 w-50" style="background-color: #f7f9fb;">
-                        <form action="">
+                        <form action="" METHOD="POST">
                             <div class="d-flex gap-5 mb-3">
                                 <p class="mt-3 fs-5">Current Admin Name</p>
                                 <input class="ms-5 form-control" type="text" value="<?php echo $adminData['adminName']; ?>" disabled>
@@ -55,7 +97,7 @@ $adminData = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM `admin`"));
 
                     <h4 class="mb-5 mt-5">Change Password</h4>
                     <div class="rounded shadow-lg p-4 w-50" style="background-color: #f7f9fb;">
-                        <form action="">
+                        <form action="" METHOD="POST">
                             <div class="d-flex gap-5 mb-3">
                                 <p class="mt-3 fs-5">Old Password</p>
                                 <input class="ms-5 form-control" type="password" name="oldPass">

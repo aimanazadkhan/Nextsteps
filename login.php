@@ -8,7 +8,9 @@ if (isset($_POST['btn_signIn'])) {
 
     $result = mysqli_query($conn, "SELECT * FROM `users` 
         WHERE email = '$log_user_email' AND BINARY `password` = '$log_password' AND verifystatus = '1'");
-    if ($log_user_email === 'admin' && $log_password === 'admin') {
+    $adminResult = mysqli_query($conn, "SELECT * FROM `admin` 
+        WHERE adminName = '$log_user_email' AND BINARY `password` = '$log_password'");
+    if (mysqli_num_rows($adminResult) > 0) {
         session_start();
         $_SESSION['user'] = $log_user_email;
         echo "<script>location.href='Admin/'</script>";

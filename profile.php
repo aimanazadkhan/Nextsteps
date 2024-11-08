@@ -1473,6 +1473,19 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
                 const subValue = subSelect.style.display === "none" ? subInput.value : subSelect.value;
                 combinedResult.value = mainValue && subValue ? `${mainValue}: ${subValue}` : "";
             }
+
+            // Document file size and pdf restrict
+            document.getElementById('fileInput').addEventListener('change', function() {
+                const file = this.files[0];
+
+                if (file && file.type !== 'application/pdf') {
+                    alert("Only PDF files allowed, homie!");
+                    this.value = ''; // Clear the input
+                } else if (file && file.size > 1024 * 1024) { // 1MB in bytes
+                    alert("File too damn big! Gotta keep it under 1MB, bruh!");
+                    this.value = ''; // Clear the input
+                }
+            });
         });
 
         // Document Upload

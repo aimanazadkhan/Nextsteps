@@ -1070,18 +1070,23 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
                                                 <h6>Result</h6>
                                                 <p class="text-muted"><?php echo $user['cgpa']; ?></p>
                                                 <div class="input-group mb-3 hidden cgpa">
+                                                    <!-- Main Select Dropdown for Result Type -->
                                                     <select class="form-select" id="main-select">
                                                         <option selected>Select Result Type</option>
-                                                        <option value="CGPA">CGPA (Out of 4)</option>
-                                                        <option value="GPA">GPA (Out of 5)</option>
+                                                        <option value="CGPA">CGPA</option>
+                                                        <option value="GPA">GPA</option>
                                                         <option value="Grades">Grade</option>
                                                         <option value="Percentage">Percentage Score</option>
-                                                        <option value="Class Rank">Class Rank</option>
+                                                        <option value="Class/Division">Class/Division</option>
                                                     </select>
 
+                                                    <!-- Sub Select Dropdown / Input Field, shown based on selection -->
                                                     <select class="form-select" id="sub-select">
                                                         <option>Select a corresponding result</option>
                                                     </select>
+
+                                                    <!-- Sub Input Field for cases where select needs to be an input -->
+                                                    <input type="text" class="form-control" id="sub-input" placeholder="Enter your score" style="display: none;">
                                                 </div>
                                             </div>
                                             <!-- Hidden input to store combined result -->
@@ -1388,105 +1393,84 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
             // Script for CGPA Calculation
             const mainSelect = document.getElementById("main-select");
             const subSelect = document.getElementById("sub-select");
+            const subInput = document.getElementById("sub-input");
             const combinedResult = document.getElementById("combined-result");
 
             const resultOptions = {
-                CGPA: [{
-                    value: "4.0",
-                    label: "4.0"
-                }, {
-                    value: "3.5",
-                    label: "3.5"
-                }, {
-                    value: "3.0",
-                    label: "3.0",
-                }, {
-                    value: "2.5",
-                    label: "2.5",
-                }, {
-                    value: "2.0",
-                    label: "2.0",
-                }],
-                GPA: [{
-                    value: "5.0",
-                    label: "5.0"
-                }, {
-                    value: "4.5",
-                    label: "4.5"
-                }, {
-                    value: "4.0",
-                    label: "4.0"
-                }, {
-                    value: "3.5",
-                    label: "3.5"
-                }, {
-                    value: "3.0",
-                    label: "3.0"
-                }, {
-                    value: "2.5",
-                    label: "2.5"
-                }, ],
                 Grades: [{
-                    value: "A+",
-                    label: "A+ (Excellent)"
-                }, {
-                    value: "A",
-                    label: "A (Good)"
-                }, {
-                    value: "A-",
-                    label: "A- (Satisfactory)"
-                }, {
-                    value: "B+",
-                    label: "B+ (Pass)"
-                }, {
-                    value: "B",
-                    label: "B (Permissible)"
-                }, ],
-                Percentage: [{
-                    value: "90-100%",
-                    label: "90-100%"
-                }, {
-                    value: "75-89%",
-                    label: "75-89%"
-                }, {
-                    value: "<50%",
-                    label: "<50%"
-                }, {
-                    value: "75-89",
-                    label: "75-89%"
-                }, ],
-                "Class Rank": [{
-                    value: "First Class",
-                    label: "First Class"
-                }, {
-                    value: "Second Class",
-                    label: "Second Class"
-                }, {
-                    value: "Third Class",
-                    label: "Third Class"
-                }, ]
+                        value: "A",
+                        label: "A+ (Excellent)"
+                    },
+                    {
+                        value: "B",
+                        label: "A (Good)"
+                    },
+                    {
+                        value: "C",
+                        label: "A- (Satisfactory)"
+                    },
+                    {
+                        value: "D",
+                        label: "B+ (Pass)"
+                    },
+                    {
+                        value: "E",
+                        label: "B (Permissible)"
+                    },
+                    {
+                        value: "F",
+                        label: "F (Not Eligible)"
+                    },
+                ],
+                "Class/Division": [{
+                        value: "First Class",
+                        label: "First Class"
+                    },
+                    {
+                        value: "Second Class",
+                        label: "Second Class"
+                    },
+                    {
+                        value: "Third Class",
+                        label: "Third Class"
+                    },
+                ]
             };
 
+            // Handle changes in the main select
             mainSelect.addEventListener("change", function() {
                 const selectedType = mainSelect.value;
-                subSelect.innerHTML = `<option>Select a corresponding result</option>`;
 
-                if (resultOptions[selectedType]) {
-                    resultOptions[selectedType].forEach(option => {
-                        const opt = document.createElement("option");
-                        opt.value = option.value;
-                        opt.textContent = option.label;
-                        subSelect.appendChild(opt);
-                    });
+                // Show input field for CGPA, GPA, and Percentage; else, show select
+                if (selectedType === "CGPA" || selectedType === "GPA" || selectedType === "Percentage") {
+                    subSelect.style.display = "none";
+                    subInput.style.display = "block";
+                    subInput.value = ""; // Clear input when switching
+                } else {
+                    subSelect.style.display = "block";
+                    subInput.style.display = "none";
+                    subSelect.innerHTML = `<option>Select a corresponding result</option>`;
+
+                    // Populate select options if available in resultOptions
+                    if (resultOptions[selectedType]) {
+                        resultOptions[selectedType].forEach(option => {
+                            const opt = document.createElement("option");
+                            opt.value = option.value;
+                            opt.textContent = option.label;
+                            subSelect.appendChild(opt);
+                        });
+                    }
                 }
                 updateCombinedResult();
             });
 
+            // Listen for changes on both select and input fields
             subSelect.addEventListener("change", updateCombinedResult);
+            subInput.addEventListener("input", updateCombinedResult);
 
             function updateCombinedResult() {
                 const mainValue = mainSelect.value;
-                const subValue = subSelect.value;
+                const subValue = subSelect.style.display === "none" ? subInput.value : subSelect.value;
                 combinedResult.value = mainValue && subValue ? `${mainValue}: ${subValue}` : "";
             }
         });

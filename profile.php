@@ -1230,8 +1230,7 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
                                         </div>
                                         <div class="">
                                             <label for="fileInput" class="form-label">Upload File</label>
-                                            <input class="form-control" type="file" id="fileInput" name="file"
-                                                accept="image/*" required>
+                                            <input class="form-control" type="file" id="fileInput" name="file" required>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
@@ -1395,7 +1394,6 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
             const subSelect = document.getElementById("sub-select");
             const subInput = document.getElementById("sub-input");
             const combinedResult = document.getElementById("combined-result");
-
             const resultOptions = {
                 Grades: [{
                         value: "A",
@@ -1436,7 +1434,6 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
                     },
                 ]
             };
-
             // Handle changes in the main select
             mainSelect.addEventListener("change", function() {
                 const selectedType = mainSelect.value;
@@ -1463,7 +1460,6 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
                 }
                 updateCombinedResult();
             });
-
             // Listen for changes on both select and input fields
             subSelect.addEventListener("change", updateCombinedResult);
             subInput.addEventListener("input", updateCombinedResult);
@@ -1479,11 +1475,11 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
                 const file = this.files[0];
 
                 if (file && file.type !== 'application/pdf') {
-                    alert("Only PDF files allowed, homie!");
-                    this.value = ''; // Clear the input
-                } else if (file && file.size > 1024 * 1024) { // 1MB in bytes
-                    alert("File too damn big! Gotta keep it under 1MB, bruh!");
-                    this.value = ''; // Clear the input
+                    alert("Only PDF files allowed");
+                    this.value = '';
+                } else if (file && file.size > 1024 * 1024) {
+                    alert("Documents should be within 1MB");
+                    this.value = '';
                 }
             });
         });

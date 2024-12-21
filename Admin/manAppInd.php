@@ -7,6 +7,19 @@ if (!isset($_SESSION['user']) || $_SESSION['user'] !== $adminData['adminName']) 
     echo "<script>alert('You have to Login First!!!')</script>";
     echo "<script>location.href='../login.php'</script>";
 }
+$appId = $_GET['appId'];
+// Application Data
+$applicationData = mysqli_query($conn, "SELECT * FROM `applications` WHERE `id` = '{$appId}'");
+$app = mysqli_fetch_assoc($applicationData);
+
+// Application User Data
+$applicationUserData = mysqli_query($conn, "SELECT * FROM `users` WHERE `email` = '{$app['userEmail']}'");
+$user = mysqli_fetch_assoc($applicationUserData);
+
+// University Data
+$applicationUniData = mysqli_query($conn, "SELECT * FROM `search` WHERE `ID` = '{$app['uniID']}'");
+$uni = mysqli_fetch_assoc($applicationUniData);
+
 
 ?>
 
@@ -34,32 +47,28 @@ if (!isset($_SESSION['user']) || $_SESSION['user'] !== $adminData['adminName']) 
                     <h3 class="mt-2 ms-1">Application</h3>
                 </div>
                 <div style="height: 95vh; overflow-y: auto; background-color:rgb(231, 232, 241);">
-                    <div class="card border-0 shadow-sm p-3 m-5">
+                    <div class="card border-0 shadow-lg p-3 mx-5 my-5">
                         <div class="row align-items-center text-center">
                             <!-- Left Side -->
-                            <div class="col-lg-6 col-md-12">
-                                <h6 class="text-muted">Application ID AID70844</h6>
-                                <h5 class="fw-bold mb-1">MD SHAHIN AHMED HALIM</h5>
-                                <p class="mb-2 text-secondary">Student ID SID40221</p>
-                                <p class="text-muted">Sylhet Division, Bangladesh</p>
+                            <div class="col-lg-5 col-md-12">
+                                <h6 class="text-muted">Application ID: <?php echo $app['id']; ?></h6>
+                                <h5 class="fw-bold mb-1"><?php echo $user['firstname'] . " " . $user['lastname'] ?></h5>
+                                <p class="mb-2 text-secondary">Student ID: <?php echo $user['id']; ?></p>
+                                <p class="text-muted"><?php echo $user['address']; ?></p>
                                 <button class="btn btn-success btn-sm px-3">View Profile</button>
-                                <span class="text-secondary ms-3">77% completed</span>
+                                <!-- <span class="text-secondary ms-3">77% completed</span> -->
                             </div>
+
+                            <div class="vr p-0 m-0"></div>
 
                             <!-- Right Side -->
                             <div class="col-lg-6 col-md-12">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <!-- Application Info -->
                                     <div>
-                                        <h6 class="text-muted mb-0">Application - 2nd Preference</h6>
-                                        <h5 class="fw-bold mb-0">International Foundation Programme - ECA</h5>
-                                        <p class="mb-2">ECA - London Metropolitan University</p>
-                                        <div>
-                                            <span class="badge bg-primary">Campus</span>
-                                            <span class="ms-2 text-muted">Delivery method</span>
-                                        </div>
+                                        <h4 class="fw-bold mb-0"><?php echo $uni['University']; ?></h4>
+                                        <h5 class="mb-2"><?php echo $uni['Country']; ?></h5>
                                     </div>
-
                                     <!-- Withdraw Button -->
                                     <div>
                                         <button class="btn btn-outline-danger btn-sm">Withdraw</button>
@@ -88,11 +97,21 @@ if (!isset($_SESSION['user']) || $_SESSION['user'] !== $adminData['adminName']) 
 
                                 <!-- Contact -->
                                 <div class="mt-3">
-                                    <p class="text-muted mb-0">
+                                    <p class="text-muted mb-0 text-end">
                                         Speak to us about this application right now
                                     </p>
-                                    <h5 class="fw-bold text-primary mb-0">+91 9311 9627 38</h5>
+                                    <h5 class="fw-bold text-primary mb-0 text-end">+91 9311 9627 38</h5>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card border-0 shadow-lg p-3 mx-5">
+                        <div class="d-flex align-items-center gap-4">
+                            <p class="fw-bold border-bottom border-primary border-2 m-0 pb-1">Documents</p>
+                            <div class="d-flex">
+                                <p class="fw-bold border-bottom border-primary border-2 m-0 pb-1">Comments</p>
+                                <span class="ms-1 pt-2 badge bg-danger rounded-circle text-center">2</span>
                             </div>
                         </div>
                     </div>

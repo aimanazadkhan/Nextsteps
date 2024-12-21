@@ -107,7 +107,7 @@ if (!isset($_SESSION['user']) || $_SESSION['user'] !== $adminData['adminName']) 
                                     echo "
                                             </td>
                                             <td>
-                                                <a href='manAppInd.php' class='ms-3 mb-0 p-0'><i class='fa-solid fa-eye text-bg-success p-2 rounded-circle icon-link icon-link-hover'></i></a>
+                                                <a href='manAppInd.php?appId=" . $row['id'] . "' class='ms-3 mb-0 p-0'><i class='fa-solid fa-eye text-bg-success p-2 rounded-circle icon-link icon-link-hover'></i></a>
                                             </td>
                                         </tr>";
                                 }

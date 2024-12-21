@@ -8,11 +8,8 @@ if (!isset($_SESSION['user']) || $_SESSION['user'] !== $adminData['adminName']) 
     echo "<script>location.href='../login.php'</script>";
 }
 
-
-// Handle the form submissions
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['adminName'])) {
-        // Update the admin username
         $newAdminName = mysqli_real_escape_string($conn, $_POST['adminName']);
         $updateNameQuery = "UPDATE `admin` SET `adminName` = '$newAdminName' WHERE `id` = 1";
 
@@ -22,11 +19,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo "<script>alert('Failed to update admin name.')</script>";
         }
     } elseif (isset($_POST['oldPass'], $_POST['newPass'])) {
-        // Update the admin password
         $oldPass = $_POST['oldPass'];
         $newPass = password_hash($_POST['newPass'], PASSWORD_BCRYPT);
 
-        // Verify the old password
         $verifyPassQuery = "SELECT `password` FROM `admin` WHERE `id` = 1";
         $result = mysqli_query($conn, $verifyPassQuery);
         $adminPassData = mysqli_fetch_assoc($result);
@@ -112,11 +107,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
-
-
 </body>
 
 </html>

@@ -102,12 +102,12 @@ if (!isset($_SESSION['user']) || $_SESSION['user'] !== $adminData['adminName']) 
                                             break;
                                     }
 
-                                    echo "<p class='badge $class'>" . $status . "</p>";
+                                    echo "<p class='badge mt-3 $class'>" . $status . "</p>";
 
                                     echo "
                                             </td>
                                             <td>
-                                                <p></p>
+                                                <a href='manAppInd.php' class='ms-3 mb-0 p-0'><i class='fa-solid fa-eye text-bg-success p-2 rounded-circle icon-link icon-link-hover'></i></a>
                                             </td>
                                         </tr>";
                                 }

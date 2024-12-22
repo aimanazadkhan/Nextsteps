@@ -120,34 +120,49 @@ $uni = mysqli_fetch_assoc($applicationUniData);
                         <div class="px-5 mt-4" style="max-height: 40vh; overflow-y: auto;">
                             <?php
                             $messageData = mysqli_query($conn, "SELECT * FROM `messages` WHERE `appId` = '{$appId}'");
-                            while ($message = mysqli_fetch_array($messageData)) {
-                                if (!empty($message['adminMsg']) && empty($message['userMsg'])) { ?>
-                                    <!-- Admin message -->
-                                    <div class="d-flex justify-content-end text-end">
-                                        <div class="card shadow-lg border-0 my-2" style="max-width: 600px;">
-                                            <div class="card-body">
-                                                <h5 class="card-title mb-1 fw-bold text-dark"><?php echo $adminData['adminName']; ?></h5>
-                                                <p class="card-text text-dark mb-2"><?php echo $message['adminMsg']; ?></p>
-                                                <p class="card-text text-muted small"><?php echo $message['msgOn']; ?></p>
+                            if (mysqli_num_rows($messageData) > 0) {
+                                while ($message = mysqli_fetch_array($messageData)) {
+                                    if (!empty($message['adminMsg']) && empty($message['userMsg'])) { ?>
+                                        <!-- Admin message -->
+                                        <div class="d-flex justify-content-end text-end">
+                                            <div class="card shadow-lg border-0 my-2" style="max-width: 600px;">
+                                                <div class="card-body">
+                                                    <h5 class="card-title mb-1 fw-bold text-dark"><?php echo $adminData['adminName']; ?></h5>
+                                                    <p class="card-text text-dark mb-2"><?php echo $message['adminMsg']; ?></p>
+                                                    <p class="card-text text-muted small"><?php echo $message['msgOn']; ?></p>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    <?php
+                                    } elseif (!empty($message['userMsg']) && empty($message['adminMsg'])) { ?>
+                                        <!-- User message -->
+                                        <div class="d-flex justify-content-start">
+                                            <div class="card shadow-lg border-0 my-2" style="max-width: 600px;">
+                                                <div class="card-body">
+                                                    <h5 class="card-title mb-1 fw-bold text-dark"><?php echo $user['lastname']; ?></h5>
+                                                    <p class="card-text text-dark mb-2"><?php echo $message['userMsg']; ?></p>
+                                                    <p class="card-text text-muted small"><?php echo $message['msgOn']; ?></p>
+                                                </div>
+                                            </div>
+                                        </div>
                                 <?php
-                                } elseif (!empty($message['userMsg']) && empty($message['adminMsg'])) { ?>
-                                    <!-- User message -->
-                                    <div class="d-flex justify-content-start">
-                                        <div class="card shadow-lg border-0 my-2" style="max-width: 600px;">
-                                            <div class="card-body">
-                                                <h5 class="card-title mb-1 fw-bold text-dark"><?php echo $user['lastname']; ?></h5>
-                                                <p class="card-text text-dark mb-2"><?php echo $message['userMsg']; ?></p>
-                                                <p class="card-text text-muted small"><?php echo $message['msgOn']; ?></p>
-                                            </div>
+                                    }
+                                }
+                            } else {
+                                ?>
+                                <div class="d-flex justify-content-center align-items-center" style="height: 40vh;">
+                                    <div class="card shadow-lg border-0 text-center p-4" style="max-width: 400px;">
+                                        <div class="card-body">
+                                            <h5 class="card-title fw-bold text-dark">Start a Conversation</h5>
+                                            <p class="card-text text-muted">Please send a message to start the conversation.</p>
                                         </div>
                                     </div>
+                                </div>
                             <?php
-                                }
-                            } ?>
+                            }
+                            ?>
                         </div>
+
                         <div>
                             <form action="manAppInd-action.php" method="POST">
                                 <div id="editor"></div>

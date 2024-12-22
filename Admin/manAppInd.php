@@ -35,6 +35,8 @@ $uni = mysqli_fetch_assoc($applicationUniData);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Fontawesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- CKEditor -->
+    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/classic/ckeditor.js"></script>
 </head>
 
 <body>
@@ -107,6 +109,7 @@ $uni = mysqli_fetch_assoc($applicationUniData);
                     </div>
 
                     <div class="card border-0 shadow-lg p-3 mx-5">
+                        <!-- Header -->
                         <div class="d-flex align-items-center gap-4">
                             <p class="fw-bold border-bottom border-primary border-2 m-0 pb-1">Documents</p>
                             <div class="d-flex">
@@ -114,16 +117,70 @@ $uni = mysqli_fetch_assoc($applicationUniData);
                                 <span class="ms-1 pt-2 badge bg-danger rounded-circle text-center">2</span>
                             </div>
                         </div>
+                        <div class="px-5 mt-4" style="max-height: 40vh; overflow-y: auto;">
+                            <?php
+                            $messageData = mysqli_query($conn, "SELECT * FROM `messages` WHERE `appId` = '{$appId}'");
+                            while ($message = mysqli_fetch_array($messageData)) {
+                                if (!empty($message['adminMsg']) && empty($message['userMsg'])) { ?>
+                                    <!-- Admin message -->
+                                    <div class="d-flex justify-content-end text-end">
+                                        <div class="card shadow-lg border-0 my-2" style="max-width: 600px;">
+                                            <div class="card-body">
+                                                <h5 class="card-title mb-1 fw-bold text-dark"><?php echo $adminData['adminName']; ?></h5>
+                                                <p class="card-text text-dark mb-2"><?php echo $message['adminMsg']; ?></p>
+                                                <p class="card-text text-muted small"><?php echo $message['msgOn']; ?></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php
+                                } elseif (!empty($message['userMsg']) && empty($message['adminMsg'])) { ?>
+                                    <!-- User message -->
+                                    <div class="d-flex justify-content-start">
+                                        <div class="card shadow-lg border-0 my-2" style="max-width: 600px;">
+                                            <div class="card-body">
+                                                <h5 class="card-title mb-1 fw-bold text-dark"><?php echo $user['lastname']; ?></h5>
+                                                <p class="card-text text-dark mb-2"><?php echo $message['userMsg']; ?></p>
+                                                <p class="card-text text-muted small"><?php echo $message['msgOn']; ?></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                            <?php
+                                }
+                            } ?>
+                        </div>
+                        <div>
+                            <form action="manAppInd-action.php" method="POST">
+                                <div id="editor"></div>
+                                <textarea name="adminMsg" id="adminMsg" hidden></textarea>
+                                <input type="hidden" name="appId" value="<?php echo $appId; ?>">
+                                <button type="submit" class="btn btn-primary mt-2">Send</button>
+                            </form>
+                        </div>
+
                     </div>
-
-
-
                 </div>
             </div>
         </div>
     </div>
 
+    <script>
+        ClassicEditor.create(document.querySelector('#editor'), {
+            toolbar: [
+                'bold', 'italic', 'underline', '|',
+                'heading', 'fontSize', '|',
+                'blockQuote', 'insertTable', 'emoji'
+            ]
+        }).then(editor => {
+            const form = document.querySelector('form');
+            const hiddenTextarea = document.querySelector('#adminMsg');
 
+            form.addEventListener('submit', () => {
+                hiddenTextarea.value = editor.getData(); // Copy editor content to the hidden textarea
+            });
+        }).catch(error => {
+            console.error(error);
+        });
+    </script>
 </body>
 
 </html>

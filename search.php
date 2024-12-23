@@ -186,7 +186,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax'])) {
         border-top-right-radius: 5px;
     }
 
-    
+
     .custom-card {
         position: relative;
         word-wrap: break-word;
@@ -276,7 +276,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax'])) {
                             </ul>
                         </li>
 
-                        
+
 
                         <!-- Filter Button -->
                         <!-- <li>
@@ -321,67 +321,67 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax'])) {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-    const toggleButtons = document.querySelectorAll('.toggle-btn');
+    document.addEventListener('DOMContentLoaded', function() {
+        const toggleButtons = document.querySelectorAll('.toggle-btn');
 
-    toggleButtons.forEach(button => {
-        button.addEventListener('click', function () {
-            const id = this.id.split('-')[2];
-            const subcategories = document.getElementById(`subcategories-${id}`);
-            if (subcategories.style.display === 'none' || subcategories.style.display === '') {
-                subcategories.style.display = 'block';
-                this.textContent = '-';
-            } else {
-                subcategories.style.display = 'none';
-                this.textContent = '+';
-            }
-        });
-    });
-
-    $(document).ready(function () {
-        // Function to handle checkbox change events
-        $('input[type="checkbox"]').change(function () {
-            applyFilters();
+        toggleButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const id = this.id.split('-')[2];
+                const subcategories = document.getElementById(`subcategories-${id}`);
+                if (subcategories.style.display === 'none' || subcategories.style.display === '') {
+                    subcategories.style.display = 'block';
+                    this.textContent = '-';
+                } else {
+                    subcategories.style.display = 'none';
+                    this.textContent = '+';
+                }
+            });
         });
 
-        // Function to apply filters and fetch data
-        function applyFilters() {
-            var selectedCountries = $('input[name="selectedCountries[]"]:checked').map(function () {
-                return this.value;
-            }).get();
+        $(document).ready(function() {
+            // Function to handle checkbox change events
+            $('input[type="checkbox"]').change(function() {
+                applyFilters();
+            });
 
-            var selectedUniversities = $('input[name="selectedUniversities[]"]:checked').map(function () {
-                return this.value;
-            }).get();
+            // Function to apply filters and fetch data
+            function applyFilters() {
+                var selectedCountries = $('input[name="selectedCountries[]"]:checked').map(function() {
+                    return this.value;
+                }).get();
 
-            var selectedLevels = $('input[name="selectedLevels[]"]:checked').map(function () {
-                return this.value;
-            }).get();
+                var selectedUniversities = $('input[name="selectedUniversities[]"]:checked').map(function() {
+                    return this.value;
+                }).get();
 
-            var selectedTitles = $('input[name="selectedTitles[]"]:checked').map(function () {
-                return this.value;
-            }).get();
+                var selectedLevels = $('input[name="selectedLevels[]"]:checked').map(function() {
+                    return this.value;
+                }).get();
 
-            // Send AJAX request only if at least one filter is selected
-            if (selectedCountries.length > 0 || selectedUniversities.length > 0 || selectedLevels.length > 0 || selectedTitles.length > 0) {
-                $.ajax({
-                    type: 'POST',
-                    url: 'search.php',
-                    data: {
-                        ajax: true,
-                        selectedCountries: selectedCountries,
-                        selectedUniversities: selectedUniversities,
-                        selectedLevels: selectedLevels,
-                        selectedTitles: selectedTitles
-                    },
-                    success: function (response) {
-                        // Update content section with new data
-                        var courses = JSON.parse(response);
-                        var courseResults = $('#course-results');
-                        courseResults.empty();
-                        if (courses.length > 0) {
-                            courses.forEach(function (course) {
-                                var html = `
+                var selectedTitles = $('input[name="selectedTitles[]"]:checked').map(function() {
+                    return this.value;
+                }).get();
+
+                // Send AJAX request only if at least one filter is selected
+                if (selectedCountries.length > 0 || selectedUniversities.length > 0 || selectedLevels.length > 0 || selectedTitles.length > 0) {
+                    $.ajax({
+                        type: 'POST',
+                        url: 'search.php',
+                        data: {
+                            ajax: true,
+                            selectedCountries: selectedCountries,
+                            selectedUniversities: selectedUniversities,
+                            selectedLevels: selectedLevels,
+                            selectedTitles: selectedTitles
+                        },
+                        success: function(response) {
+                            // Update content section with new data
+                            var courses = JSON.parse(response);
+                            var courseResults = $('#course-results');
+                            courseResults.empty();
+                            if (courses.length > 0) {
+                                courses.forEach(function(course) {
+                                    var html = `
                                     <div class='col-12 mb-4'>
                                         <div class='custom-card'>
                                             <div class='card-body'>
@@ -397,32 +397,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ajax'])) {
                                             </div>
                                         </div>
                                     </div>`;
-                                courseResults.append(html);
-                            });
-                        } else {
-                            courseResults.append("<p>No results found.</p>");
+                                    courseResults.append(html);
+                                });
+                            } else {
+                                courseResults.append("<p>No results found.</p>");
+                            }
+                        },
+                        error: function(error) {
+                            console.error('Error:', error);
                         }
-                    },
-                    error: function (error) {
-                        console.error('Error:', error);
-                    }
-                });
-            } else {
-                // If no filters selected, display a message or handle accordingly
-                $('#course-results').html("<p>Please select at least one filter option.</p>");
+                    });
+                } else {
+                    // If no filters selected, display a message or handle accordingly
+                    $('#course-results').html("<p>Please select at least one filter option.</p>");
+                }
             }
-        }
 
-        // Function to handle "Apply Now" button click
-        window.applyNow = function(courseID) {
-            const email = new URLSearchParams(window.location.search).get('email');
-            const url = `search.php?createApp=${courseID}&email=${email ? email : ''}`;
-            window.location.href = url;
-        }
+            // Function to handle "Apply Now" button click
+            window.applyNow = function(courseID) {
+                const email = new URLSearchParams(window.location.search).get('email');
+                const url = `search.php?createApp=${courseID}&email=${email ? email : ''}`;
+                window.location.href = url;
+            }
+        });
     });
-});
-
 </script>
 
 </html>
-

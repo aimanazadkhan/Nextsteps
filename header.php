@@ -1,6 +1,6 @@
 <head></head>
 
-<header class="navigation bg-tertiary">
+<header class="navigation bg-transparent">
   <nav class="navbar navbar-expand-xl navbar-light text-center py-3">
     <div class="container">
       <a class="navbar-brand" href="index.php">
@@ -17,7 +17,7 @@
           </li>
           <li class="nav-item"><a class="nav-link" href="about.html">About</a>
           </li>
-          <li class="nav-item"><a class="nav-link" href="search.php">Search Courses</a></li>
+          <li class="nav-item"><a class="nav-link" href="courses.php">Search Courses</a></li>
           <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
               data-bs-toggle="dropdown" aria-expanded="false">Services</a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">

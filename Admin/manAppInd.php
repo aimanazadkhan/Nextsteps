@@ -37,6 +37,23 @@ $uni = mysqli_fetch_assoc($applicationUniData);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- CKEditor -->
     <script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/classic/ckeditor.js"></script>
+    <style>
+        .clickable {
+            cursor: pointer;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.3s;
+        }
+
+        .fade-out {
+            animation: fadeOut 0.3s;
+        }
+
+        .d-none {
+            display: none !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -49,7 +66,7 @@ $uni = mysqli_fetch_assoc($applicationUniData);
                     <h3 class="mt-2 ms-1">Application</h3>
                 </div>
                 <div style="height: 95vh; overflow-y: auto; background-color:rgb(231, 232, 241);">
-                    <div class="card border-0 shadow-lg p-3 mx-5 my-5">
+                    <div class="card border-0 shadow-lg p-3 mx-5 mt-4 mb-3">
                         <div class="row align-items-center text-center">
                             <!-- Left Side -->
                             <div class="col-lg-5 col-md-12">
@@ -111,67 +128,74 @@ $uni = mysqli_fetch_assoc($applicationUniData);
                     <div class="card border-0 shadow-lg p-3 mx-5">
                         <!-- Header -->
                         <div class="d-flex align-items-center gap-4">
-                            <p class="fw-bold border-bottom border-primary border-2 m-0 pb-1">Documents</p>
+                            <p class="fw-bold border-bottom border-primary border-2 m-0 pb-1 clickable" id="documents-tab">Documents</p>
                             <div class="d-flex">
-                                <p class="fw-bold border-bottom border-primary border-2 m-0 pb-1">Comments</p>
+                                <p class="fw-bold border-bottom border-primary border-2 m-0 pb-1 clickable" id="messages-tab">Comments</p>
                                 <span class="ms-1 pt-2 badge bg-danger rounded-circle text-center">2</span>
                             </div>
                         </div>
-                        <div class="px-5 mt-4" style="max-height: 40vh; overflow-y: auto;">
-                            <?php
-                            $messageData = mysqli_query($conn, "SELECT * FROM `messages` WHERE `appId` = '{$appId}'");
-                            if (mysqli_num_rows($messageData) > 0) {
-                                while ($message = mysqli_fetch_array($messageData)) {
-                                    if (!empty($message['adminMsg']) && empty($message['userMsg'])) { ?>
-                                        <!-- Admin message -->
-                                        <div class="d-flex justify-content-end text-end">
-                                            <div class="card shadow-lg border-0 my-2" style="max-width: 600px;">
-                                                <div class="card-body">
-                                                    <h5 class="card-title mb-1 fw-bold text-dark"><?php echo $adminData['adminName']; ?></h5>
-                                                    <p class="card-text text-dark mb-2"><?php echo $message['adminMsg']; ?></p>
-                                                    <p class="card-text text-muted small"><?php echo $message['msgOn']; ?></p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    <?php
-                                    } elseif (!empty($message['userMsg']) && empty($message['adminMsg'])) { ?>
-                                        <!-- User message -->
-                                        <div class="d-flex justify-content-start">
-                                            <div class="card shadow-lg border-0 my-2" style="max-width: 600px;">
-                                                <div class="card-body">
-                                                    <h5 class="card-title mb-1 fw-bold text-dark"><?php echo $user['lastname']; ?></h5>
-                                                    <p class="card-text text-dark mb-2"><?php echo $message['userMsg']; ?></p>
-                                                    <p class="card-text text-muted small"><?php echo $message['msgOn']; ?></p>
-                                                </div>
-                                            </div>
-                                        </div>
+
+                        <!-- Document Section -->
+                        <div id="documents" class="fade-in active-section">
+                            Documents
+                        </div>
+
+                        <!-- Messages Section -->
+                        <div id="messages" class="fade-out d-none">
+                            <div class="px-5 mt-4" style="max-height: 45vh; overflow-y: auto;">
                                 <?php
+                                $messageData = mysqli_query($conn, "SELECT * FROM `messages` WHERE `appId` = '{$appId}'");
+                                if (mysqli_num_rows($messageData) > 0) {
+                                    while ($message = mysqli_fetch_array($messageData)) {
+                                        if (!empty($message['adminMsg']) && empty($message['userMsg'])) { ?>
+                                            <!-- Admin message -->
+                                            <div class="d-flex justify-content-end text-end">
+                                                <div class="card shadow-lg border-0 my-2" style="max-width: 600px;">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title mb-1 fw-bold text-dark"><?php echo $adminData['adminName']; ?></h5>
+                                                        <p class="card-text text-dark mb-2"><?php echo $message['adminMsg']; ?></p>
+                                                        <p class="card-text text-muted small"><?php echo $message['msgOn']; ?></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <?php
+                                        } elseif (!empty($message['userMsg']) && empty($message['adminMsg'])) { ?>
+                                            <!-- User message -->
+                                            <div class="d-flex justify-content-start">
+                                                <div class="card shadow-lg border-0 my-2" style="max-width: 600px;">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title mb-1 fw-bold text-dark"><?php echo $user['lastname']; ?></h5>
+                                                        <p class="card-text text-dark mb-2"><?php echo $message['userMsg']; ?></p>
+                                                        <p class="card-text text-muted small"><?php echo $message['msgOn']; ?></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    <?php
+                                        }
                                     }
-                                }
-                            } else {
-                                ?>
-                                <div class="d-flex justify-content-center align-items-center" style="height: 40vh;">
-                                    <div class="card shadow-lg border-0 text-center p-4" style="max-width: 400px;">
-                                        <div class="card-body">
-                                            <h5 class="card-title fw-bold text-dark">Start a Conversation</h5>
-                                            <p class="card-text text-muted">Please send a message to start the conversation.</p>
+                                } else {
+                                    ?>
+                                    <div class="d-flex justify-content-center align-items-center" style="height: 40vh;">
+                                        <div class="card shadow-lg border-0 text-center p-4" style="max-width: 400px;">
+                                            <div class="card-body">
+                                                <h5 class="card-title fw-bold text-dark">Start a Conversation</h5>
+                                                <p class="card-text text-muted">Please send a message to start the conversation.</p>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            <?php
-                            }
-                            ?>
+                                <?php
+                                }
+                                ?>
+                            </div>
+                            <div>
+                                <form action="manAppInd-action.php" method="POST">
+                                    <div id="editor"></div>
+                                    <textarea name="adminMsg" id="adminMsg" hidden></textarea>
+                                    <input type="hidden" name="appId" value="<?php echo $appId; ?>">
+                                    <button type="submit" class="btn btn-primary mt-2">Send</button>
+                                </form>
+                            </div>
                         </div>
-
-                        <div>
-                            <form action="manAppInd-action.php" method="POST">
-                                <div id="editor"></div>
-                                <textarea name="adminMsg" id="adminMsg" hidden></textarea>
-                                <input type="hidden" name="appId" value="<?php echo $appId; ?>">
-                                <button type="submit" class="btn btn-primary mt-2">Send</button>
-                            </form>
-                        </div>
-
                     </div>
                 </div>
             </div>
@@ -179,6 +203,32 @@ $uni = mysqli_fetch_assoc($applicationUniData);
     </div>
 
     <script>
+        // Documents/Message Header functionalities
+        document.addEventListener("DOMContentLoaded", function() {
+            const documentsTab = document.getElementById("documents-tab");
+            const messagesTab = document.getElementById("messages-tab");
+            const documentsSection = document.getElementById("documents");
+            const messagesSection = document.getElementById("messages");
+
+            function switchSection(showSection, hideSection) {
+                hideSection.classList.remove("fade-in", "active-section");
+                hideSection.classList.add("fade-out");
+                setTimeout(() => {
+                    hideSection.classList.add("d-none");
+                    showSection.classList.remove("fade-out", "d-none");
+                    showSection.classList.add("fade-in", "active-section");
+                }, 300); // Timeout matches animation duration
+            }
+
+            documentsTab.addEventListener("click", function() {
+                switchSection(documentsSection, messagesSection);
+            });
+
+            messagesTab.addEventListener("click", function() {
+                switchSection(messagesSection, documentsSection);
+            });
+        });
+        // CKEditor
         ClassicEditor.create(document.querySelector('#editor'), {
             toolbar: [
                 'bold', 'italic', 'underline', '|',

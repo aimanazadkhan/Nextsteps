@@ -37,6 +37,8 @@ $uni = mysqli_fetch_assoc($applicationUniData);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- CKEditor -->
     <script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/classic/ckeditor.js"></script>
+    <!-- Aniamte.CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <style>
         .clickable {
             cursor: pointer;
@@ -51,7 +53,17 @@ $uni = mysqli_fetch_assoc($applicationUniData);
         }
 
         .d-none {
-            display: none !important;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .section {
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .active-section {
+            opacity: 1;
+            pointer-events: auto;
         }
     </style>
 </head>
@@ -128,20 +140,147 @@ $uni = mysqli_fetch_assoc($applicationUniData);
                     <div class="card border-0 shadow-lg p-3 mx-5">
                         <!-- Header -->
                         <div class="d-flex align-items-center gap-4">
-                            <p class="fw-bold border-bottom border-primary border-2 m-0 pb-1 clickable" id="documents-tab">Documents</p>
+                            <p class="fw-bold m-0 pb-1 clickable" id="documents-tab" onclick="showSection('documents')">Documents</p>
                             <div class="d-flex">
-                                <p class="fw-bold border-bottom border-primary border-2 m-0 pb-1 clickable" id="messages-tab">Comments</p>
-                                <span class="ms-1 pt-2 badge bg-danger rounded-circle text-center">2</span>
+                                <p class="fw-bold border-bottom border-primary border-2 m-0 pb-1 clickable" id="messages-tab" onclick="showSection('messages')">Comments</p>
                             </div>
                         </div>
 
                         <!-- Document Section -->
-                        <div id="documents" class="fade-in active-section">
-                            Documents
+                        <div id="documents" class="d-none">
+                            <div class="container my-4">
+                                <div class="d-flex justify-content-between">
+                                    <!-- Submitted -->
+                                    <div class="text-center p-3 rounded" style="flex: 1; background: linear-gradient(to bottom, #e0f0ff, #cce5ff); margin: 0 5px; border: 1px solid #b3d7ff;">
+                                        <h5 class="mb-1">2</h5>
+                                        <small>Submitted</small>
+                                    </div>
+                                    <!-- Pending -->
+                                    <div class="text-center p-3 rounded" style="flex: 1; background: linear-gradient(to bottom, #fff5e6, #ffe6b3); margin: 0 5px; border: 1px solid #ffd699;">
+                                        <h5 class="mb-1">2</h5>
+                                        <small>Pending</small>
+                                    </div>
+                                    <!-- Not Approved -->
+                                    <div class="text-center p-3 rounded" style="flex: 1; background: linear-gradient(to bottom, #ffe5e5, #ffcccc); margin: 0 5px; border: 1px solid #ff9999;">
+                                        <h5 class="mb-1">0</h5>
+                                        <small>Not Approved</small>
+                                    </div>
+                                    <!-- Accepted -->
+                                    <div class="text-center p-3 rounded" style="flex: 1; background: linear-gradient(to bottom, #e6fffa, #b3fff0); margin: 0 5px; border: 1px solid #99ffe0;">
+                                        <h5 class="mb-1">6</h5>
+                                        <small>Accepted</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div style="max-height: 48vh; overflow-y: auto;">
+                                <!-- Application Submission Screenshot -->
+                                <div class="card shadow-lg border-0 border-start border-success border-5 flex-grow-1 mb-3 mt-3">
+                                    <div class="card-body d-flex align-items-center justify-content-between">
+                                        <div>
+                                            <h6 class="card-title mb-1">Application Submission Screenshot. <span class="badge bg-success me-3">Accepted</span></h6>
+                                        </div>
+                                        <div class="d-flex flex-column align-items-center">
+                                            <button class="btn btn-outline-primary btn-sm me-2">
+                                                <i class="bi bi-upload"></i> Upload
+                                            </button>
+                                            <button class="btn btn-link text-decoration-none text-danger">
+                                                Show updates <span class="badge bg-danger ms-1">1</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Letter of Recommendation -->
+                                <div class="card shadow-lg border-0 border-start border-success border-5 flex-grow-1 mb-3 mt-3">
+                                    <div class="card-body d-flex align-items-center justify-content-between">
+                                        <div>
+                                            <h6 class="card-title mb-1">Letter of Recommendation <span class="badge bg-success me-3">Accepted</span></h6>
+                                        </div>
+                                        <div class="d-flex flex-column align-items-center">
+                                            <button class="btn btn-outline-primary btn-sm me-2">
+                                                <i class="bi bi-upload"></i> Upload
+                                            </button>
+                                            <button class="btn btn-link text-decoration-none text-danger">
+                                                Show updates <span class="badge bg-danger ms-1">1</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- University Application Form -->
+                                <div class="card shadow-lg border-0 border-start border-success border-5 flex-grow-1 mb-3 mt-3">
+                                    <div class="card-body d-flex align-items-center justify-content-between">
+                                        <div>
+                                            <h6 class="card-title mb-1">University Application Form. <span class="badge bg-success me-3">Accepted</span></h6>
+                                        </div>
+                                        <div class="d-flex flex-column align-items-center">
+                                            <button class="btn btn-outline-primary btn-sm me-2">
+                                                <i class="bi bi-upload"></i> Upload
+                                            </button>
+                                            <button class="btn btn-link text-decoration-none text-danger">
+                                                Show updates <span class="badge bg-danger ms-1">1</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Statement of Purpose -->
+                                <div class="card shadow-lg border-0 border-start border-success border-5 flex-grow-1 mb-3 mt-3">
+                                    <div class="card-body d-flex align-items-center justify-content-between">
+                                        <div>
+                                            <h6 class="card-title mb-1">Statement of Purpose <span class="badge bg-success me-3">Accepted</span></h6>
+                                        </div>
+                                        <div class="d-flex flex-column align-items-center">
+                                            <button class="btn btn-outline-primary btn-sm me-2">
+                                                <i class="bi bi-upload"></i> Upload
+                                            </button>
+                                            <button class="btn btn-link text-decoration-none text-danger">
+                                                Show updates <span class="badge bg-danger ms-1">1</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- SSC Certificate & Transcript -->
+                                <div class="card shadow-lg border-0 border-start border-success border-5 flex-grow-1 mb-3 mt-3">
+                                    <div class="card-body d-flex align-items-center justify-content-between">
+                                        <div>
+                                            <h6 class="card-title mb-1">SSC Certificate & Transcript <span class="badge bg-success me-3">Accepted</span></h6>
+                                        </div>
+                                        <div class="d-flex flex-column align-items-center">
+                                            <button class="btn btn-outline-primary btn-sm me-2">
+                                                <i class="bi bi-upload"></i> Upload
+                                            </button>
+                                            <button class="btn btn-link text-decoration-none text-danger">
+                                                Show updates <span class="badge bg-danger ms-1">1</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- HSC Certificate & Transcript -->
+                                <div class="card shadow-lg border-0 border-start border-success border-5 flex-grow-1 mb-3 mt-3">
+                                    <div class="card-body d-flex align-items-center justify-content-between">
+                                        <div>
+                                            <h6 class="card-title mb-1">HSC Certificate & Transcript <span class="badge bg-success me-3">Accepted</span></h6>
+                                        </div>
+                                        <div class="d-flex flex-column align-items-center">
+                                            <button class="btn btn-outline-primary btn-sm me-2">
+                                                <i class="bi bi-upload"></i> Upload
+                                            </button>
+                                            <button class="btn btn-link text-decoration-none text-danger">
+                                                Show updates <span class="badge bg-danger ms-1">1</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
                         </div>
 
                         <!-- Messages Section -->
-                        <div id="messages" class="fade-out d-none">
+                        <div id="messages" class="active-section">
                             <div class="px-5 mt-4" style="max-height: 45vh; overflow-y: auto;">
                                 <?php
                                 $messageData = mysqli_query($conn, "SELECT * FROM `messages` WHERE `appId` = '{$appId}'");
@@ -204,30 +343,35 @@ $uni = mysqli_fetch_assoc($applicationUniData);
 
     <script>
         // Documents/Message Header functionalities
-        document.addEventListener("DOMContentLoaded", function() {
-            const documentsTab = document.getElementById("documents-tab");
-            const messagesTab = document.getElementById("messages-tab");
-            const documentsSection = document.getElementById("documents");
-            const messagesSection = document.getElementById("messages");
+        function showSection(section) {
+            const documentsTab = document.getElementById('documents-tab');
+            const messagesTab = document.getElementById('messages-tab');
+            const documentsSection = document.getElementById('documents');
+            const messagesSection = document.getElementById('messages');
 
-            function switchSection(showSection, hideSection) {
-                hideSection.classList.remove("fade-in", "active-section");
-                hideSection.classList.add("fade-out");
+            if (section === 'documents') {
+                documentsTab.classList.add('border-bottom', 'border-primary', 'border-2');
+                messagesTab.classList.remove('border-bottom', 'border-primary', 'border-2');
+                messagesSection.classList.add('fade-out');
                 setTimeout(() => {
-                    hideSection.classList.add("d-none");
-                    showSection.classList.remove("fade-out", "d-none");
-                    showSection.classList.add("fade-in", "active-section");
-                }, 300); // Timeout matches animation duration
+                    messagesSection.classList.add('d-none');
+                    messagesSection.classList.remove('active-section', 'fade-out');
+                    documentsSection.classList.remove('d-none');
+                    documentsSection.classList.add('active-section', 'fade-in');
+                }, 300); // Delay to match the CSS animation duration
+            } else if (section === 'messages') {
+                messagesTab.classList.add('border-bottom', 'border-primary', 'border-2');
+                documentsTab.classList.remove('border-bottom', 'border-primary', 'border-2');
+                documentsSection.classList.add('fade-out');
+                setTimeout(() => {
+                    documentsSection.classList.add('d-none');
+                    documentsSection.classList.remove('active-section', 'fade-out');
+                    messagesSection.classList.remove('d-none');
+                    messagesSection.classList.add('active-section', 'fade-in');
+                }, 300); // Delay to match the CSS animation duration
             }
+        }
 
-            documentsTab.addEventListener("click", function() {
-                switchSection(documentsSection, messagesSection);
-            });
-
-            messagesTab.addEventListener("click", function() {
-                switchSection(messagesSection, documentsSection);
-            });
-        });
         // CKEditor
         ClassicEditor.create(document.querySelector('#editor'), {
             toolbar: [

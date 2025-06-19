@@ -1,9 +1,9 @@
 <?php
 
 $serverName = "localhost";
-$userName = "mynepmos_nextAdmin";
-$password = "nextAdmin123";
-$dbName = "mynepmos_nextsteps";
+$userName = "root";
+$password = "";
+$dbName = "nextssteps_search";
 
 $conn = mysqli_connect($serverName, $userName, $password, $dbName);
 

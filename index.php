@@ -79,7 +79,7 @@ include "./connection.php";
   <?php include "header.php"; ?>
   <!-- /navigation -->
 
-  <!-- <div class="modal applyLoanModal fade" id="applyLoan" tabindex="-1" aria-labelledby="applyLoanLabel" aria-hidden="true">
+  <div class="modal applyLoanModal fade" id="applyLoan" tabindex="-1" aria-labelledby="applyLoanLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header border-bottom-0">
@@ -709,15 +709,6 @@ include "./connection.php";
           <p>Visa</p>
         </div>
       </div>
-    </div>
-  </div> -->
-
-  <!-- We Are Returning Soon Section -->
-  <div class="container text-center">
-    <div class="p-5 bg-secondary rounded-3 shadow">
-      <h1 class="display-4 fw-bold">We'll Be Back Shortly</h1>
-      <p class="lead mt-3">Our website is currently undergoing scheduled maintenance. We appreciate your patience and look forward to serving you again soon.</p>
-
     </div>
   </div>
 

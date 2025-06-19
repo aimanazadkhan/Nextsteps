@@ -1,10 +1,10 @@
 <?php
-// session_start();
-// if (!isset($_SESSION['user']) || $_SESSION['user'] == 'admin') {
-//     echo "<script>alert('You have to Login First!!!')</script>";
-//     echo "<script>location.href='./login.php'</script>";
-// }
-include "connection2.php";
+session_start();
+if (!isset($_SESSION['user']) || $_SESSION['user'] == 'admin') {
+    echo "<script>alert('You have to Login First!!!')</script>";
+    echo "<script>location.href='./login.php'</script>";
+}
+include "connection.php";
 
 $result = null;
 

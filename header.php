@@ -32,7 +32,16 @@
         </ul>
 
         <?php if (isset($_SESSION['user']) && $_SESSION['user'] !== 'admin') {
-          $proPicQuery = mysqli_query($conn, "SELECT `profilePic` FROM `users` WHERE email = '{$_SESSION['user']}'");
+          $email = mysqli_real_escape_string($conn, $_SESSION['user']);
+
+          $proPicQuery = mysqli_query($conn, "
+                                            SELECT up.profilePic
+                                            FROM user_personal up
+                                            JOIN auth a ON up.auth_id = a.id
+                                            WHERE a.email = '$email'
+                                            LIMIT 1
+                                        ");
+
           $row = mysqli_fetch_assoc($proPicQuery);
           echo
           "

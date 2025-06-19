@@ -61,6 +61,15 @@ if (isset($_POST['signup'])) {
         if (!mysqli_query($conn, $user_query)) {
             throw new Exception('Failed to insert into user_personal table.');
         }
+
+        $user_personal_id = mysqli_insert_id($conn);
+
+        $edu_query = "INSERT INTO user_education (user_id, created_at, updated_at)
+                  VALUES ('$user_personal_id', NOW(), NOW())";
+
+        if (!mysqli_query($conn, $edu_query)) {
+            echo "<script>alert('Registration boom! Shit went sideways. Try again.')</script>";
+        }
         // Everything smooth? Commit that shit
         mysqli_commit($conn);
         // include 'sendmail.php';
@@ -74,8 +83,6 @@ if (isset($_POST['signup'])) {
 }
 
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">

@@ -3,36 +3,52 @@
 if (isset($_POST['btn_signIn'])) {
     include 'connection.php';
 
-    $log_user_email = $_POST['l_email'];
-    $log_password = $_POST['l_pass'];
+    session_start();
 
-    $result = mysqli_query($conn, "SELECT * FROM `users` 
-        WHERE email = '$log_user_email' AND BINARY `password` = '$log_password' AND verifystatus = '1'");
+    $log_user_email = mysqli_real_escape_string($conn, $_POST['l_email']);
+    $log_password = mysqli_real_escape_string($conn, $_POST['l_pass']);
+    $hashed_pass = md5($log_password); // same as registration
 
+    // Check admin login first
     $adminResult = mysqli_query($conn, "SELECT * FROM `admin` WHERE `adminName` = '$log_user_email'");
     $adminData = mysqli_fetch_assoc($adminResult);
 
     if ($adminData && password_verify($log_password, $adminData['password'])) {
-        session_start();
         $_SESSION['user'] = $log_user_email;
         echo "<script>location.href='admin/';</script>";
-    } else if (mysqli_num_rows($result) > 0) {
-        session_start();
+        exit;
+    }
+
+    // Check normal user login
+    $userResult = mysqli_query($conn, "
+        SELECT * FROM `auth` 
+        WHERE email = '$log_user_email' 
+        AND BINARY password = '$hashed_pass' 
+        AND verifyStatus = '1'
+    ");
+
+    if (mysqli_num_rows($userResult) > 0) {
         $_SESSION['user'] = $log_user_email;
         echo "<script>location.href='profile.php'</script>";
+        exit;
+    }
+
+    // If not verified yet
+    $pendingResult = mysqli_query($conn, "
+        SELECT * FROM `auth` 
+        WHERE email = '$log_user_email' 
+        AND BINARY password = '$hashed_pass' 
+        AND verifyStatus = '0'
+    ");
+
+    if (mysqli_num_rows($pendingResult) > 0) {
+        echo "<script>alert('Your account hasn’t been verified yet. A verification link has been sent to your email.')</script>";
+        echo "<script>location.href='login.php'</script>";
     } else {
-        $result1 = mysqli_query($conn, "SELECT * FROM `users` 
-            WHERE email = '$log_user_email' AND BINARY `password` = '$log_password' AND verifystatus = '0'");
-        if (mysqli_num_rows($result1) > 0) {
-            echo "<script>alert('Your Account has not been verified yet. A verification link has been sent to your registered email address!')</script>";
-            echo "<script>location.href='login.php'</script>";
-        } else {
-            echo "<script>alert('Invalid Username or Password.Please Try Again!')</script>";
-            echo "<script>location.href='login.php'</script>";
-        }
+        echo "<script>alert('Invalid username or password. Try again.')</script>";
+        echo "<script>location.href='login.php'</script>";
     }
 }
-
 ?>
 
 <!DOCTYPE html>

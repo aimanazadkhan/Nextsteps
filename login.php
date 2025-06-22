@@ -7,13 +7,12 @@ if (isset($_POST['btn_signIn'])) {
 
     $log_user_email = mysqli_real_escape_string($conn, $_POST['l_email']);
     $log_password = mysqli_real_escape_string($conn, $_POST['l_pass']);
-    $hashed_pass = md5($log_password); // same as registration
+    $hashed_pass = md5($log_password);
 
     // Check admin login first
-    $adminResult = mysqli_query($conn, "SELECT * FROM `admin` WHERE `adminName` = '$log_user_email'");
-    $adminData = mysqli_fetch_assoc($adminResult);
+    $adminResult = mysqli_query($conn, "SELECT * FROM `admin` WHERE `adminName` = '$log_user_email' AND BINARY password = '$hashed_pass'");
 
-    if ($adminData && password_verify($log_password, $adminData['password'])) {
+    if (mysqli_num_rows($adminResult) > 0) {
         $_SESSION['user'] = $log_user_email;
         echo "<script>location.href='admin/';</script>";
         exit;

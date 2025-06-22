@@ -57,8 +57,9 @@ if (!isset($_SESSION['user']) || $_SESSION['user'] !== $adminData['adminName']) 
                                 $applicationData = mysqli_query($conn, "SELECT * FROM `applications`");
 
                                 while ($row = mysqli_fetch_array($applicationData)) {
-                                    $user = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM `users` WHERE `email` = '{$row['userEmail']}'"));
-                                    $uni = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM `search` WHERE `ID` = '{$row['uniID']}'"));
+                                    $user = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM `auth` WHERE `email` = '{$row['userEmail']}'"));
+                                    $uni = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM `university` WHERE `id` = '{$row['uniID']}'"));
+                                    $course = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM `course_list` WHERE `id` = '{$row['courseID']}'"));
 
                                     $datetime = $row['createdOn'];
                                     list($date, $time) = explode(' ', $datetime);

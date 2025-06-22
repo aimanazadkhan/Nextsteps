@@ -55,25 +55,27 @@ if (isset($_POST['search_btn'])) {
 
 // Apply Course Application
 if (isset($_GET['createApp'])) {
-    $id = $_GET['createApp'];
+    $course_id = $_GET['createApp'];
 
     if (isset($_GET['email']) && !empty($_GET['email'])) {
         $email = $_GET['email'];
     } else {
         $email = $_SESSION['user'];
     }
+    $university_id = $_GET['universityId'];
 
-    $query = "INSERT INTO `applications`(`uniID`, `userEmail`) VALUES ('$id', '$email')";
+    $query = "INSERT INTO `applications`(`uniID`, `userEmail`, `courseID`) VALUES ('$university_id', '$email','$course_id')";
     if (!mysqli_query($conn, $query)) {
         die("Not Inserted!!");
     } else {
         // Increment the applied column
-        $updateQuery = "UPDATE `users` SET `applied` = `applied` + 1 WHERE `email` = '$email'";
+        $id = mysqli_fetch_assoc(mysqli_query($conn, "SELECT `id` FROM auth WHERE email = '{$_SESSION["user"]}'"));
+        $updateQuery = "UPDATE `user_personal` SET `applied` = `applied` + 1 WHERE `auth_id` = '{$id["id"]}'";
         if (!mysqli_query($conn, $updateQuery)) {
             die("Failed to update applied count!");
         } else {
             echo "<script>alert('Application Created Successfully. Wait for an admin to contact you.')</script>";
-            echo "<script>location.href='search.php'</script>";
+            echo "<script>location.href='courses.php'</script>";
         }
     }
 }
@@ -227,7 +229,7 @@ if (isset($_GET['createApp'])) {
                                         <p class="mb-1"><strong>Tuition Fees:</strong> <?= htmlspecialchars($row['tuition_fees']) ?></p>
                                         <div class="d-flex align-items-center mt-3">
                                             <a href="<?= htmlspecialchars($row['url']) ?>" target="_blank" class="btn btn-outline-primary">View Course</a>
-                                            <a href="search.php?createApp=<?= $row['id'] ?>&email=<?= htmlspecialchars($_GET['email'] ?? '') ?>" class="ms-3 btn btn-primary">Apply Now</a>
+                                            <a href="courses.php?createApp=<?= $row['id'] ?>&email=<?= htmlspecialchars($_GET['email'] ?? '') ?>&universityId=<?= $row['university_id'] ?>" class="ms-3 btn btn-primary">Apply Now</a>
                                         </div>
                                     </div>
                                 </div>

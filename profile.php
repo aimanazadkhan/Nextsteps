@@ -72,10 +72,10 @@ if (isset($_POST['aQualSave'])) {
     $address = $_POST['address'];
 
     $update_query = "UPDATE `user_education` SET 
-            `institutionname`='$institution_name', `studycountry`='$study_country', 
+            `institution_name`='$institution_name', `study_country`='$study_country', 
             `qualification`='$qualification', `cgpa`='$cgpa', 
-            `startdate`='$start_date', `enddate`='$end_date', 
-            `language`='$language', `eduaddress`='$address' WHERE email = '{$_SESSION['user']}'";
+            `start_date`='$start_date', `end_date`='$end_date', 
+            `language`='$language', `edu_address`='$address' WHERE user_id = '{$user_personal['user_id']}'";
 
     if (mysqli_query($conn, $update_query)) {
         $_SESSION['alert'] = "Information Updated Successfully!";

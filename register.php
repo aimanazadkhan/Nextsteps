@@ -41,7 +41,6 @@ if (isset($_POST['signup'])) {
             exit;
         }
 
-        // Insert into auth table
         $auth_query = "INSERT INTO auth (email, password, phoneNumber, verifyStatus, verifyToken)
                        VALUES ('$reg_email', '$hashed_pass', '$reg_phoneNumber', '0', '$verifyToken')";
 
@@ -49,27 +48,26 @@ if (isset($_POST['signup'])) {
             throw new Exception('Failed to insert into auth table.');
         }
 
-        $auth_id = mysqli_insert_id($conn);
+        // $auth_id = mysqli_insert_id($conn);
 
-        // Insert into user_personal table — minimal fields for now
-        $user_query = "INSERT INTO user_personal (
-            auth_id, firstname, lastname, created_at, updated_at
-        ) VALUES (
-            '$auth_id', '$reg_firstName', '$reg_lastName', NOW(), NOW()
-        )";
+        // $user_query = "INSERT INTO user_personal (
+        //     auth_id, firstname, lastname, created_at, updated_at
+        // ) VALUES (
+        //     '$auth_id', '$reg_firstName', '$reg_lastName', NOW(), NOW()
+        // )";
 
-        if (!mysqli_query($conn, $user_query)) {
-            throw new Exception('Failed to insert into user_personal table.');
-        }
+        // if (!mysqli_query($conn, $user_query)) {
+        //     throw new Exception('Failed to insert into user_personal table.');
+        // }
 
-        $user_personal_id = mysqli_insert_id($conn);
+        // $user_personal_id = mysqli_insert_id($conn);
 
-        $edu_query = "INSERT INTO user_education (user_id, created_at, updated_at)
-                  VALUES ('$user_personal_id', NOW(), NOW())";
+        // $edu_query = "INSERT INTO user_education (user_id, created_at, updated_at)
+        //           VALUES ('$user_personal_id', NOW(), NOW())";
 
-        if (!mysqli_query($conn, $edu_query)) {
-            echo "<script>alert('Registration boom! Shit went sideways. Try again.')</script>";
-        }
+        // if (!mysqli_query($conn, $edu_query)) {
+        //     echo "<script>alert('Registration boom!  went sideways. Try again.')</script>";
+        // }
         // Everything smooth? Commit that shit
         mysqli_commit($conn);
         // include 'sendmail.php';
@@ -77,7 +75,7 @@ if (isset($_POST['signup'])) {
         echo "<script>location.href='login.php'</script>";
     } catch (Exception $e) {
         mysqli_rollback($conn); // drop all inserts if anything failed
-        echo "<script>alert('Registration failed! Shit went sideways. Try again.')</script>";
+        echo "<script>alert('Registration failed!  went sideways. Try again.')</script>";
         echo "<script>location.href='register.php'</script>";
     }
 }

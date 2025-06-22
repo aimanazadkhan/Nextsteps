@@ -404,7 +404,7 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
         }
 
         .hidden {
-            display: none;
+            display: none !important;
         }
 
         .doc-container {
@@ -502,14 +502,15 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
                                         <div class="d-flex justify-content-between mb-1">
                                             <h6 class="text-secondary fs-5 mt-1">Personal Information</h6>
                                             <?php
-                                            $appQuery = mysqli_query($conn, "SELECT `applied` FROM `user_personal` WHERE auth_id = '{$auth_id}'");
+                                            $appQuery = mysqli_query($conn, "SELECT `appNum` FROM `user_personal` WHERE auth_id = '{$user_personal['auth_id']}'");
                                             $appNum = mysqli_fetch_assoc($appQuery);
 
-                                            if (empty($appNum['applied']) || $appNum['applied'] == 0) {
+                                            if (empty($appNum['appNum']) || $appNum['appNum'] == 0) {
                                                 echo '
-                                                    <button class="btn border mb-1 editBtn">
-                                                        <i class="far fa-edit editData"><span class="h6 ms-1">Edit</span></i>
-                                                    </button>';
+                                                    <button type="button" class="btn border mb-1 editBtn editData">
+                                                        <i class="far fa-edit"><span class="h6 ms-1">Edit</span></i>
+                                                    </button>
+                                                    ';
                                             }
                                             ?>
                                         </div>
@@ -848,9 +849,9 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
                                 <div class="col-md-4 gradient-custom text-center text-white d-flex justify-content-center align-items-center"
                                     style="height: auto;">
                                     <div>
-                                        <img src="<?php echo $user['profilePic']; ?>" alt="Avatar"
+                                        <img src="<?php echo $user_personal['profilePic']; ?>" alt="Avatar"
                                             class="img-fluid mb-4" style="width: 10rem;" />
-                                        <h5><?php echo $user['firstname'] . " " . $user['lastname']; ?></h5>
+                                        <h5><?php echo $user_personal['firstname'] . " " . $user_personal['lastname']; ?></h5>
                                     </div>
                                 </div>
                                 <div class="col-md-8">
@@ -858,10 +859,10 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
                                         <div class="d-flex justify-content-between mb-1">
                                             <h6 class="text-secondary fs-5">Academic Qualification</h6>
                                             <?php
-                                            $appQuery = mysqli_query($conn, "SELECT `applied` FROM `users` WHERE email = '{$_SESSION['user']}'");
+                                            $appQuery = mysqli_query($conn, "SELECT `appNum` FROM `user_personal` WHERE auth_id = '{$user_personal['auth_id']}'");
                                             $appNum = mysqli_fetch_assoc($appQuery);
 
-                                            if (empty($appNum['applied']) || $appNum['applied'] == 0) {
+                                            if (empty($appNum['appNum']) || $appNum['appNum'] == 0) {
                                                 echo '
                                                     <button class="btn border mb-1 editBtn">
                                                         <i class="far fa-edit editData"><span class="h6 ms-1">Edit</span></i>
@@ -873,14 +874,14 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
                                         <div class="row pt-1">
                                             <div class="col-6 mb-3">
                                                 <h6>Name of the Institution</h6>
-                                                <p class="text-muted"><?php echo $user['institutionname']; ?></p>
+                                                <p class="text-muted"><?php echo $user_education['institution_name']; ?></p>
                                                 <input type="text" class="form-control mb-3 hidden"
-                                                    value="<?php echo $user['institutionname']; ?>"
+                                                    value="<?php echo $user_education['institution_name']; ?>"
                                                     name="institution_name" pattern="[A-Za-z ]+" />
                                             </div>
                                             <div class="col-6 mb-3">
                                                 <h6>Country of Study</h6>
-                                                <p class="text-muted"><?php echo $user['studycountry']; ?></p>
+                                                <p class="text-muted"><?php echo $user_education['study_country']; ?></p>
                                                 <select class="form-control mb-3 hidden" name="study_country" id="study_country">
                                                     <?php
                                                     $countries = [
@@ -1076,7 +1077,7 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
                                                         'Zimbabwe'
                                                     ];
                                                     foreach ($countries as $country) {
-                                                        $selected = ($user['studycountry'] === $country) ? 'selected' : '';
+                                                        $selected = ($user_education['study_country'] === $country) ? 'selected' : '';
                                                         echo "<option value=\"$country\" $selected>$country</option>";
                                                     }
                                                     ?>
@@ -1087,14 +1088,14 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
                                         <div class="row pt-1">
                                             <div class="col-6 mb-3">
                                                 <h6>Highest Level of Qualification</h6>
-                                                <p class="text-muted"><?php echo $user['qualification']; ?></p>
+                                                <p class="text-muted"><?php echo $user_education['qualification']; ?></p>
                                                 <input type="text" class="form-control mb-3 hidden"
-                                                    value="<?php echo $user['qualification']; ?>" name="qualification"
+                                                    value="<?php echo $user_education['qualification']; ?>" name="qualification"
                                                     pattern="[A-Za-z .]+" />
                                             </div>
                                             <div class="col-6 mb-3">
                                                 <h6>Result</h6>
-                                                <p class="text-muted"><?php echo $user['cgpa']; ?></p>
+                                                <p class="text-muted"><?php echo $user_eeducation['cgpa']; ?></p>
                                                 <div class="input-group mb-3 hidden cgpa">
                                                     <!-- Main Select Dropdown for Result Type -->
                                                     <select class="form-select" id="main-select">
@@ -1121,32 +1122,32 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
                                         <div class="row pt-1">
                                             <div class="col-6 mb-3">
                                                 <h6>Start Date</h6>
-                                                <p class="text-muted"><?php echo $user['startdate']; ?></p>
+                                                <p class="text-muted"><?php echo $user_education['start_date']; ?></p>
                                                 <input type="date" class="form-control mb-3 hidden"
-                                                    value="<?php echo $user['startdate']; ?>" name="start_date"
+                                                    value="<?php echo $user_education['start_date']; ?>" name="start_date"
                                                     pattern="\d{4}-\d{2}-\d{2}" />
                                             </div>
                                             <div class="col-6 mb-3">
                                                 <h6>End Date</h6>
-                                                <p class="text-muted"><?php echo $user['enddate']; ?></p>
+                                                <p class="text-muted"><?php echo $user_education['end_date']; ?></p>
                                                 <input type="date" class="form-control mb-3 hidden"
-                                                    value="<?php echo $user['enddate']; ?>" name="end_date"
+                                                    value="<?php echo $user_education['end_date']; ?>" name="end_date"
                                                     pattern="\d{4}-\d{2}-\d{2}" />
                                             </div>
                                         </div>
                                         <div class="row pt-1">
                                             <div class="col-6 mb-3">
                                                 <h6>Primary Language</h6>
-                                                <p class="text-muted"><?php echo $user['language']; ?></p>
+                                                <p class="text-muted"><?php echo $user_education['language']; ?></p>
                                                 <input type="text" class="form-control mb-3 hidden"
-                                                    value="<?php echo $user['language']; ?>" name="language"
+                                                    value="<?php echo $user_education['language']; ?>" name="language"
                                                     pattern="[A-Za-z]+" />
                                             </div>
                                             <div class="col-6 mb-3">
                                                 <h6>Address</h6>
-                                                <p class="text-muted"><?php echo $user['eduaddress']; ?></p>
+                                                <p class="text-muted"><?php echo $user_education['edu_address']; ?></p>
                                                 <input type="text" class="form-control mb-3 hidden"
-                                                    value="<?php echo $user['eduaddress']; ?>" name="address" />
+                                                    value="<?php echo $user_education['edu_address']; ?>" name="address" />
                                             </div>
                                         </div>
                                         <div class="float-end mb-3">
@@ -1167,9 +1168,9 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
                             <div class="col-md-4 gradient-custom text-center text-white d-flex justify-content-center align-items-center"
                                 style="height: auto;">
                                 <div>
-                                    <img src="<?php echo $user['profilePic']; ?>" alt="Avatar" class="img-fluid mb-4"
+                                    <img src="<?php echo $user_personal['profilePic']; ?>" alt="Avatar" class="img-fluid mb-4"
                                         style="width: 10rem;" />
-                                    <h5><?php echo $user['firstname'] . " " . $user['lastname']; ?></h5>
+                                    <h5><?php echo $user_personal['firstname'] . " " . $user_personal['lastname']; ?></h5>
                                 </div>
                             </div>
                             <div class="col-md-8">
@@ -1177,10 +1178,10 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
                                     <div class="d-flex justify-content-between mb-1">
                                         <h6 class="text-secondary fs-5">Documents</h6>
                                         <?php
-                                        $appQuery = mysqli_query($conn, "SELECT `applied` FROM `users` WHERE email = '{$_SESSION['user']}'");
+                                        $appQuery = mysqli_query($conn, "SELECT `appNum` FROM `user_personal` WHERE auth_id = '{$user_personal['auth_id']}'");
                                         $appNum = mysqli_fetch_assoc($appQuery);
 
-                                        if (empty($appNum['applied']) || $appNum['applied'] == 0) {
+                                        if (empty($appNum['appNum']) || $appNum['appNum'] == 0) {
                                             echo '
                                                 <button class="btn border mb-1" data-bs-toggle="modal" data-bs-target="#documentModal">
                                                     <i class="fa-solid fa-file-circle-plus cursor-pointer"><span class="h6 ms-1">Upload</span></i>
@@ -1193,7 +1194,7 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
                                     <div class="" style="height: 40rem; overflow: auto;">
                                         <div>
                                             <?php
-                                            $query = mysqli_query($conn, "SELECT eduDoc FROM `users` WHERE email = '{$_SESSION['user']}'");
+                                            $query = mysqli_query($conn, "SELECT eduDoc FROM `user_education` WHERE user_id = '{$user_education['user_id']}'");
                                             $documents = mysqli_fetch_assoc($query)['eduDoc'];
 
                                             if (empty($documents)) {
@@ -1286,10 +1287,10 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
                                         <div class="d-flex justify-content-between mb-1">
                                             <h6 class="text-secondary fs-5">Work Experience</h6>
                                             <?php
-                                            $appQuery = mysqli_query($conn, "SELECT `applied` FROM `users` WHERE email = '{$_SESSION['user']}'");
+                                            $appQuery = mysqli_query($conn, "SELECT `appNum` FROM `user_personal` WHERE auth_id = '{$user_personal['auth_id']}'");
                                             $appNum = mysqli_fetch_assoc($appQuery);
 
-                                            if (empty($appNum['applied']) || $appNum['applied'] == 0) {
+                                            if (empty($appNum['appNum']) || $appNum['appNum'] == 0) {
                                                 echo '
                                                     <button class="btn border mb-1 editBtn">
                                                         <i class="far fa-edit editData"><span class="h6 ms-1">Edit</span></i>
@@ -1356,12 +1357,14 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
 
     <?php include "footer.php"; ?>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script>
         document.querySelectorAll('.editBtn').forEach(function(button) {
             button.addEventListener('click', function(event) {
                 event.preventDefault();
+                $(this).closest('.card-body').find('.editData').click();
             });
         });
 

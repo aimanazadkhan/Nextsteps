@@ -53,10 +53,17 @@ if (!isset($_SESSION['user']) || $_SESSION['user'] !== $adminData['adminName']) 
                             </thead>
                             <tbody>
                                 <?php
-                                $userData = mysqli_query($conn, "SELECT * FROM `users`");
+                                $userData = mysqli_query(
+                                    $conn,
+                                    "
+                                    SELECT a.*, up.*, ue.*
+                                    FROM auth a
+                                    JOIN user_personal up ON up.auth_id = a.id
+                                    JOIN user_education ue ON ue.user_id = up.id"
+                                );
 
                                 while ($row = mysqli_fetch_array($userData)) {
-                                    $datetime = $row['createdOn'];
+                                    $datetime = $row['created_at'];
                                     list($date, $time) = explode(' ', $datetime); ?>
 
                                     <tr>
@@ -81,13 +88,20 @@ if (!isset($_SESSION['user']) || $_SESSION['user'] !== $adminData['adminName']) 
                                             </div>
                                         </td>
                                         <td>
-                                            <p class="m-0 p-0"><?php echo $row['phonenumber']; ?></p>
+                                            <p class="m-0 p-0"><?php echo $row['phoneNumber']; ?></p>
                                         </td>
                                         <td>
-                                            <select class='form-select'>
-                                                <option value='dummy1' <?php echo ($row['assignedTo'] == 'dummy1') ? 'selected' : ''; ?>>Dummy Name 1</option>
-                                                <option value='dummy2' <?php echo ($row['assignedTo'] == 'dummy2') ? 'selected' : ''; ?>>Dummy Name 2</option>
-                                                <option value='dummy3' <?php echo ($row['assignedTo'] == 'dummy3') ? 'selected' : ''; ?>>Dummy Name 3</option>
+                                            <?php
+                                            $admins = mysqli_query($conn, "SELECT adminName FROM admin");
+                                            ?>
+
+                                            <select class='form-select' name='assignedTo'>
+                                                <?php while ($admin = mysqli_fetch_assoc($admins)) {
+                                                    $name = $admin['adminName'];
+                                                    $selected = ($row['assignedTo'] == $name) ? 'selected' : '';
+                                                ?>
+                                                    <option value='<?php echo $name; ?>' <?php echo $selected; ?>><?php echo $name; ?></option>
+                                                <?php } ?>
                                             </select>
                                         </td>
                                         <td>
@@ -98,7 +112,6 @@ if (!isset($_SESSION['user']) || $_SESSION['user'] !== $adminData['adminName']) 
                                                 $documents = ['IELTS', 'HSC_Certificate', 'SSC_Certificate']; // Documents to check
                                                 $missingDocs = [];
 
-                                                // Loop through each document type and check if it's in the string
                                                 foreach ($documents as $doc) {
                                                     if (strpos($eduDoc, $doc) === false) {
                                                         $missingDocs[] = $doc;
@@ -106,27 +119,25 @@ if (!isset($_SESSION['user']) || $_SESSION['user'] !== $adminData['adminName']) 
                                                 }
 
                                                 if (!empty($missingDocs)) {
-                                                    // Show "not found" messages for each missing document
                                                     foreach ($missingDocs as $missingDoc) {
                                                         echo '<p class="fs-6 text-danger fw-light m-0 p-0">' . $missingDoc . ' Not Found</p>';
                                                     }
                                                 } else {
-                                                    // If no documents are missing, show "No missing document"
                                                     echo '<p class="fs-6 text-success fw-light m-0 p-0">No missing document</p>';
                                                 }
                                                 ?>
                                             </div>
                                         </td>
                                         <td>
-                                            <a href="../search.php?email=<?php echo $row['email']; ?>"
-                                                class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">
-                                                <p
-                                                    class='<?php echo $row['applied'] == 0 ? "text-danger" : "text-success"; ?> fw-light m-0 p-0'>
+                                            <?php if (!empty($eduDoc)) { ?>
+                                                <p class='<?php echo $row['applied'] == 0 ? "text-danger" : "text-success"; ?> fw-light m-0 p-0'>
                                                     <?php echo $row['applied']; ?> Applications Applied
                                                 </p>
-                                            </a>
-
+                                            <?php } else { ?>
+                                                <p class="text-muted fw-light m-0 p-0">No application data</p>
+                                            <?php } ?>
                                         </td>
+
                                     </tr>
                                 <?php } ?>
                             </tbody>

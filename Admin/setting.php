@@ -18,30 +18,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             echo "<script>alert('Failed to update admin name.')</script>";
         }
-    } elseif (isset($_POST['oldPass'], $_POST['newPass'])) {
-        $oldPass = $_POST['oldPass'];
-        $newPass = password_hash($_POST['newPass'], PASSWORD_BCRYPT);
-
-        $verifyPassQuery = "SELECT `password` FROM `admin` WHERE `id` = 1";
-        $result = mysqli_query($conn, $verifyPassQuery);
-        $adminPassData = mysqli_fetch_assoc($result);
-
-        if (password_verify($oldPass, $adminPassData['password'])) {
-            $updatePassQuery = "UPDATE `admin` SET `password` = '$newPass' WHERE `id` = 1";
-
-            if (mysqli_query($conn, $updatePassQuery)) {
-                echo "<script>alert('Password updated successfully.')</script>";
-            } else {
-                echo "<script>alert('Failed to update password.')</script>";
-            }
-        } else {
-            // echo $oldPass;
-            // echo $adminPassData['password'];
-            // die();
-            echo "<script>alert('Old password is incorrect.')</script>";
-        }
+        echo "<script>location.href='setting.php'</script>";
     }
-    echo "<script>location.href='setting.php'</script>";
 }
 
 ?>
@@ -82,23 +60,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <div class="d-flex gap-5">
                                 <p class="mt-3 fs-5">Change Admin Name</p>
                                 <input class="ms-5 form-control" type="text" name="adminName">
-                            </div>
-                            <div class="d-flex justify-content-end">
-                                <button class="btn btn-outline-success mt-4" type="submit">Save Changes</button>
-                            </div>
-                        </form>
-                    </div>
-
-                    <h4 class="mb-5 mt-5">Change Password</h4>
-                    <div class="rounded shadow-lg p-4 col-11 col-md-6" style="background-color: #f7f9fb;">
-                        <form action="" METHOD="POST">
-                            <div class="d-flex gap-5 mb-3">
-                                <p class="mt-3 fs-5">Old Password</p>
-                                <input class="ms-5 form-control" type="password" name="oldPass">
-                            </div>
-                            <div class="d-flex gap-5">
-                                <p class="mt-3 fs-5">New Password</p>
-                                <input class="ms-5 form-control" type="password" name="newPass">
                             </div>
                             <div class="d-flex justify-content-end">
                                 <button class="btn btn-outline-success mt-4" type="submit">Save Changes</button>

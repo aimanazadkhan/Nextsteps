@@ -13,13 +13,20 @@ $applicationData = mysqli_query($conn, "SELECT * FROM `applications` WHERE `id` 
 $app = mysqli_fetch_assoc($applicationData);
 
 // Application User Data
-$applicationUserData = mysqli_query($conn, "SELECT * FROM `users` WHERE `email` = '{$app['userEmail']}'");
+$applicationUserData = mysqli_query($conn, "SELECT a.*, up.* FROM auth a
+                                        JOIN user_personal up ON up.auth_id = a.id 
+                                        WHERE `email` = '{$app['userEmail']}'");
 $user = mysqli_fetch_assoc($applicationUserData);
 
 // University Data
-$applicationUniData = mysqli_query($conn, "SELECT * FROM `search` WHERE `ID` = '{$app['uniID']}'");
-$uni = mysqli_fetch_assoc($applicationUniData);
+$uniQuery = "
+SELECT u.*, c.country_name
+FROM university u
+JOIN country c ON c.id = u.country_id
+WHERE u.ID = '{$app['uniID']}'
+";
 
+$uni = mysqli_fetch_assoc(mysqli_query($conn, $uniQuery));
 
 ?>
 
@@ -97,8 +104,8 @@ $uni = mysqli_fetch_assoc($applicationUniData);
                                 <div class="d-flex justify-content-between align-items-center">
                                     <!-- Application Info -->
                                     <div>
-                                        <h4 class="fw-bold mb-0"><?php echo $uni['University']; ?></h4>
-                                        <h5 class="mb-2"><?php echo $uni['Country']; ?></h5>
+                                        <h4 class="fw-bold mb-0"><?php echo $uni['university_name']; ?></h4>
+                                        <h5 class="mb-2"><?php echo $uni['country_name']; ?></h5>
                                     </div>
                                     <!-- Withdraw Button -->
                                     <div>
@@ -292,7 +299,8 @@ $uni = mysqli_fetch_assoc($applicationUniData);
                                                 <div class="card shadow-lg border-0 my-2" style="max-width: 600px;">
                                                     <div class="card-body">
                                                         <h5 class="card-title mb-1 fw-bold text-dark"><?php echo $adminData['adminName']; ?></h5>
-                                                        <p class="card-text text-dark mb-2"><?php echo $message['adminMsg']; ?></p>
+                                                        <p class="card-text text-dark mb-2"><?php echo base64_decode($message['adminMsg']); ?></p>
+
                                                         <p class="card-text text-muted small"><?php echo $message['msgOn']; ?></p>
                                                     </div>
                                                 </div>

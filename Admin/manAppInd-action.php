@@ -2,7 +2,7 @@
 session_start();
 include "../connection.php";
 
-$adminMsg = $_POST['adminMsg'];
+$adminMsg = base64_encode($_POST['adminMsg']);
 $appId = $_POST['appId'];
 
 $query = "INSERT INTO `messages` (`adminMsg`, `appId`) VALUES ('$adminMsg', '$appId')";

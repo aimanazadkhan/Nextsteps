@@ -4,79 +4,71 @@ include 'connection.php';
 
 if (isset($_POST['signup'])) {
 
-    // Start transaction — all or nothin' b*tch
-    mysqli_begin_transaction($conn);
+    // Sanitizing inputs
+    $reg_firstName = ucwords(mysqli_real_escape_string($conn, $_POST['fname']));
+    $reg_lastName = ucfirst(mysqli_real_escape_string($conn, $_POST['lname']));
+    $reg_email = mysqli_real_escape_string($conn, $_POST['email']);
+    $reg_phoneNumber = mysqli_real_escape_string($conn, $_POST['mobile']);
+    $reg_pass = mysqli_real_escape_string($conn, $_POST['pass']);
+    $reg_conPass = mysqli_real_escape_string($conn, $_POST['con_pass']);
 
-    try {
-        // Sanitize inputs
-        $reg_firstName = ucwords(mysqli_real_escape_string($conn, $_POST['fname']));
-        $reg_lastName = ucfirst(mysqli_real_escape_string($conn, $_POST['lname']));
-        $reg_email = mysqli_real_escape_string($conn, $_POST['email']);
-        $reg_phoneNumber = mysqli_real_escape_string($conn, $_POST['mobile']);
-        $reg_pass = mysqli_real_escape_string($conn, $_POST['pass']);
-        $reg_conPass = mysqli_real_escape_string($conn, $_POST['con_pass']);
+    $hashed_pass = md5($reg_pass);
+    $verifyToken = md5(rand());
 
-        $hashed_pass = md5($reg_pass);
-        $verifyToken = md5(rand());
+    if ($reg_pass !== $reg_conPass) {
+        echo "<script>alert('Password & Confirm Password do not match..!!')</script>";
+        echo "<script>location.href='register.php'</script>";
+        exit;
+    }
 
-        if ($reg_pass !== $reg_conPass) {
-            echo "<script>alert('Password & Confirm Password do not match..!!')</script>";
-            echo "<script>location.href='register.php'</script>";
-            exit;
-        }
+    // Check duplicate email
+    $check_email = mysqli_query($conn, "SELECT * FROM auth WHERE email = '$reg_email'");
+    if (mysqli_num_rows($check_email) > 0) {
+        echo "<script>alert('This email is already taken..!!')</script>";
+        echo "<script>location.href='register.php'</script>";
+        exit;
+    }
 
-        // Check duplicate email
-        $check_email = mysqli_query($conn, "SELECT * FROM auth WHERE email = '$reg_email'");
-        if (mysqli_num_rows($check_email) > 0) {
-            echo "<script>alert('This email is already taken..!!')</script>";
-            echo "<script>location.href='register.php'</script>";
-            exit;
-        }
+    // Check duplicate Phone Numver
+    $check_phone = mysqli_query($conn, "SELECT * FROM auth WHERE phoneNumber = '$reg_phoneNumber'");
+    if (mysqli_num_rows($check_phone) > 0) {
+        echo "<script>alert('This Phone Number is already taken..!!')</script>";
+        echo "<script>location.href='register.php'</script>";
+        exit;
+    }
 
-        // Check duplicate Phone Numver
-        $check_phone = mysqli_query($conn, "SELECT * FROM auth WHERE phoneNumber = '$reg_phoneNumber'");
-        if (mysqli_num_rows($check_phone) > 0) {
-            echo "<script>alert('This Phone Number is already taken..!!')</script>";
-            echo "<script>location.href='register.php'</script>";
-            exit;
-        }
-
-        $auth_query = "INSERT INTO auth (email, password, phoneNumber, verifyStatus, verifyToken)
+    $auth_query = "INSERT INTO auth (email, password, phoneNumber, verifyStatus, verifyToken)
                        VALUES ('$reg_email', '$hashed_pass', '$reg_phoneNumber', '0', '$verifyToken')";
 
-        if (!mysqli_query($conn, $auth_query)) {
-            throw new Exception('Failed to insert into auth table.');
+    if (!mysqli_query($conn, $auth_query)) {
+        echo "<script>alert('Account Creation Failed! Please Try Again.')</script>";
+    } else {
+        $auth_id = mysqli_insert_id($conn);
+
+        $user_query = "INSERT INTO user_personal (
+            auth_id, firstname, lastname) VALUES (
+            '$auth_id', '$reg_firstName', '$reg_lastName')";
+
+        if (!mysqli_query($conn, $user_query)) {
+            mysqli_query($conn, "DELETE FROM auth WHERE id = '$auth_id'");
+            echo "<script>alert('Registration Failed. Try again.')</script>";
+        } else {
+            $user_personal_id = mysqli_insert_id($conn);
+
+            $edu_query = "INSERT INTO user_education (user_id)
+                  VALUES ('$user_personal_id')";
+
+            if (!mysqli_query($conn, $edu_query)) {
+                // Rollback both previous inserts
+                mysqli_query($conn, "DELETE FROM user_personal WHERE id = '$user_personal_id'");
+                mysqli_query($conn, "DELETE FROM auth WHERE id = '$auth_id'");
+                echo "<script>alert('Registration Failed. Try again.')</script>";
+            } else {
+                // include 'sendmail.php';
+                echo "<script>alert('Account Created Successfully! Please Check Your Email for Confirmation.')</script>";
+                echo "<script>location.href='login.php'</script>";
+            }
         }
-
-        // $auth_id = mysqli_insert_id($conn);
-
-        // $user_query = "INSERT INTO user_personal (
-        //     auth_id, firstname, lastname, created_at, updated_at
-        // ) VALUES (
-        //     '$auth_id', '$reg_firstName', '$reg_lastName', NOW(), NOW()
-        // )";
-
-        // if (!mysqli_query($conn, $user_query)) {
-        //     throw new Exception('Failed to insert into user_personal table.');
-        // }
-
-        // $user_personal_id = mysqli_insert_id($conn);
-
-        // $edu_query = "INSERT INTO user_education (user_id, created_at, updated_at)
-        //           VALUES ('$user_personal_id', NOW(), NOW())";
-
-        // if (!mysqli_query($conn, $edu_query)) {
-        //     echo "<script>alert('Registration boom!  went sideways. Try again.')</script>";
-        // }
-        // Everything smooth? Commit that shit
-        mysqli_commit($conn);
-        // include 'sendmail.php';
-        echo "<script>alert('Account Created Successfully! Please Check Your Email for Confirmation.')</script>";
-        echo "<script>location.href='login.php'</script>";
-    } catch (Exception $e) {
-        mysqli_rollback($conn); // drop all inserts if anything failed
-        echo "<script>alert('Registration failed!  went sideways. Try again.')</script>";
-        echo "<script>location.href='register.php'</script>";
     }
 }
 

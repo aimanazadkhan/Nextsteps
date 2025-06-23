@@ -57,7 +57,13 @@ if (!isset($_SESSION['user']) || $_SESSION['user'] !== $adminData['adminName']) 
                                 $applicationData = mysqli_query($conn, "SELECT * FROM `applications`");
 
                                 while ($row = mysqli_fetch_array($applicationData)) {
-                                    $user = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM `auth` WHERE `email` = '{$row['userEmail']}'"));
+                                    $query = "
+                                        SELECT a.*, up.*
+                                        FROM auth a
+                                        JOIN user_personal up ON up.auth_id = a.id
+                                        WHERE a.email = '{$row['userEmail']}'
+                                        ";
+                                    $user = mysqli_fetch_array(mysqli_query($conn, $query));
                                     $uni = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM `university` WHERE `id` = '{$row['uniID']}'"));
                                     $course = mysqli_fetch_array(mysqli_query($conn, "SELECT * FROM `course_list` WHERE `id` = '{$row['courseID']}'"));
 
@@ -78,10 +84,10 @@ if (!isset($_SESSION['user']) || $_SESSION['user'] !== $adminData['adminName']) 
                                                 </div>
                                             </td>
                                             <td>
-                                                <p>" . $uni['University'] . "</p>
+                                                <p>" . $uni['university_name'] . "</p>
                                             </td>
                                             <td>
-                                                <p>" . $uni['CourseTitle'] . "</p>
+                                                <p>" . $course['course_title'] . "</p>
                                             </td>
                                             <td>";
 

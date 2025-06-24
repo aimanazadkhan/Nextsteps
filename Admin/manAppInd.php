@@ -28,10 +28,13 @@ WHERE a.id = '{$appId}'
 $result = mysqli_query($conn, $mergedQuery);
 $app = mysqli_fetch_assoc($result);
 
-// Application User Data
-$applicationUserData = mysqli_query($conn, "SELECT a.*, up.* FROM auth a
-                                        JOIN user_personal up ON up.auth_id = a.id 
-                                        WHERE `email` = '{$app['userEmail']}'");
+$applicationUserData = mysqli_query($conn, "
+    SELECT a.*, up.*, ue.eduDoc 
+    FROM auth a
+    JOIN user_personal up ON up.auth_id = a.id
+    LEFT JOIN user_education ue ON ue.user_id = up.id
+    WHERE a.email = '{$app['userEmail']}'
+");
 $user = mysqli_fetch_assoc($applicationUserData);
 
 if (isset($_POST['appStatus'], $_POST['appId']) && is_numeric($_POST['appId'])) {
@@ -208,137 +211,83 @@ if (isset($_POST['appStatus'], $_POST['appId']) && is_numeric($_POST['appId'])) 
                         </div>
 
                         <!-- Document Section -->
+                        <?php
+                        $docString = $user['eduDoc'] ?? '';
+
+                        $submittedDocs = [];
+                        $docPairs = explode('|', $docString);
+                        foreach ($docPairs as $pair) {
+                            list($type, $path) = explode(':', $pair, 2);
+                            $submittedDocs[trim($type)] = trim($path);
+                        }
+
+                        $documentTypes = [
+                            "IELTS" => "IELTS",
+                            "SSC_Certificate" => "SSC Certificate",
+                            "SSC_Transcript" => "SSC Transcript",
+                            "HSC_Certificate" => "HSC Certificate",
+                            "HSC_Transcript" => "HSC Transcript",
+                            "Application_Submission_Screenshot" => "Application Submission Screenshot",
+                            "Letter_of_Recommendation" => "Letter of Recommendation",
+                            "University_Application_Form" => "University Application Form",
+                            "Statement_of_Purpose" => "Statement of Purpose"
+                        ];
+
+                        $submittedCount = 0;
+                        $pendingCount = 0;
+                        $cards = "";
+
+                        foreach ($documentTypes as $key => $label) {
+                            $isSubmitted = isset($submittedDocs[$key]);
+                            $status = $isSubmitted ? 'Accepted' : 'Pending';
+                            $border = $isSubmitted ? 'success' : 'danger';
+                            $badge = $isSubmitted ? 'bg-success' : 'bg-danger';
+                            $cards .= <<<HTML
+                                    <div class="card shadow-lg border-0 border-start border-$border border-5 flex-grow-1 mb-3 mt-3">
+                                        <div class="card-body d-flex align-items-center justify-content-between">
+                                            <div>
+                                                <h6 class="card-title mb-1">$label <span class="badge $badge me-3">$status</span></h6>
+                                            </div>
+                                            <div class="d-flex flex-column align-items-center">
+                                                <button class="btn btn-outline-primary btn-sm me-2">
+                                                    <i class="bi bi-upload"></i> Upload
+                                                </button>
+                                                <button class="btn btn-link text-decoration-none text-danger">
+                                                    Show updates <span class="badge bg-danger ms-1">1</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    HTML;
+                            if ($isSubmitted) $submittedCount++;
+                            else $pendingCount++;
+                        }
+                        ?>
                         <div id="documents" class="d-none">
                             <div class="container my-4">
                                 <div class="d-flex justify-content-between">
                                     <!-- Submitted -->
                                     <div class="text-center p-3 rounded" style="flex: 1; background: linear-gradient(to bottom, #e0f0ff, #cce5ff); margin: 0 5px; border: 1px solid #b3d7ff;">
-                                        <h5 class="mb-1">2</h5>
+                                        <h5 class="mb-1"><?php echo $submittedCount; ?></h5>
                                         <small>Submitted</small>
                                     </div>
                                     <!-- Pending -->
                                     <div class="text-center p-3 rounded" style="flex: 1; background: linear-gradient(to bottom, #fff5e6, #ffe6b3); margin: 0 5px; border: 1px solid #ffd699;">
-                                        <h5 class="mb-1">2</h5>
+                                        <h5 class="mb-1"><?php echo $pendingCount; ?></h5>
                                         <small>Pending</small>
-                                    </div>
-                                    <!-- Not Approved -->
-                                    <div class="text-center p-3 rounded" style="flex: 1; background: linear-gradient(to bottom, #ffe5e5, #ffcccc); margin: 0 5px; border: 1px solid #ff9999;">
-                                        <h5 class="mb-1">0</h5>
-                                        <small>Not Approved</small>
                                     </div>
                                     <!-- Accepted -->
                                     <div class="text-center p-3 rounded" style="flex: 1; background: linear-gradient(to bottom, #e6fffa, #b3fff0); margin: 0 5px; border: 1px solid #99ffe0;">
-                                        <h5 class="mb-1">6</h5>
+                                        <h5 class="mb-1"><?php echo $submittedCount; ?></h5>
                                         <small>Accepted</small>
                                     </div>
                                 </div>
                             </div>
-
                             <div style="max-height: 48vh; overflow-y: auto;">
-                                <!-- Application Submission Screenshot -->
-                                <div class="card shadow-lg border-0 border-start border-success border-5 flex-grow-1 mb-3 mt-3">
-                                    <div class="card-body d-flex align-items-center justify-content-between">
-                                        <div>
-                                            <h6 class="card-title mb-1">Application Submission Screenshot. <span class="badge bg-success me-3">Accepted</span></h6>
-                                        </div>
-                                        <div class="d-flex flex-column align-items-center">
-                                            <button class="btn btn-outline-primary btn-sm me-2">
-                                                <i class="bi bi-upload"></i> Upload
-                                            </button>
-                                            <button class="btn btn-link text-decoration-none text-danger">
-                                                Show updates <span class="badge bg-danger ms-1">1</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Letter of Recommendation -->
-                                <div class="card shadow-lg border-0 border-start border-success border-5 flex-grow-1 mb-3 mt-3">
-                                    <div class="card-body d-flex align-items-center justify-content-between">
-                                        <div>
-                                            <h6 class="card-title mb-1">Letter of Recommendation <span class="badge bg-success me-3">Accepted</span></h6>
-                                        </div>
-                                        <div class="d-flex flex-column align-items-center">
-                                            <button class="btn btn-outline-primary btn-sm me-2">
-                                                <i class="bi bi-upload"></i> Upload
-                                            </button>
-                                            <button class="btn btn-link text-decoration-none text-danger">
-                                                Show updates <span class="badge bg-danger ms-1">1</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- University Application Form -->
-                                <div class="card shadow-lg border-0 border-start border-success border-5 flex-grow-1 mb-3 mt-3">
-                                    <div class="card-body d-flex align-items-center justify-content-between">
-                                        <div>
-                                            <h6 class="card-title mb-1">University Application Form. <span class="badge bg-success me-3">Accepted</span></h6>
-                                        </div>
-                                        <div class="d-flex flex-column align-items-center">
-                                            <button class="btn btn-outline-primary btn-sm me-2">
-                                                <i class="bi bi-upload"></i> Upload
-                                            </button>
-                                            <button class="btn btn-link text-decoration-none text-danger">
-                                                Show updates <span class="badge bg-danger ms-1">1</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Statement of Purpose -->
-                                <div class="card shadow-lg border-0 border-start border-success border-5 flex-grow-1 mb-3 mt-3">
-                                    <div class="card-body d-flex align-items-center justify-content-between">
-                                        <div>
-                                            <h6 class="card-title mb-1">Statement of Purpose <span class="badge bg-success me-3">Accepted</span></h6>
-                                        </div>
-                                        <div class="d-flex flex-column align-items-center">
-                                            <button class="btn btn-outline-primary btn-sm me-2">
-                                                <i class="bi bi-upload"></i> Upload
-                                            </button>
-                                            <button class="btn btn-link text-decoration-none text-danger">
-                                                Show updates <span class="badge bg-danger ms-1">1</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- SSC Certificate & Transcript -->
-                                <div class="card shadow-lg border-0 border-start border-success border-5 flex-grow-1 mb-3 mt-3">
-                                    <div class="card-body d-flex align-items-center justify-content-between">
-                                        <div>
-                                            <h6 class="card-title mb-1">SSC Certificate & Transcript <span class="badge bg-success me-3">Accepted</span></h6>
-                                        </div>
-                                        <div class="d-flex flex-column align-items-center">
-                                            <button class="btn btn-outline-primary btn-sm me-2">
-                                                <i class="bi bi-upload"></i> Upload
-                                            </button>
-                                            <button class="btn btn-link text-decoration-none text-danger">
-                                                Show updates <span class="badge bg-danger ms-1">1</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- HSC Certificate & Transcript -->
-                                <div class="card shadow-lg border-0 border-start border-success border-5 flex-grow-1 mb-3 mt-3">
-                                    <div class="card-body d-flex align-items-center justify-content-between">
-                                        <div>
-                                            <h6 class="card-title mb-1">HSC Certificate & Transcript <span class="badge bg-success me-3">Accepted</span></h6>
-                                        </div>
-                                        <div class="d-flex flex-column align-items-center">
-                                            <button class="btn btn-outline-primary btn-sm me-2">
-                                                <i class="bi bi-upload"></i> Upload
-                                            </button>
-                                            <button class="btn btn-link text-decoration-none text-danger">
-                                                Show updates <span class="badge bg-danger ms-1">1</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
+                                <?php echo $cards; ?>
                             </div>
-
-
                         </div>
+
 
                         <!-- Messages Section -->
                         <div id="messages" class="active-section">

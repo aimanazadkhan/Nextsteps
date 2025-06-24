@@ -1253,6 +1253,10 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
                                                 <option value="SSC_Transcript">SSC Transcript</option>
                                                 <option value="HSC_Certificate">HSC Certificate</option>
                                                 <option value="HSC_Transcript">HSC Transcript</option>
+                                                <option value="Application_Submission_Screenshot">Application Submission Screenshot</option>
+                                                <option value="Letter_of_Recommendation">Letter of Recommendation</option>
+                                                <option value="University_Application_Form">University Application Form</option>
+                                                <option value="Statement_of_Purpose">Statement of Purpose</option>
                                             </select>
                                         </div>
                                         <div class="">

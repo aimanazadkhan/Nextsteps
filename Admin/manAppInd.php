@@ -43,7 +43,7 @@ if (isset($_POST['appStatus'], $_POST['appId']) && is_numeric($_POST['appId'])) 
     $update = mysqli_query($conn, "UPDATE applications SET appStatus = '$status' WHERE id = '$appId'");
 
     if ($update) {
-        header("Location: manAppInd.php?app=$appId");
+        header("Location: manAppInd.php?appId=$appId");
         exit;
     } else {
         echo "<script>alert('Failed to update status');</script>";

@@ -52,6 +52,7 @@
                 </a>
                 <ul class='dropdown-menu text-small'>
                   <li><a class='dropdown-item' href='profile.php'>Profile</a></li>
+                  <li><a class='dropdown-item' href='applications.php'>Applications</a></li>
                   <li><hr class='dropdown-divider'></li>";
 
           if (isset($_SESSION['userName']) && $_SESSION['userName'] == 'admin') {

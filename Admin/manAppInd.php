@@ -312,7 +312,7 @@ $uni = mysqli_fetch_assoc(mysqli_query($conn, $uniQuery));
                                                 <div class="card shadow-lg border-0 my-2" style="max-width: 600px;">
                                                     <div class="card-body">
                                                         <h5 class="card-title mb-1 fw-bold text-dark"><?php echo $user['lastname']; ?></h5>
-                                                        <p class="card-text text-dark mb-2"><?php echo $message['userMsg']; ?></p>
+                                                        <p class="card-text text-dark mb-2"><?php echo base64_decode($message['userMsg']); ?></p>
                                                         <p class="card-text text-muted small"><?php echo $message['msgOn']; ?></p>
                                                     </div>
                                                 </div>

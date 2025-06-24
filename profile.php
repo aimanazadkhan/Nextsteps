@@ -8,16 +8,18 @@ if (!isset($_SESSION['user']) || $_SESSION['user'] == 'admin') {
 include "connection.php";
 
 if (isset($_SESSION['user'])) {
-    $loggedInUser = mysqli_query($conn, "SELECT * FROM `auth` WHERE email = '{$_SESSION['user']}'");
-    $user = mysqli_fetch_assoc($loggedInUser);
+    $userQuery = mysqli_query($conn, "
+    SELECT 
+        a.*, 
+        up.id AS personal_id, up.*, 
+        ue.id AS education_id, ue.* 
+    FROM auth a
+    LEFT JOIN user_personal up ON up.auth_id = a.id
+    LEFT JOIN user_education ue ON ue.user_id = up.id
+    WHERE a.email = '{$_SESSION['user']}'
+");
 
-    $auth_id = $user['id'];
-    $personalQuery = mysqli_query($conn, "SELECT * FROM `user_personal` WHERE auth_id = '$auth_id'");
-    $user_personal = mysqli_fetch_assoc($personalQuery);
-
-    $user_personal_id = $user_personal['id'];
-    $educationQuery = mysqli_query($conn, "SELECT * FROM `user_education` WHERE user_id = '$user_personal_id'");
-    $user_education = mysqli_fetch_assoc($educationQuery);
+    $user = mysqli_fetch_assoc($userQuery);
 }
 
 if (isset($_POST['pInfoSave'])) {
@@ -40,8 +42,8 @@ if (isset($_POST['pInfoSave'])) {
         `gender`='$gender', `marital`='$marital', 
         `nation`='$nationality', `address`='$address',
         `postcode`='$postcode', `passportnum`='$passportnum', 
-        `issuecountry`='$issuecountry', `issuedate`='$issuedate',
-        WHERE email = '{$_SESSION['user']}'";
+        `issuecountry`='$issuecountry', `issuedate`='$issuedate'
+        WHERE auth_id = '{$user['auth_id']}'";
 
     if (mysqli_query($conn, $update_query)) {
         $_SESSION['alert'] = "Information Updated Successfully!";
@@ -75,7 +77,7 @@ if (isset($_POST['aQualSave'])) {
             `institution_name`='$institution_name', `study_country`='$study_country', 
             `qualification`='$qualification', `cgpa`='$cgpa', 
             `start_date`='$start_date', `end_date`='$end_date', 
-            `language`='$language', `edu_address`='$address' WHERE user_id = '{$user_personal['user_id']}'";
+            `language`='$language', `edu_address`='$address' WHERE user_id = '{$user['user_id']}'";
 
     if (mysqli_query($conn, $update_query)) {
         $_SESSION['alert'] = "Information Updated Successfully!";
@@ -108,7 +110,7 @@ if (isset($_FILES['file']) && isset($_POST['documentType'])) {
     $destinationPath = $uploadDir . $newFileName;
 
     if (move_uploaded_file($fileTmpName, $destinationPath)) {
-        $query = "SELECT eduDoc FROM user_education WHERE email = '{$_SESSION['user']}'";
+        $query = "SELECT eduDoc FROM user_education WHERE user_id = '{$user['user_id']}'";
         $result = mysqli_query($conn, $query);
         if ($result) {
             $row = mysqli_fetch_assoc($result);
@@ -118,7 +120,7 @@ if (isset($_FILES['file']) && isset($_POST['documentType'])) {
             $newFilePathWithDocType = $documentType . ":" . $destinationPath;
             $newFilePaths = $oldFilePaths ? $oldFilePaths . "|" . $newFilePathWithDocType : $newFilePathWithDocType;
 
-            $updateQuery = "UPDATE user_education SET eduDoc = '$newFilePaths' WHERE id = {$user['id']}";
+            $updateQuery = "UPDATE user_education SET eduDoc = '$newFilePaths' WHERE user_id = '{$user['user_id']}'";
             if (mysqli_query($conn, $updateQuery)) {
                 $_SESSION['alert'] = "File uploaded and database updated successfully.";
             } else {
@@ -142,16 +144,16 @@ if (isset($_FILES['file']) && isset($_POST['documentType'])) {
 if (isset($_GET['delDocPath'])) {
     $docPathToDelete = $_GET['delDocPath'];
 
-    $query = mysqli_query($conn, "SELECT eduDoc FROM user_education WHERE email = '{$_SESSION['user']}'");
-    $user = mysqli_fetch_assoc($query);
-    $currentDocs = explode('|', $user['eduDoc']);
+    $query = mysqli_query($conn, "SELECT eduDoc FROM user_education WHERE user_id = '{$user['user_id']}'");
+    $eduData = mysqli_fetch_assoc($query);
+    $currentDocs = explode('|', $eduData['eduDoc']);
 
     $indexToDelete = array_search($docPathToDelete, $currentDocs);
     if ($indexToDelete !== false) {
         unset($currentDocs[$indexToDelete]);
         $updatedEduDoc = implode('|', array_filter($currentDocs));
 
-        $sql = "UPDATE user_education SET eduDoc = '$updatedEduDoc' WHERE  email = '{$_SESSION['user']}'";
+        $sql = "UPDATE user_education SET eduDoc = '$updatedEduDoc' WHERE user_id = '{$user['user_id']}'";
 
         if (mysqli_query($conn, $sql)) {
             list($docType, $docDelete) = explode(':', $docPathToDelete);
@@ -182,10 +184,10 @@ if (isset($_POST['workSave'])) {
     $end_date = $_POST['end_date'];
     $responsibilities = $_POST['responsibilities'];
 
-    $update_query = "UPDATE `user_education` SET 
-        `companyname`='$company_name', `jobtitle`='$job_title', 
-        `jobstartdate`='$start_date', `jobenddate`='$end_date', 
-        `jobresponsibilities`='$responsibilities' WHERE email = '{$_SESSION['user']}'";
+    $update_query = "UPDATE `user_personal` SET 
+        `companyName`='$company_name', `jobTitle`='$job_title', 
+        `jobStartDate`='$start_date', `jobEndDate`='$end_date', 
+        `jobResponse`='$responsibilities' WHERE auth_id = '{$user['auth_id']}'";
 
     if (mysqli_query($conn, $update_query)) {
         $_SESSION['alert'] = "Information Updated Successfully!";
@@ -492,9 +494,9 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
                                 <div class="col-md-4 gradient-custom text-center text-white d-flex justify-content-center align-items-center"
                                     style="height: auto;">
                                     <div>
-                                        <img src="<?php echo $user_personal['profilePic']; ?>" alt="Avatar"
+                                        <img src="<?php echo $user['profilePic']; ?>" alt="Avatar"
                                             class="img-fluid mb-4" style="width: 10rem;" />
-                                        <h5><?php echo $user_personal['firstname'] . " " . $user_personal['lastname']; ?></h5>
+                                        <h5><?php echo $user['firstname'] . " " . $user['lastname']; ?></h5>
                                     </div>
                                 </div>
                                 <div class="col-md-8">
@@ -502,7 +504,7 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
                                         <div class="d-flex justify-content-between mb-1">
                                             <h6 class="text-secondary fs-5 mt-1">Personal Information</h6>
                                             <?php
-                                            $appQuery = mysqli_query($conn, "SELECT `appNum` FROM `user_personal` WHERE auth_id = '{$user_personal['auth_id']}'");
+                                            $appQuery = mysqli_query($conn, "SELECT `appNum` FROM `user_personal` WHERE auth_id = '{$user['auth_id']}'");
                                             $appNum = mysqli_fetch_assoc($appQuery);
 
                                             if (empty($appNum['appNum']) || $appNum['appNum'] == 0) {
@@ -518,16 +520,16 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
                                         <div class="row pt-1">
                                             <div class="col-6 mb-3">
                                                 <h6>First Name</h6>
-                                                <p class="text-muted"><?php echo $user_personal['firstname']; ?></p>
+                                                <p class="text-muted"><?php echo $user['firstname']; ?></p>
                                                 <input type="text" class="form-control mb-3 hidden"
-                                                    value="<?php echo $user_personal['firstname']; ?>" name="first_name"
+                                                    value="<?php echo $user['firstname']; ?>" name="first_name"
                                                     pattern="[A-Za-z ]+" />
                                             </div>
                                             <div class="col-6 mb-3">
                                                 <h6>Last Name</h6>
-                                                <p class="text-muted"><?php echo $user_personal['lastname']; ?></p>
+                                                <p class="text-muted"><?php echo $user['lastname']; ?></p>
                                                 <input type="text" class="form-control mb-3 hidden"
-                                                    value="<?php echo $user_personal['lastname']; ?>" name="last_name"
+                                                    value="<?php echo $user['lastname']; ?>" name="last_name"
                                                     pattern="[A-Za-z]+" />
                                             </div>
                                         </div>
@@ -549,14 +551,14 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
                                         <div class="row pt-1">
                                             <div class="col-6 mb-3">
                                                 <h6>Date of Birth</h6>
-                                                <p class="text-muted"><?php echo $user_personal['dob']; ?></p>
+                                                <p class="text-muted"><?php echo $user['dob']; ?></p>
                                                 <input type="date" class="form-control mb-3 hidden"
-                                                    value="<?php echo $user_personal['dob']; ?>" name="date_of_birth"
+                                                    value="<?php echo $user['dob']; ?>" name="date_of_birth"
                                                     pattern="\d{4}-\d{2}-\d{2}" />
                                             </div>
                                             <div class="col-6 mb-3">
                                                 <h6>Gender</h6>
-                                                <p class="text-muted"><?php echo $user_personal['gender']; ?></p>
+                                                <p class="text-muted"><?php echo $user['gender']; ?></p>
                                                 <select class="form-control mb-3 hidden" name="gender">
                                                     <option value="Male" selected>Male</option>
                                                     <option value="Female">Female</option>
@@ -567,7 +569,7 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
                                         <div class="row pt-1">
                                             <div class="col-6 mb-3">
                                                 <h6>Martial Status</h6>
-                                                <p class="text-muted"><?php echo $user_personal['marital']; ?></p>
+                                                <p class="text-muted"><?php echo $user['marital']; ?></p>
                                                 <select class="form-control mb-3 hidden" name="marital">
                                                     <option value="Single" selected>Single</option>
                                                     <option value="Married">Married</option>
@@ -576,7 +578,7 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
                                             </div>
                                             <div class="col-6 mb-3">
                                                 <h6>Nationality</h6>
-                                                <p class="text-muted"><?php echo $user_personal['nation']; ?></p>
+                                                <p class="text-muted"><?php echo $user['nation']; ?></p>
                                                 <select class="form-control mb-3 hidden" name="nationality" id="nationality">
                                                     <?php
                                                     $countries = [
@@ -772,7 +774,7 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
                                                         'Zimbabwe'
                                                     ];
                                                     foreach ($countries as $country) {
-                                                        $selected = ($user_personal['nation'] === $country) ? 'selected' : '';
+                                                        $selected = ($user['nation'] === $country) ? 'selected' : '';
                                                         echo "<option value=\"$country\" $selected>$country</option>";
                                                     }
                                                     ?>
@@ -783,47 +785,47 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
                                         <div class="row pt-1">
                                             <div class="col-6 mb-3">
                                                 <h6>Address</h6>
-                                                <p class="text-muted"><?php echo $user_personal['address']; ?></p>
+                                                <p class="text-muted"><?php echo $user['address']; ?></p>
                                                 <input type="text" class="form-control mb-3 hidden"
-                                                    value="<?php echo $user_personal['address']; ?>" name="address" />
+                                                    value="<?php echo $user['address']; ?>" name="address" />
                                             </div>
                                             <div class="col-6 mb-3">
                                                 <h6>Postcode</h6>
-                                                <p class="text-muted"><?php echo $user_personal['postcode']; ?></p>
+                                                <p class="text-muted"><?php echo $user['postcode']; ?></p>
                                                 <input type="number" class="form-control mb-3 hidden"
-                                                    value="<?php echo $user_personal['postcode']; ?>" name="postcode"
+                                                    value="<?php echo $user['postcode']; ?>" name="postcode"
                                                     pattern="^\d+$" />
                                             </div>
                                         </div>
                                         <div class="row pt-1">
                                             <div class="col-6 mb-3">
                                                 <h6>Passport Number</h6>
-                                                <p class="text-muted"><?php echo $user_personal['passportnum']; ?></p>
+                                                <p class="text-muted"><?php echo $user['passportnum']; ?></p>
                                                 <input type="number" class="form-control mb-3 hidden"
-                                                    value="<?php echo $user_personal['passportnum']; ?>" name="passport_number"
+                                                    value="<?php echo $user['passportnum']; ?>" name="passport_number"
                                                     pattern="^[A-Z0-9]+$" />
                                             </div>
                                             <div class="col-6 mb-3">
                                                 <h6>Issue Country</h6>
-                                                <p class="text-muted"><?php echo $user_personal['issuecountry']; ?></p>
+                                                <p class="text-muted"><?php echo $user['issuecountry']; ?></p>
                                                 <input type="text" class="form-control mb-3 hidden"
-                                                    value="<?php echo $user_personal['issuecountry']; ?>" name="issue_country"
+                                                    value="<?php echo $user['issuecountry']; ?>" name="issue_country"
                                                     pattern="[A-Za-z]+" />
                                             </div>
                                         </div>
                                         <div class="row pt-1">
                                             <div class="col-6 mb-3">
                                                 <h6>Issue Date</h6>
-                                                <p class="text-muted"><?php echo $user_personal['issuedate']; ?></p>
+                                                <p class="text-muted"><?php echo $user['issuedate']; ?></p>
                                                 <input type="date" class="form-control mb-3 hidden" id="issue_date"
-                                                    value="<?php echo $user_personal['issuedate']; ?>" name="issue_date"
+                                                    value="<?php echo $user['issuedate']; ?>" name="issue_date"
                                                     pattern="\d{4}-\d{2}-\d{2}" />
                                             </div>
                                             <div class="col-6 mb-3">
                                                 <h6>Expiry Date</h6>
-                                                <p class="text-muted"><?php echo $user_personal['expirydate']; ?></p>
+                                                <p class="text-muted"><?php echo $user['expirydate']; ?></p>
                                                 <input type="date" class="form-control hidden" id="expiry_date"
-                                                    value="<?php echo $user_personal['expirydate']; ?>" name="expiry_date"
+                                                    value="<?php echo $user['expirydate']; ?>" name="expiry_date"
                                                     pattern="\d{4}-\d{2}-\d{2}" />
                                                 <p class="text-danger hidden warning mb-0 text-end">*Must be at least 6
                                                     month
@@ -849,9 +851,9 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
                                 <div class="col-md-4 gradient-custom text-center text-white d-flex justify-content-center align-items-center"
                                     style="height: auto;">
                                     <div>
-                                        <img src="<?php echo $user_personal['profilePic']; ?>" alt="Avatar"
+                                        <img src="<?php echo $user['profilePic']; ?>" alt="Avatar"
                                             class="img-fluid mb-4" style="width: 10rem;" />
-                                        <h5><?php echo $user_personal['firstname'] . " " . $user_personal['lastname']; ?></h5>
+                                        <h5><?php echo $user['firstname'] . " " . $user['lastname']; ?></h5>
                                     </div>
                                 </div>
                                 <div class="col-md-8">
@@ -859,7 +861,7 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
                                         <div class="d-flex justify-content-between mb-1">
                                             <h6 class="text-secondary fs-5">Academic Qualification</h6>
                                             <?php
-                                            $appQuery = mysqli_query($conn, "SELECT `appNum` FROM `user_personal` WHERE auth_id = '{$user_personal['auth_id']}'");
+                                            $appQuery = mysqli_query($conn, "SELECT `appNum` FROM `user_personal` WHERE auth_id = '{$user['auth_id']}'");
                                             $appNum = mysqli_fetch_assoc($appQuery);
 
                                             if (empty($appNum['appNum']) || $appNum['appNum'] == 0) {
@@ -874,14 +876,14 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
                                         <div class="row pt-1">
                                             <div class="col-6 mb-3">
                                                 <h6>Name of the Institution</h6>
-                                                <p class="text-muted"><?php echo $user_education['institution_name']; ?></p>
+                                                <p class="text-muted"><?php echo $user['institution_name']; ?></p>
                                                 <input type="text" class="form-control mb-3 hidden"
-                                                    value="<?php echo $user_education['institution_name']; ?>"
+                                                    value="<?php echo $user['institution_name']; ?>"
                                                     name="institution_name" pattern="[A-Za-z ]+" />
                                             </div>
                                             <div class="col-6 mb-3">
                                                 <h6>Country of Study</h6>
-                                                <p class="text-muted"><?php echo $user_education['study_country']; ?></p>
+                                                <p class="text-muted"><?php echo $user['study_country']; ?></p>
                                                 <select class="form-control mb-3 hidden" name="study_country" id="study_country">
                                                     <?php
                                                     $countries = [
@@ -1077,7 +1079,7 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
                                                         'Zimbabwe'
                                                     ];
                                                     foreach ($countries as $country) {
-                                                        $selected = ($user_education['study_country'] === $country) ? 'selected' : '';
+                                                        $selected = ($user['study_country'] === $country) ? 'selected' : '';
                                                         echo "<option value=\"$country\" $selected>$country</option>";
                                                     }
                                                     ?>
@@ -1088,14 +1090,14 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
                                         <div class="row pt-1">
                                             <div class="col-6 mb-3">
                                                 <h6>Highest Level of Qualification</h6>
-                                                <p class="text-muted"><?php echo $user_education['qualification']; ?></p>
+                                                <p class="text-muted"><?php echo $user['qualification']; ?></p>
                                                 <input type="text" class="form-control mb-3 hidden"
-                                                    value="<?php echo $user_education['qualification']; ?>" name="qualification"
+                                                    value="<?php echo $user['qualification']; ?>" name="qualification"
                                                     pattern="[A-Za-z .]+" />
                                             </div>
                                             <div class="col-6 mb-3">
                                                 <h6>Result</h6>
-                                                <p class="text-muted"><?php echo $user_eeducation['cgpa']; ?></p>
+                                                <p class="text-muted"><?php echo $user['cgpa']; ?></p>
                                                 <div class="input-group mb-3 hidden cgpa">
                                                     <!-- Main Select Dropdown for Result Type -->
                                                     <select class="form-select" id="main-select">
@@ -1122,32 +1124,32 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
                                         <div class="row pt-1">
                                             <div class="col-6 mb-3">
                                                 <h6>Start Date</h6>
-                                                <p class="text-muted"><?php echo $user_education['start_date']; ?></p>
+                                                <p class="text-muted"><?php echo $user['start_date']; ?></p>
                                                 <input type="date" class="form-control mb-3 hidden"
-                                                    value="<?php echo $user_education['start_date']; ?>" name="start_date"
+                                                    value="<?php echo $user['start_date']; ?>" name="start_date"
                                                     pattern="\d{4}-\d{2}-\d{2}" />
                                             </div>
                                             <div class="col-6 mb-3">
                                                 <h6>End Date</h6>
-                                                <p class="text-muted"><?php echo $user_education['end_date']; ?></p>
+                                                <p class="text-muted"><?php echo $user['end_date']; ?></p>
                                                 <input type="date" class="form-control mb-3 hidden"
-                                                    value="<?php echo $user_education['end_date']; ?>" name="end_date"
+                                                    value="<?php echo $user['end_date']; ?>" name="end_date"
                                                     pattern="\d{4}-\d{2}-\d{2}" />
                                             </div>
                                         </div>
                                         <div class="row pt-1">
                                             <div class="col-6 mb-3">
                                                 <h6>Primary Language</h6>
-                                                <p class="text-muted"><?php echo $user_education['language']; ?></p>
+                                                <p class="text-muted"><?php echo $user['language']; ?></p>
                                                 <input type="text" class="form-control mb-3 hidden"
-                                                    value="<?php echo $user_education['language']; ?>" name="language"
+                                                    value="<?php echo $user['language']; ?>" name="language"
                                                     pattern="[A-Za-z]+" />
                                             </div>
                                             <div class="col-6 mb-3">
                                                 <h6>Address</h6>
-                                                <p class="text-muted"><?php echo $user_education['edu_address']; ?></p>
+                                                <p class="text-muted"><?php echo $user['edu_address']; ?></p>
                                                 <input type="text" class="form-control mb-3 hidden"
-                                                    value="<?php echo $user_education['edu_address']; ?>" name="address" />
+                                                    value="<?php echo $user['edu_address']; ?>" name="address" />
                                             </div>
                                         </div>
                                         <div class="float-end mb-3">
@@ -1168,9 +1170,9 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
                             <div class="col-md-4 gradient-custom text-center text-white d-flex justify-content-center align-items-center"
                                 style="height: auto;">
                                 <div>
-                                    <img src="<?php echo $user_personal['profilePic']; ?>" alt="Avatar" class="img-fluid mb-4"
+                                    <img src="<?php echo $user['profilePic']; ?>" alt="Avatar" class="img-fluid mb-4"
                                         style="width: 10rem;" />
-                                    <h5><?php echo $user_personal['firstname'] . " " . $user_personal['lastname']; ?></h5>
+                                    <h5><?php echo $user['firstname'] . " " . $user['lastname']; ?></h5>
                                 </div>
                             </div>
                             <div class="col-md-8">
@@ -1178,7 +1180,7 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
                                     <div class="d-flex justify-content-between mb-1">
                                         <h6 class="text-secondary fs-5">Documents</h6>
                                         <?php
-                                        $appQuery = mysqli_query($conn, "SELECT `appNum` FROM `user_personal` WHERE auth_id = '{$user_personal['auth_id']}'");
+                                        $appQuery = mysqli_query($conn, "SELECT `appNum` FROM `user_personal` WHERE auth_id = '{$user['auth_id']}'");
                                         $appNum = mysqli_fetch_assoc($appQuery);
 
                                         if (empty($appNum['appNum']) || $appNum['appNum'] == 0) {
@@ -1194,7 +1196,7 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
                                     <div class="" style="height: 40rem; overflow: auto;">
                                         <div>
                                             <?php
-                                            $query = mysqli_query($conn, "SELECT eduDoc FROM `user_education` WHERE user_id = '{$user_education['user_id']}'");
+                                            $query = mysqli_query($conn, "SELECT eduDoc FROM `user_education` WHERE user_id = '{$user['user_id']}'");
                                             $documents = mysqli_fetch_assoc($query)['eduDoc'];
 
                                             if (empty($documents)) {
@@ -1216,8 +1218,6 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
                                                         </div>
 
                                                         <div class="d-flex gap-3">
-                                                            <img src="<?php echo $docPath; ?>" alt="documents"
-                                                                class="img-thumbnail" style="width: 4rem;">
                                                             <p class="d-flex flex-column justify-content-center lead">
                                                                 <?php echo $docName; ?>
                                                             </p>
@@ -1287,7 +1287,7 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
                                         <div class="d-flex justify-content-between mb-1">
                                             <h6 class="text-secondary fs-5">Work Experience</h6>
                                             <?php
-                                            $appQuery = mysqli_query($conn, "SELECT `appNum` FROM `user_personal` WHERE auth_id = '{$user_personal['auth_id']}'");
+                                            $appQuery = mysqli_query($conn, "SELECT `appNum` FROM `user_personal` WHERE auth_id = '{$user['auth_id']}'");
                                             $appNum = mysqli_fetch_assoc($appQuery);
 
                                             if (empty($appNum['appNum']) || $appNum['appNum'] == 0) {
@@ -1302,41 +1302,41 @@ $isDocumentsComplete = isDocumentsComplete($documentString);
                                         <div class="row pt-1">
                                             <div class="col-6 mb-3">
                                                 <h6>Company Name</h6>
-                                                <p class="text-muted"><?php echo $user['companyname']; ?></p>
+                                                <p class="text-muted"><?php echo $user['companyName']; ?></p>
                                                 <input type="text" class="form-control mb-3 hidden"
-                                                    value="<?php echo $user['companyname']; ?>" name="company_name"
+                                                    value="<?php echo $user['companyName']; ?>" name="company_name"
                                                     pattern="[A-Za-z\s]+" />
                                             </div>
                                             <div class="col-6 mb-3">
                                                 <h6>Job Title</h6>
-                                                <p class="text-muted"><?php echo $user['jobtitle']; ?></p>
+                                                <p class="text-muted"><?php echo $user['jobTitle']; ?></p>
                                                 <input type="text" class="form-control mb-3 hidden"
-                                                    value="<?php echo $user['jobtitle']; ?>" name="job_title"
+                                                    value="<?php echo $user['jobTitle']; ?>" name="job_title"
                                                     pattern="[A-Za-z\s]+" />
                                             </div>
                                         </div>
                                         <div class="row pt-1">
                                             <div class="col-6 mb-3">
                                                 <h6>Start Date</h6>
-                                                <p class="text-muted"><?php echo $user['jobstartdate']; ?></p>
+                                                <p class="text-muted"><?php echo $user['jobStartDate']; ?></p>
                                                 <input type="date" class="form-control mb-3 hidden"
-                                                    value="<?php echo $user['jobstartdate']; ?>" name="start_date"
+                                                    value="<?php echo $user['jobStartDate']; ?>" name="start_date"
                                                     pattern="\d{4}-\d{2}-\d{2}" />
                                             </div>
                                             <div class="col-6 mb-3">
                                                 <h6>End Date</h6>
-                                                <p class="text-muted"><?php echo $user['jobenddate']; ?></p>
+                                                <p class="text-muted"><?php echo $user['jobEndDate']; ?></p>
                                                 <input type="date" class="form-control mb-3 hidden"
-                                                    value="<?php echo $user['jobenddate']; ?>" name="end_date"
+                                                    value="<?php echo $user['jobEndDate']; ?>" name="end_date"
                                                     pattern="\d{4}-\d{2}-\d{2}" />
                                             </div>
                                         </div>
                                         <div class="row pt-1">
                                             <div class="col-6 mb-3">
                                                 <h6>Responsibilities</h6>
-                                                <p class="text-muted"><?php echo $user['jobresponsibilities']; ?></p>
+                                                <p class="text-muted"><?php echo $user['jobResponse']; ?></p>
                                                 <textarea class="form-control mb-3 hidden" name="responsibilities"
-                                                    pattern="[\s\S]+"><?php echo $user['jobresponsibilities']; ?></textarea>
+                                                    pattern="[\s\S]+"><?php echo $user['jobResponse']; ?></textarea>
                                             </div>
                                         </div>
                                         <div class="float-end mb-3">

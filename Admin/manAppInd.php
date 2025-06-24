@@ -8,9 +8,25 @@ if (!isset($_SESSION['user']) || $_SESSION['user'] !== $adminData['adminName']) 
     echo "<script>location.href='../login.php'</script>";
 }
 $appId = $_GET['appId'];
-// Application Data
-$applicationData = mysqli_query($conn, "SELECT * FROM `applications` WHERE `id` = '{$appId}'");
-$app = mysqli_fetch_assoc($applicationData);
+
+$mergedQuery = "
+SELECT 
+    a.*, 
+    u.*, 
+    c.country_name, 
+    cl.course_title, 
+    cl.course_level, 
+    cl.available_intakes,
+    cl.tuition_fees
+FROM applications a
+JOIN university u ON u.id = a.uniID
+JOIN country c ON c.id = u.country_id
+JOIN course_list cl ON cl.id = a.courseID
+WHERE a.id = '{$appId}'
+";
+
+$result = mysqli_query($conn, $mergedQuery);
+$app = mysqli_fetch_assoc($result);
 
 // Application User Data
 $applicationUserData = mysqli_query($conn, "SELECT a.*, up.* FROM auth a
@@ -18,15 +34,19 @@ $applicationUserData = mysqli_query($conn, "SELECT a.*, up.* FROM auth a
                                         WHERE `email` = '{$app['userEmail']}'");
 $user = mysqli_fetch_assoc($applicationUserData);
 
-// University Data
-$uniQuery = "
-SELECT u.*, c.country_name
-FROM university u
-JOIN country c ON c.id = u.country_id
-WHERE u.ID = '{$app['uniID']}'
-";
+if (isset($_POST['appStatus'], $_POST['appId']) && is_numeric($_POST['appId'])) {
+    $status = mysqli_real_escape_string($conn, $_POST['appStatus']);
 
-$uni = mysqli_fetch_assoc(mysqli_query($conn, $uniQuery));
+    $update = mysqli_query($conn, "UPDATE applications SET appStatus = '$status' WHERE id = '$appId'");
+
+    if ($update) {
+        header("Location: manAppInd.php?app=$appId");
+        exit;
+    } else {
+        echo "<script>alert('Failed to update status');</script>";
+    }
+}
+
 
 ?>
 
@@ -93,7 +113,7 @@ $uni = mysqli_fetch_assoc(mysqli_query($conn, $uniQuery));
                                 <h5 class="fw-bold mb-1"><?php echo $user['firstname'] . " " . $user['lastname'] ?></h5>
                                 <p class="mb-2 text-secondary">Student ID: <?php echo $user['id']; ?></p>
                                 <p class="text-muted"><?php echo $user['address']; ?></p>
-                                <button class="btn btn-success btn-sm px-3">View Profile</button>
+                                <!-- <button class="btn btn-success btn-sm px-3">View Profile</button> -->
                                 <!-- <span class="text-secondary ms-3">77% completed</span> -->
                             </div>
 
@@ -103,29 +123,63 @@ $uni = mysqli_fetch_assoc(mysqli_query($conn, $uniQuery));
                             <div class="col-lg-6 col-md-12">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <!-- Application Info -->
-                                    <div>
-                                        <h4 class="fw-bold mb-0"><?php echo $uni['university_name']; ?></h4>
-                                        <h5 class="mb-2"><?php echo $uni['country_name']; ?></h5>
+                                    <div class="">
+                                        <h4 class="fw-bold mb-0"><?php echo $app['university_name']; ?></h4>
+                                        <h5 class="mb-2"><?php echo $app['country_name']; ?></h5>
                                     </div>
-                                    <!-- Withdraw Button -->
-                                    <div>
-                                        <button class="btn btn-outline-danger btn-sm">Withdraw</button>
-                                    </div>
+                                    <!-- Application Status Dropdown -->
+                                    <form method="POST" class="d-inline">
+                                        <input type="hidden" name="appId" value="<?= $app['id'] ?>">
+                                        <div class="dropdown">
+                                            <button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button" id="statusDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <?= htmlspecialchars($app['appStatus']) ?>
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="statusDropdown">
+                                                <?php
+                                                $statusOptions = [
+                                                    "Application Initiated",
+                                                    "Application Drafted",
+                                                    "Application Submitted for Review",
+                                                    "Application on Hold for Modification",
+                                                    "Application Lodged",
+                                                    "Application Submitted to Institution",
+                                                    "Application Rejected",
+                                                    "Conditional Offer",
+                                                    "Unconditional Offer",
+                                                    "Tuition Fee Paid",
+                                                    "CAS/i20/COE Issued",
+                                                    "Visa Application Submitted",
+                                                    "Visa Rejected",
+                                                    "Visa Issued",
+                                                    "Student Enrolled"
+                                                ];
+
+                                                foreach ($statusOptions as $status):
+                                                ?>
+                                                    <li>
+                                                        <button type="submit" name="appStatus" value="<?= $status ?>" class="dropdown-item">
+                                                            <?= $status ?>
+                                                        </button>
+                                                    </li>
+                                                <?php endforeach; ?>
+                                            </ul>
+                                        </div>
+                                    </form>
                                 </div>
 
                                 <!-- Additional Details -->
                                 <div class="mt-3 row text-center">
                                     <div class="col">
                                         <h6 class="mb-0 text-muted">Intake(s)</h6>
-                                        <p class="mb-0">Q1 (Jan - Mar) 2025</p>
+                                        <p class="mb-0"><?php echo $app['available_intakes']; ?></p>
                                     </div>
                                     <div class="col">
                                         <h6 class="mb-0 text-muted">Levels</h6>
-                                        <p class="mb-0">Undergraduate</p>
+                                        <p class="mb-0"><?php echo $app['course_level']; ?></p>
                                     </div>
                                     <div class="col">
                                         <h6 class="mb-0 text-muted">Tuition</h6>
-                                        <p class="mb-0">-</p>
+                                        <p class="mb-0"><?php echo $app['tuition_fees']; ?></p>
                                     </div>
                                     <div class="col">
                                         <h6 class="mb-0 text-muted">Application Fee</h6>
@@ -138,7 +192,7 @@ $uni = mysqli_fetch_assoc(mysqli_query($conn, $uniQuery));
                                     <p class="text-muted mb-0 text-end">
                                         Speak to us about this application right now
                                     </p>
-                                    <h5 class="fw-bold text-primary mb-0 text-end">+91 9311 9627 38</h5>
+                                    <h5 class="fw-bold text-primary mb-0 text-end">NextSteps Contact Number</h5>
                                 </div>
                             </div>
                         </div>
@@ -348,6 +402,9 @@ $uni = mysqli_fetch_assoc(mysqli_query($conn, $uniQuery));
             </div>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+
 
     <script>
         // Documents/Message Header functionalities

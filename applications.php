@@ -90,7 +90,10 @@ if (isset($_POST['sendMsg'])) {
                     ?>
                             <a href="applications.php?app=<?= $application['id']; ?>">
                                 <div class="<?= $cardClass ?>">
-                                    <p class="p-0 m-0">Application: #<?= $application['id'] ?></p>
+                                    <div class="d-flex justify-content-between">
+                                        <p class="p-0 m-0">Application: #<?= $application['id'] ?></p>
+                                        <p class="px-1 py-1 m-0 bg-success h6 rounded-pill "><?= $application['appStatus'] ?></p>
+                                    </div>
                                     <p class="text-muted p-0 m-0"><?= $application['university_name'] ?></p>
                                     <p class="text-muted p-0 m-0"><?= $application['course_title'] ?></p>
                                 </div>

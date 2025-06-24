@@ -2,7 +2,7 @@
 session_start();
 include "../connection.php";
 // Admin Data
-$adminData = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM `admin`"));
+$adminData = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM `admin` WHERE adminName='{$_SESSION['user']}'"));
 if (!isset($_SESSION['user']) || $_SESSION['user'] !== $adminData['adminName']) {
     echo "<script>alert('You have to Login First!!!')</script>";
     echo "<script>location.href='../login.php'</script>";
@@ -314,7 +314,7 @@ if (isset($_POST['appStatus'], $_POST['appId']) && is_numeric($_POST['appId'])) 
                                             <div class="d-flex justify-content-start">
                                                 <div class="card shadow-lg border-0 my-2" style="max-width: 600px;">
                                                     <div class="card-body">
-                                                        <h5 class="card-title mb-1 fw-bold text-dark"><?php echo $user['lastname']; ?></h5>
+                                                        <h5 class="card-title mb-1 fw-bold text-dark"><?php echo $user['firstname']; ?></h5>
                                                         <p class="card-text text-dark mb-2"><?php echo base64_decode($message['userMsg']); ?></p>
                                                         <p class="card-text text-muted small"><?php echo $message['msgOn']; ?></p>
                                                     </div>
@@ -342,6 +342,7 @@ if (isset($_POST['appStatus'], $_POST['appId']) && is_numeric($_POST['appId'])) 
                                     <div id="editor"></div>
                                     <textarea name="adminMsg" id="adminMsg" hidden></textarea>
                                     <input type="hidden" name="appId" value="<?php echo $appId; ?>">
+                                    <input type="hidden" name="adminId" value="<?php echo $adminData['id']; ?>">
                                     <button type="submit" class="btn btn-primary mt-2">Send</button>
                                 </form>
                             </div>
@@ -353,7 +354,6 @@ if (isset($_POST['appStatus'], $_POST['appId']) && is_numeric($_POST['appId'])) 
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
-
 
     <script>
         // Documents/Message Header functionalities
@@ -394,7 +394,7 @@ if (isset($_POST['appStatus'], $_POST['appId']) && is_numeric($_POST['appId'])) 
                 'blockQuote', 'insertTable', 'emoji'
             ]
         }).then(editor => {
-            const form = document.querySelector('form');
+            const form = document.querySelector('form[action="manAppInd-action.php"]');
             const hiddenTextarea = document.querySelector('#adminMsg');
 
             form.addEventListener('submit', () => {

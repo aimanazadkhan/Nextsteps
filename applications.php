@@ -131,7 +131,7 @@ if (isset($_POST['sendMsg'])) {
                                         $adminName = $adminRow['adminName'];
                                     }
                                 }
-
+                                // Admin Message
                                 if (!empty($message['adminMsg']) && empty($message['userMsg'])) {
                     ?>
                                     <div class="d-flex justify-content-start text-end">
@@ -146,10 +146,11 @@ if (isset($_POST['sendMsg'])) {
                                 <?php
                                 } elseif (!empty($message['userMsg']) && empty($message['adminMsg'])) {
                                 ?>
+                                    <!-- User Message -->
                                     <div class="d-flex justify-content-end">
                                         <div class="card shadow-sm border-0 my-2" style="max-width: 600px;">
                                             <div class="card-body">
-                                                <h5 class="card-title mb-1 fw-bold text-dark"><?= htmlspecialchars($user['lastname']) ?></h5>
+                                                <h5 class="card-title mb-1 fw-bold text-dark"><?= htmlspecialchars($user['firstname']) ?></h5>
                                                 <p class="card-text text-dark mb-2"><?= base64_decode($message['userMsg']) ?></p>
                                                 <p class="card-text text-muted small"><?= $message['msgOn'] ?></p>
                                             </div>

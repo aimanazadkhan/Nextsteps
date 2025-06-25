@@ -437,18 +437,18 @@ include "./connection.php";
     </div>
     <div class="slide-container">
       <div class="logo-slider">
-        <div class="item"><a href="#"></a><img src="images/about/ukj__1_-removebg-preview.png" class="img-fluid"
-            style="object-fit: cover; max-height: 100%;"></a></div>
-        <div class="item"><a href="#"></a><img src="images/about/usa.png" class="img-fluid"
-            style="object-fit: cover; max-height: 100%;"></a></div>
-        <div class="item"><a href="#"></a><img src="images/about/canada.png" class="img-fluid"
-            style="object-fit: cover; max-height: 100%;"></a></div>
-        <div class="item"><a href="#"></a><img src="images/about/finland__1_-removebg-preview.png" class="img-fluid"
-            style="object-fit: cover; max-height: 100%;"></a></div>
-        <div class="item"><a href="#"></a><img src="images/about/australia (1).png" class="img-fluid"
-            style="object-fit: cover; max-height: 100%;"></a></div>
-        <div class="item"><a href="#"></a><img src="images/about/denmark.png" class="img-fluid"
-            style="object-fit: cover; max-height: 100%;"></a></div>
+        <div class="item" style="width: 25px;"><a href="#"></a><img src="images/about/ukj__1_-removebg-preview.png" class="img-fluid"
+            style="object-fit:contain;"></a></div>
+        <div class="item" style="width: 25px;"><a href="#"></a><img src="images/about/usa.png" class="img-fluid"
+            style="object-fit: contain;"></a></div>
+        <div class="item" style="width: 25px;"><a href="#"></a><img src="images/about/canada.png" class="img-fluid"
+            style="object-fit: contain;"></a></div>
+        <div class="item" style="width: 25px;"><a href="#"></a><img src="images/about/finland__1_-removebg-preview.png" class="img-fluid"
+            style="object-fit: contain;"></a></div>
+        <div class="item" style="width: 25px;"><a href="#"></a><img src="images/about/australia (1).png" class="img-fluid"
+            style="object-fit: contain;"></a></div>
+        <div class="item" style="width: 25px;"><a href="#"></a><img src="images/about/denmark.png" class="img-fluid"
+            style="object-fit: contain;"></a></div>
       </div>
     </div>
 

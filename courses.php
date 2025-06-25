@@ -8,67 +8,39 @@ include "connection.php";
 
 $result = null;
 
+// Search Query
 if (isset($_POST['search_btn'])) {
     $university_id = $_POST['university_id'] ?? '';
-    $country_id = $_POST['country_id'] ?? '';
-    $course_levels = $_POST['course_level'] ?? [];
-
-    $university_ids = [];
+    echo $university_id;
 
     if (!empty($university_id)) {
-        // If uni is selected, just use that, no country filter needed
-        $university_ids[] = $university_id;
-    } elseif (!empty($country_id)) {
-        // If uni not selected, but country selected, get all unis in that country
-        $uniQuery = "SELECT id FROM university WHERE country_id = '$country_id'";
-        $uniRes = mysqli_query($conn, $uniQuery);
-        while ($uni = mysqli_fetch_assoc($uniRes)) {
-            $university_ids[] = $uni['id'];
-        }
-        if (empty($university_ids)) {
-            echo "<div class='alert alert-danger mt-4 text-center'>No universities found for that country, dawg.</div>";
-            return;
-        }
+        $query = "
+            SELECT course_list.*, university.university_name 
+            FROM course_list 
+            JOIN university ON course_list.university_id = university.id 
+            WHERE course_list.university_id = " . intval($university_id);
+    } else {
+        // If university_id is empty, fetch all courses
+        $query = "
+            SELECT course_list.*, university.university_name 
+            FROM course_list 
+            JOIN university ON course_list.university_id = university.id";
     }
 
-    $conditions = [];
-
-    if (!empty($university_ids)) {
-        $uni_in = implode(",", array_map('intval', $university_ids));
-        $conditions[] = "university_id IN ($uni_in)";
-    }
-
-    if (!empty($course_levels)) {
-        $escaped_levels = array_map(function ($lvl) use ($conn) {
-            return "'" . mysqli_real_escape_string($conn, $lvl) . "'";
-        }, $course_levels);
-        $levels_in = implode(",", $escaped_levels);
-        $conditions[] = "course_level IN ($levels_in)";
-    }
-
-    $where = count($conditions) ? "WHERE " . implode(" AND ", $conditions) : '';
-    $query = "SELECT * FROM course_list $where";
     $result = mysqli_query($conn, $query) or die("Query failed: " . mysqli_error($conn));
     $allRows = mysqli_fetch_all($result, MYSQLI_ASSOC);
 }
 
-
-// Apply Course Application
+// Application creation
 if (isset($_GET['createApp'])) {
     $course_id = $_GET['createApp'];
-
-    if (isset($_GET['email']) && !empty($_GET['email'])) {
-        $email = $_GET['email'];
-    } else {
-        $email = $_SESSION['user'];
-    }
+    $email = $_GET['email'] ?? $_SESSION['user'];
     $university_id = $_GET['universityId'];
 
     $query = "INSERT INTO `applications`(`uniID`, `userEmail`, `courseID`) VALUES ('$university_id', '$email','$course_id')";
     if (!mysqli_query($conn, $query)) {
         die("Not Inserted!!");
     } else {
-        // Increment the applied column
         $id = mysqli_fetch_assoc(mysqli_query($conn, "SELECT `id` FROM auth WHERE email = '{$_SESSION["user"]}'"));
         $updateQuery = "UPDATE `user_personal` SET `applied` = `applied` + 1 WHERE `auth_id` = '{$id["id"]}'";
         if (!mysqli_query($conn, $updateQuery)) {
@@ -79,7 +51,6 @@ if (isset($_GET['createApp'])) {
         }
     }
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -91,14 +62,9 @@ if (isset($_GET['createApp'])) {
     <title>Course Finder</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="icon" href="images/Next Steps logo.png">
-    <link rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/next.css">
-    <!-- # Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
-
 </head>
 
 <body style="background-color: #e8f4fc;">
@@ -109,7 +75,7 @@ if (isset($_GET['createApp'])) {
             <p class="fs-5" style="color: #6c757d;">Use our Course Finder to search</p>
         </div>
         <div class="card mx-auto bg-white rounded p-4 shadow-lg border-none">
-            <form class="" METHOD="POST">
+            <form method="POST">
                 <div class="row g-3 mb-3">
                     <!-- University Dropdown -->
                     <div class="col-md-4">
@@ -122,30 +88,6 @@ if (isset($_GET['createApp'])) {
                                 echo "<option value='{$row['id']}' $selected>{$row['university_name']}</option>";
                             }
                             ?>
-                        </select>
-                    </div>
-                    <div class="col-md-2">
-                        <select class="form-select text-dark" name="intake">
-                            <option selected>Intake</option>
-                            <option value="Jan">January</option>
-                            <option value="Feb">February</option>
-                            <option value="Mar">March</option>
-                            <option value="Apr">April</option>
-                            <option value="May">May</option>
-                            <option value="Jun">June</option>
-                            <option value="Jul">July</option>
-                            <option value="Aug">August</option>
-                            <option value="Sep">September</option>
-                            <option value="Oct">October</option>
-                            <option value="Nov">November</option>
-                            <option value="Dec">December</option>
-                        </select>
-                    </div>
-                    <div class="col-md-2">
-                        <select class="form-select text-dark" name="year">
-                            <option selected>Year</option>
-                            <option value="2024">2024</option>
-                            <option value="2025">2025</option>
                         </select>
                     </div>
                     <!-- Country Dropdown -->
@@ -161,45 +103,43 @@ if (isset($_GET['createApp'])) {
                             ?>
                         </select>
                     </div>
+                    <!-- Intake Dropdown -->
+                    <div class="col-md-2">
+                        <select class="form-select text-dark" name="intake">
+                            <option value="">Select Intake</option>
+                            <?php
+                            $intakes = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                            foreach ($intakes as $month) {
+                                $selected = ($month == ($_POST['intake'] ?? '')) ? 'selected' : '';
+                                echo "<option value=\"$month\" $selected>$month</option>";
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <!-- Year Dropdown -->
+                    <div class="col-md-2">
+                        <select class="form-select text-dark" name="year">
+                            <option value="">Select Year</option>
+                            <?php
+                            $years = ["2024", "2025"];
+                            foreach ($years as $yr) {
+                                $selected = ($yr == ($_POST['year'] ?? '')) ? 'selected' : '';
+                                echo "<option value=\"$yr\" $selected>$yr</option>";
+                            }
+                            ?>
+                        </select>
+                    </div>
                 </div>
 
                 <div class="row g-3 mb-3">
                     <div class="col-md-3">
                         <h6>Course Level</h6>
-                        <?php $levels = $_POST['course_level'] ?? []; ?>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="pg" name="course_level[]" value="PG" <?= in_array("PG", $levels) ? 'checked' : '' ?>>
-                            <label class="form-check-label" for="pg">PG</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="ug" name="course_level[]" value="UG" <?= in_array("UG", $levels) ? 'checked' : '' ?>>
-                            <label class="form-check-label" for="ug">UG</label>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3">
-                        <h6>Duration</h6>
-                        <select class="form-select text-dark">
-                            <option selected>Select</option>
-                            <option>1 Year</option>
-                            <option>2 Years</option>
+                        <?php $level = $_POST['course_level'][0] ?? ''; ?>
+                        <select name="course_level[]" class="form-select text-dark">
+                            <option value="">Select Level</option>
+                            <option class="text-dark" value="PG" <?= $level === "PG" ? 'selected' : '' ?>>PG</option>
+                            <option class="text-dark" value="UG" <?= $level === "UG" ? 'selected' : '' ?>>UG</option>
                         </select>
-                    </div>
-
-                    <div class="col-md-3">
-                        <h6>Requirements</h6>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="pte">
-                            <label class="form-check-label" for="pte">PTE</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="toefl">
-                            <label class="form-check-label" for="toefl">TOEFL iBT</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="ielts">
-                            <label class="form-check-label" for="ielts">IELTS</label>
-                        </div>
                     </div>
                 </div>
 
@@ -217,6 +157,7 @@ if (isset($_GET['createApp'])) {
                     <?php foreach ($allRows as $row): ?>
                         <div class="card mb-4 shadow border-0 rounded-4" style="border-left: 6px solid #0d6efd;">
                             <div class="card-body p-4">
+                                <h4 class="mb-1"><strong>University:</strong> <?= htmlspecialchars($row['university_name']) ?></h4>
                                 <h4 class="card-title fw-bold text-primary mb-3"><?= htmlspecialchars($row['course_title']) ?></h4>
                                 <div class="row">
                                     <div class="col-md-6 mb-2">
@@ -243,10 +184,24 @@ if (isset($_GET['createApp'])) {
         </div>
     <?php endif; ?>
 
-
-
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.querySelector('select[name="country_id"]').addEventListener('change', function() {
+            const countryId = this.value;
+            const universityDropdown = document.querySelector('select[name="university_id"]');
+            fetch('get_universities.php?country_id=' + countryId)
+                .then(response => response.json())
+                .then(data => {
+                    universityDropdown.innerHTML = '<option value="">Select University</option>';
+                    data.forEach(university => {
+                        const option = document.createElement('option');
+                        option.value = university.id;
+                        option.textContent = university.university_name;
+                        universityDropdown.appendChild(option);
+                    });
+                });
+        });
+    </script>
 </body>
 
 </html>

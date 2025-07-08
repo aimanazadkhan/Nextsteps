@@ -64,7 +64,7 @@ if (isset($_POST['signup'])) {
                 mysqli_query($conn, "DELETE FROM auth WHERE id = '$auth_id'");
                 echo "<script>alert('Registration Failed. Try again.')</script>";
             } else {
-                // include 'sendmail.php';
+                include 'sendmail.php';
                 echo "<script>alert('Account Created Successfully! Please Check Your Email for Confirmation.')</script>";
                 echo "<script>location.href='login.php'</script>";
             }
